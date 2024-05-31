@@ -1,0 +1,45 @@
+[PROJECT]
+Target=ALARMA_PONAL.hex
+Development_Mode=2
+Processor=0x2550
+ToolSuite=CCS
+Processor_Text=PIC18F4550
+CCSVersion=5.007
+Compiler=PCH
+
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers\;K:\PORTATIL HOLMAN\BACKUP(D)\copia_portatil\Memoria_2011\Soft_Alarma_V3.0\USB_ALARMA\
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=ALARMA_PONAL.c
+BuildTool=C-COMPILER
+OptionString=+FH
+AdditionalOptionString=
+BuildRequired=1
+
+[ALARMA_PONAL.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=ALARMA_PONAL.c
+
+[Windows]
+0=0000 ALARMA~1.C 0 0 796 451 3 0
+
+[Opened Files]
+1=ALARMA_PONAL.c
+2=
+3=C:\Program Files (x86)\PICC\Drivers\USB.C
+4=G:\micros_2015\puertos.c
+5=C:\Program Files (x86)\PICC\Devices\18F4550.h
+6=
+[Units]
+Count=1
+1=ALARMA_PONAL (main)

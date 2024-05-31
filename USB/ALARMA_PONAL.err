@@ -1,0 +1,11 @@
+>>> Warning 203 "C:\Program Files\PICC\Drivers\pic18_usb.c" Line 531(1,1): Condition always TRUE
+>>> Warning 216 "ALARMA_PONAL.c" Line 136(0,1): Interrupts disabled during call to prevent re-entrancy:  (usb_token_reset)
+>>> Warning 216 "ALARMA_PONAL.c" Line 136(0,1): Interrupts disabled during call to prevent re-entrancy:  (usb_flush_out)
+>>> Warning 216 "ALARMA_PONAL.c" Line 136(0,1): Interrupts disabled during call to prevent re-entrancy:  (usb_tbe)
+>>> Warning 216 "ALARMA_PONAL.c" Line 136(0,1): Interrupts disabled during call to prevent re-entrancy:  (usb_flush_in)
+>>> Warning 202 "ALARMA_PONAL.c" Line 53(6,7): Variable never used:   z
+>>> Warning 202 "ALARMA_PONAL.c" Line 55(6,12): Variable never used:   sndbuf
+>>> Warning 202 "ALARMA_PONAL.c" Line 56(9,15): Variable never used:   posmem
+>>> Warning 202 "ALARMA_PONAL.c" Line 56(17,18): Variable never used:   x
+      Memory usage:   ROM=13%      RAM=16% - 17%
+      0 Errors,  9 Warnings.
