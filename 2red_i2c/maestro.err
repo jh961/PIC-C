@@ -1,0 +1,9 @@
+*** Error 18 "maestro.c" Line 1(9,20): File can not be opened
+    Not in local "C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\2red_i2c\18f4550.h"
+*** Error 111 "maestro.c" Line 2(7,92): Unknown keyword in #FUSES   "NOVREGEN"
+*** Error 111 "maestro.c" Line 3(7,65): Unknown keyword in #FUSES   "CPUDIV1"
+*** Error 18 "maestro.c" Line 5(10,17): File can not be opened
+    Not in local "C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\2red_i2c\lcd.c"
+*** Error 100 "maestro.c" Line 7(5,46): USE parameter value is out of range   Not a number: PIN_B1
+*** Error 128 "maestro.c" Line 9(1,42): A #DEVICE required before this line
+      6 Errors,  0 Warnings.

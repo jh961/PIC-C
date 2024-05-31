@@ -1,0 +1,125 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016-017 n
+018     a
+019     x
+01A     e
+01B     d
+01C     k
+01D-080 dato
+081     lcd_init.i
+081     MAIN.@SCRATCH1
+081     @PSTRINGC_96.@SCRATCH1
+082     lcd_init.@SCRATCH1
+082     @PSTRINGC_96.@SCRATCH2
+083     lcd_putc.c
+084     lcd_gotoxy.x
+084     @delay_ms1.P1
+085     lcd_gotoxy.y
+086     lcd_gotoxy.address
+087     lcd_gotoxy.@SCRATCH1
+088     lcd_send_byte.address
+089     lcd_send_byte.n
+08A     lcd_read_byte.low
+08A     lcd_send_byte.@SCRATCH1
+08B     lcd_read_byte.high
+08B     lcd_send_nibble.n
+08C     lcd_read_byte.@SCRATCH1
+08D     rda_isr.@SCRATCH1
+08E     rda_isr.@SCRATCH2
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @READ_PACKED_MEMORY.P1
+FE1-FE2 @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P3
+FE9-FEA @WRITE_PACKED_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+13BE  @delay_ms1
+156C  @PUTCHARI_BIU_1
+0096  LCD_INIT_STRING
+140E  lcd_read_byte
+1402  lcd_read_nibble
+13E4  lcd_send_nibble
+1450  lcd_send_byte
+1484  lcd_init
+14E6  lcd_gotoxy
+1508  lcd_putc
+00B4  co
+133E  rda_isr
+1576  MAIN
+139C  @const114
+154C  @PSTRINGC_96
+13A2  @const116
+13AE  @const117
+1576  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\comunicacion serial basica PIC\
+
+Project Files:
+    comunicacion serial 1.c
+    ..\..\..\..\..\..\Program Files\PICC\devices\18f4550.h
+    ..\..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\comunicacion serial basica PIC\comunicacion serial 1 (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      comunicacion serial 1.err
+    Ext Symbols: comunicacion serial 1.esym
+    INHX32:      comunicacion serial 1.hex
+    Symbols:     comunicacion serial 1.sym
+    List:        comunicacion serial 1.lst
+    Debug/COFF:  comunicacion serial 1.cof
+    Project:     comunicacion serial 1.PJT
+    Call Tree:   comunicacion serial 1.tre
+    Statistics:  comunicacion serial 1.sta

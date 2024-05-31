@@ -1,0 +1,79 @@
+#include <18F4550.H> // tipo de PIC 
+#use delay( clock = 20000000 ) // reloj de 20 MHz 
+#fuses nowdt,hs,put
+
+int vector[10]={0b11000000, 0b11111001, 0b10100100,0b10110000, 0b10011001, 0b10010010, 0b10000010, 0b11111000, 0b10000000, 0b10011000};
+int i=0,j=0;//varibales para contar
+int s0=0,s1=0; //variables de los switch
+
+void main( void )
+{
+set_tris_b( 255 );
+set_tris_d( 0x00 );
+set_tris_a( 255 ); //salidas para activar cada display                   // a1 para display de decenas                   // a2 para display de unidades
+
+while(true)
+{
+if(input(PIN_d2)==1){
+    if((s0==0)){    
+         s1=0;
+         s0=1;         
+          }
+      else{      
+         s1=0; 
+         s0=0;         
+        }
+while(input(PIN_d2)==1){}// antirrebote
+   }
+
+
+if(input(PIN_d3)==1){
+    if((s1==0)){    
+         s1=1;
+         s0=0;        
+          }
+      else{      
+         s1=0;
+         s0=0;        
+        }
+while(input(PIN_d3)==1){}// antirrebote
+   }
+
+if ((s1==1)){ 
+         j++;
+         if (j==10){         
+         j=0;                    // decenas
+         i++;
+         }         
+         if (i==10){
+          i=0;
+         }
+   }     
+else if ((s0==1)){
+            j--;            
+            if (j==-1){         
+                j=9;                    // decenas
+                i--;                
+            }            
+             if (i==-1){
+                   i=9;
+             }   
+      } 
+               
+         int z=0;
+         while (z<120){
+          output_high(PIN_A0);  //unidades
+          output_b(vector[j]);          
+         delay_us(1000);
+          output_low(PIN_A0);
+         
+          output_high(PIN_A1);  
+          output_b(vector[i]);
+         delay_us(1000);
+          output_low(PIN_A1);
+          z++;
+         }
+   }
+}
+
+

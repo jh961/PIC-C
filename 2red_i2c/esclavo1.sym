@@ -1,0 +1,132 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     flag
+017     dato
+018     incoming
+019     state
+01A     @I2C_STATE
+01B     lcd_init.i
+01B     @PRINTF_U_93.P1
+01B     MAIN.@SCRATCH1
+01B     @PSTRINGC_93.@SCRATCH1
+01C     @PRINTF_U_93.P1
+01C     lcd_init.@SCRATCH1
+01C     @PSTRINGC_93.@SCRATCH2
+01D     lcd_putc.c
+01D     @DIV88.P1
+01E     @delay_ms1.P1
+01E     lcd_gotoxy.x
+01E     @DIV88.P1
+01F     lcd_gotoxy.y
+01F     @DIV88.@SCRATCH1
+020     lcd_gotoxy.address
+021     lcd_gotoxy.@SCRATCH1
+022     lcd_send_byte.address
+023     lcd_send_byte.n
+024     lcd_read_byte.low
+024     lcd_send_byte.@SCRATCH1
+025     lcd_send_nibble.n
+025     lcd_read_byte.high
+026     lcd_read_byte.@SCRATCH1
+027     ssp_interupt.incoming
+028     ssp_interupt.state
+029     @I2C_WRITE_1.P1
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @READ_PACKED_MEMORY.P1
+FE1-FE2 @WRITE_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @READ_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @WRITE_PROGRAM_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+012A  @delay_ms1
+0096  LCD_INIT_STRING
+017A  lcd_read_byte
+016E  lcd_read_nibble
+0150  lcd_send_nibble
+01BC  lcd_send_byte
+01F0  lcd_init
+0250  lcd_gotoxy
+0272  lcd_putc
+00B4  @I2C_WRITE_1
+00CC  ssp_interupt
+0366  MAIN
+0110  @const111
+02B6  @PSTRINGC_93
+0112  @const113
+0118  @const114
+011E  @const115
+0120  @const116
+02D6  @DIV88
+02FE  @PRINTF_U_93
+0366  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\2red_i2c\
+
+Project Files:
+    esclavo1.c
+    ..\..\..\..\..\..\Program Files\PICC\devices\18f4550.h
+    ..\..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\2red_i2c\esclavo1 (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      esclavo1.err
+    Ext Symbols: esclavo1.esym
+    INHX32:      esclavo1.hex
+    Symbols:     esclavo1.sym
+    List:        esclavo1.lst
+    Debug/COFF:  esclavo1.cof
+    Project:     esclavo1.PJT
+    Call Tree:   esclavo1.tre
+    Statistics:  esclavo1.sta

@@ -1,0 +1,79 @@
+#include <18f4550.h>
+//#DEVICE ADC=10
+#fuses XT,INTRC_IO,MCLR,NOWDT,NOPROTECT,NOLVP,PUT,CPUDIV1,BROWNOUT,NOVREGEN
+#use delay(clock=4000000)
+#include <lcd.c>
+
+#use i2c(SLAVE, SDA=PIN_b0, SCL=PIN_b1, ADDRESS=0XB0,FORCE_HW)
+int flag =0;
+int dato;
+byte incoming,state;
+
+#INT_SSP
+void ssp_interupt ()
+{
+BYTE incoming, state;
+
+   state = i2c_isr_state();
+
+   if(state < 0x80)                     //Master is sending data
+   {
+      incoming = i2c_read();
+
+      if (incoming == 0x05){
+
+         flag=1;
+      
+
+      }
+
+
+   }
+   if((state == 0x80)&& (flag==1))                     //Master is requesting data
+   {
+      i2c_write(dato);
+      flag=0;
+   }
+}
+
+
+
+
+void main (){
+set_tris_b (0xff);
+
+enable_interrupts(GLOBAL);
+enable_interrupts(INT_SSP);
+
+ lcd_init();
+ lcd_putc("\f");
+ lcd_gotoxy (1, 1) ;
+    printf (lcd_putc, "AUTOR");
+    lcd_gotoxy (1, 2) ;
+    printf (lcd_putc, "JUAN");
+    delay_ms(1000);
+    
+setup_adc_ports (AN0);
+setup_adc(ADC_CLOCK_INTERNAL );
+set_adc_channel(0);
+delay_us(10);
+ 
+
+while (true){
+
+dato=read_adc();
+delay_ms(1);
+lcd_putc("\f");
+  lcd_gotoxy (1, 1) ;
+    printf (lcd_putc, "Dato es =");
+    lcd_gotoxy (1, 2) ;
+    printf (lcd_putc, "%u",dato);
+    delay_ms(10);
+}
+
+}
+
+
+
+
+

@@ -1,0 +1,46 @@
+[PROJECT]
+Target=esclavo1.HEX
+Development_Mode=2
+Processor=0x4550
+ToolSuite=CCS
+Processor_Text=PIC18F4550
+
+[Directories]
+Include=
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=G:\red_i2c\esclavo1.c
+BuildTool=C-COMPILER
+OptionString=+FM
+AdditionalOptionString=
+BuildRequired=1
+
+[esclavo1.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=esclavo1.c
+
+[Windows]
+0=0000 esclavo1.c 0 0 796 451 3 0
+
+[Opened Files]
+1=esclavo1.c
+2=
+3=..\..\TRANSVERSAL 4\COMUNICACIÓN TRANSVERSAL\programa pic\SERIAL PIC PC TRANSVERSAL VOCALES.c
+4=esclavo1.c
+5=maestro.c
+6=
+7=C:\Program Files\PICC\Examples\EX_SLAVE.C
+8=
+[Units]
+Count=1
+1=esclavo1.c (main)
+Link=0

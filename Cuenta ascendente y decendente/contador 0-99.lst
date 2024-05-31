@@ -1,0 +1,262 @@
+CCS PCH C Compiler, Version 4.104, 5967               19-ago.-15 01:14
+
+               Filename: C:\Users\Cristian cortes\Downloads\DIGITALES 2\contador 0-99.lst
+
+               ROM used: 328 bytes (1%)
+                         Largest free fragment is 32440
+               RAM used: 19 (1%) at main() level
+                         20 (1%) worst case
+               Stack:    1 locations
+
+*
+0000:  GOTO   002A
+.................... #include <18F4550.H> // tipo de PIC  
+.................... //////// Standard Header file for the PIC18F4550 device //////////////// 
+.................... #device PIC18F4550 
+.................... #list 
+....................  
+.................... #use delay( clock = 20000000 ) // reloj de 4 MHz  
+0004:  CLRF   FEA
+0006:  MOVLW  13
+0008:  MOVWF  FE9
+000A:  MOVF   FEF,W
+000C:  BZ    0028
+000E:  MOVLW  06
+0010:  MOVWF  01
+0012:  CLRF   00
+0014:  DECFSZ 00,F
+0016:  BRA    0014
+0018:  DECFSZ 01,F
+001A:  BRA    0012
+001C:  MOVLW  7B
+001E:  MOVWF  00
+0020:  DECFSZ 00,F
+0022:  BRA    0020
+0024:  DECFSZ FEF,F
+0026:  BRA    000E
+0028:  RETLW  00
+.................... #fuses nowdt,hs,put 
+....................  
+.................... int vector[10]={0b11000000, 0b11111001, 0b10100100,0b10110000, 0b10011001, 0b10010010, 0b10000010, 0b11111000, 0b10000000, 0b10011000}; 
+.................... int i=0,j=0;//varibales para contar 
+.................... int s0=0,s1=0; //variables de los switch 
+....................  
+.................... void main( void ) 
+.................... { 
+002A:  CLRF   FF8
+002C:  BCF    FD0.7
+002E:  CLRF   FEA
+0030:  CLRF   FE9
+0032:  CLRF   0E
+0034:  CLRF   0F
+0036:  CLRF   10
+0038:  CLRF   11
+003A:  MOVF   FC1,W
+003C:  ANDLW  C0
+003E:  IORLW  0F
+0040:  MOVWF  FC1
+0042:  MOVLW  07
+0044:  MOVWF  FB4
+0046:  MOVLW  C0
+0048:  MOVWF  04
+004A:  MOVLW  F9
+004C:  MOVWF  05
+004E:  MOVLW  A4
+0050:  MOVWF  06
+0052:  MOVLW  B0
+0054:  MOVWF  07
+0056:  MOVLW  99
+0058:  MOVWF  08
+005A:  MOVLW  92
+005C:  MOVWF  09
+005E:  MOVLW  82
+0060:  MOVWF  0A
+0062:  MOVLW  F8
+0064:  MOVWF  0B
+0066:  MOVLW  80
+0068:  MOVWF  0C
+006A:  MOVLW  98
+006C:  MOVWF  0D
+.................... set_tris_b( 255 ); 
+006E:  MOVLW  FF
+0070:  MOVWF  F93
+.................... set_tris_d( 0x00 ); 
+0072:  MOVLW  00
+0074:  MOVWF  F95
+.................... set_tris_a( 255 ); //salidas para activar cada display                   // a1 para display de decenas                   // a2 para display de unidades 
+0076:  MOVLW  FF
+0078:  MOVWF  F92
+....................  
+.................... while(true) 
+.................... { 
+.................... if(input(PIN_d2)==1){ 
+007A:  BSF    F95.2
+007C:  BTFSS  F83.2
+007E:  BRA    0098
+....................     if((s0==0)){     
+0080:  MOVF   10,F
+0082:  BNZ   008C
+....................          s1=0; 
+0084:  CLRF   11
+....................          s0=1;          
+0086:  MOVLW  01
+0088:  MOVWF  10
+....................           } 
+....................       else{       
+008A:  BRA    0090
+....................          s1=0;  
+008C:  CLRF   11
+....................          s0=0;          
+008E:  CLRF   10
+....................         } 
+.................... while(input(PIN_d2)==1){}// antirrebote 
+0090:  BSF    F95.2
+0092:  BTFSS  F83.2
+0094:  BRA    0098
+0096:  BRA    0090
+....................    } 
+....................  
+....................  
+.................... if(input(PIN_d3)==1){ 
+0098:  BSF    F95.3
+009A:  BTFSS  F83.3
+009C:  BRA    00B6
+....................     if((s1==0)){     
+009E:  MOVF   11,F
+00A0:  BNZ   00AA
+....................          s1=1; 
+00A2:  MOVLW  01
+00A4:  MOVWF  11
+....................          s0=0;         
+00A6:  CLRF   10
+....................           } 
+....................       else{       
+00A8:  BRA    00AE
+....................          s1=0; 
+00AA:  CLRF   11
+....................          s0=0;         
+00AC:  CLRF   10
+....................         } 
+.................... while(input(PIN_d3)==1){}// antirrebote 
+00AE:  BSF    F95.3
+00B0:  BTFSS  F83.3
+00B2:  BRA    00B6
+00B4:  BRA    00AE
+....................    } 
+....................  
+.................... if ((s1==1)){  
+00B6:  DECFSZ 11,W
+00B8:  BRA    00D0
+....................          j++; 
+00BA:  INCF   0F,F
+....................          if (j==10){          
+00BC:  MOVF   0F,W
+00BE:  SUBLW  0A
+00C0:  BNZ   00C6
+....................          j=0;                    // decenas 
+00C2:  CLRF   0F
+....................          i++; 
+00C4:  INCF   0E,F
+....................          }          
+....................          if (i==10){ 
+00C6:  MOVF   0E,W
+00C8:  SUBLW  0A
+00CA:  BNZ   00CE
+....................           i=0; 
+00CC:  CLRF   0E
+....................          } 
+....................    }      
+.................... else if ((s0==1)){ 
+00CE:  BRA    00EC
+00D0:  DECFSZ 10,W
+00D2:  BRA    00EC
+....................             j--;             
+00D4:  DECF   0F,F
+....................             if (j==-1){          
+00D6:  MOVF   0F,W
+00D8:  SUBLW  FF
+00DA:  BNZ   00E2
+....................                 j=9;                    // decenas 
+00DC:  MOVLW  09
+00DE:  MOVWF  0F
+....................                 i--;                 
+00E0:  DECF   0E,F
+....................             }             
+....................              if (i==-1){ 
+00E2:  MOVF   0E,W
+00E4:  SUBLW  FF
+00E6:  BNZ   00EC
+....................                    i=9; 
+00E8:  MOVLW  09
+00EA:  MOVWF  0E
+....................              }    
+....................       }  
+....................                 
+....................          int z=0; 
+00EC:  CLRF   12
+....................          while (z<120){ 
+00EE:  MOVF   12,W
+00F0:  SUBLW  77
+00F2:  BNC   0144
+....................           output_high(PIN_A0);  //unidades 
+00F4:  BCF    F92.0
+00F6:  BSF    F89.0
+....................           output_b(vector[j]);           
+00F8:  CLRF   03
+00FA:  MOVF   0F,W
+00FC:  ADDLW  04
+00FE:  MOVWF  FE9
+0100:  MOVLW  00
+0102:  ADDWFC 03,W
+0104:  MOVWF  FEA
+0106:  MOVFF  FEF,13
+010A:  CLRF   F93
+010C:  MOVFF  13,F8A
+....................          delay_us(1000); 
+0110:  MOVLW  01
+0112:  MOVWF  13
+0114:  RCALL  0004
+....................           output_low(PIN_A0); 
+0116:  BCF    F92.0
+0118:  BCF    F89.0
+....................           
+....................           output_high(PIN_A1);   
+011A:  BCF    F92.1
+011C:  BSF    F89.1
+....................           output_b(vector[i]); 
+011E:  CLRF   03
+0120:  MOVF   0E,W
+0122:  ADDLW  04
+0124:  MOVWF  FE9
+0126:  MOVLW  00
+0128:  ADDWFC 03,W
+012A:  MOVWF  FEA
+012C:  MOVFF  FEF,13
+0130:  CLRF   F93
+0132:  MOVFF  13,F8A
+....................          delay_us(1000); 
+0136:  MOVLW  01
+0138:  MOVWF  13
+013A:  RCALL  0004
+....................           output_low(PIN_A1); 
+013C:  BCF    F92.1
+013E:  BCF    F89.1
+....................           z++; 
+0140:  INCF   12,F
+....................          } 
+0142:  BRA    00EE
+....................    } 
+0144:  BRA    007A
+.................... } 
+....................  
+....................  
+0146:  SLEEP 
+
+Configuration Fuses:
+   Word  1: CC3F   IESO FCMEN HS PLL12 CPUDIV4 USBDIV
+   Word  2: 1E3E   BROWNOUT NOWDT BORV20 PUT WDT32768 VREGEN
+   Word  3: 8700   PBADEN CCP2C1 MCLR LPT1OSC
+   Word  4: 0081   STVREN NODEBUG NOLVP NOXINST NOICPRT
+   Word  5: C00F   NOPROTECT NOCPD NOCPB
+   Word  6: E00F   NOWRT NOWRTD NOWRTC NOWRTB
+   Word  7: 400F   NOEBTR NOEBTRB

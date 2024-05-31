@@ -1,0 +1,111 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     valor
+005     @PRINTF_U_93.P1
+005     @I2C_WRITE_1.P2
+005     lcd_init.i
+005     @I2C_READ_1.P1
+005     MAIN.@SCRATCH1
+005     @PSTRINGC_93.@SCRATCH1
+006     @PRINTF_U_93.P1
+006     lcd_init.@SCRATCH1
+006     @I2C_READ_1.@SCRATCH1
+006     @PSTRINGC_93.@SCRATCH2
+007     @DIV88.P1
+007     lcd_putc.c
+007     @I2C_READ_1.@SCRATCH2
+008     @delay_ms1.P1
+008     @DIV88.P2
+008     lcd_gotoxy.x
+009     lcd_gotoxy.y
+009     @DIV88.@SCRATCH1
+00A     lcd_gotoxy.address
+00B     lcd_gotoxy.@SCRATCH1
+00C     lcd_send_byte.address
+00D     lcd_send_byte.n
+00E     lcd_read_byte.low
+00E     lcd_send_byte.@SCRATCH1
+00F     lcd_read_byte.high
+00F     lcd_send_nibble.n
+010     lcd_read_byte.@SCRATCH1
+F83     lcd
+F83     PSP_DATA
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @READ_PACKED_MEMORY.P1
+FE1-FE2 @WRITE_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P1
+FE9-FEA @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0032  @delay_ms1
+0004  LCD_INIT_STRING
+0082  lcd_read_byte
+0076  lcd_read_nibble
+0058  lcd_send_nibble
+00C4  lcd_send_byte
+00F8  lcd_init
+0158  lcd_gotoxy
+017A  lcd_putc
+024A  @I2C_READ_1
+01DE  @I2C_WRITE_1
+0342  MAIN
+0018  @const106
+01BE  @PSTRINGC_93
+001A  @const108
+0020  @const109
+0026  @const110
+0028  @const111
+02B2  @DIV88
+02DA  @PRINTF_U_93
+0342  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\2red_i2c\
+
+Project Files:
+    maestro.c
+    ..\..\..\..\..\..\Program Files\PICC\devices\18f4550.h
+    ..\..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\2red_i2c\maestro (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      maestro.err
+    Ext Symbols: maestro.esym
+    INHX32:      maestro.hex
+    Symbols:     maestro.sym
+    List:        maestro.lst
+    Debug/COFF:  maestro.cof
+    Project:     maestro.PJT
+    Call Tree:   maestro.tre
+    Statistics:  maestro.sta
