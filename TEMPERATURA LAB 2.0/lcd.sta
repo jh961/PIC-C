@@ -1,0 +1,69 @@
+
+ROM used: 772 (2%)
+          772 (2%) including unused fragments
+
+          1 Average locations per line
+          11 Average locations per statement
+
+RAM used: 8 (0%) at main() level
+          27 (1%) worst case
+
+Stack used: 5 worst case (out of 31 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+   24    10  14  lcd.c
+  422     0   0  C:\Program Files (x86)\PICC\devices\18f4550.h
+  168    63  86  C:\Program Files (x86)\PICC\drivers\lcd.c
+----- -----
+  614    73 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0     40   3   1             @delay_ms1
+0     20   1   0             @const55
+0     56   4   3   463  4.3  lcd_read_byte
+0     24   2   1   134  2.2  lcd_send_nibble
+0     54   3   3   317  4.3  lcd_send_byte
+0     88   6   3   422  4.7  lcd_init
+0     34   2   4   186  5.5  lcd_gotoxy
+0     68   4   1   272  4.1  lcd_putc
+0    136   9   1   247  3.9  MAIN
+0     34   2   0             @const84
+0     34   2   0             @const85
+0    180  12   9             @PRINTF_LU_75
+
+Program metrics:
+    Functions               7
+    Statements              73
+    Comments                151
+    Volume (V)              3122
+    Difficilty (D)          28.3
+    Effort to implement (E) 88350
+    Time to implement (T)   1 hours, 22 minutes
+    Est Delivered Bugs (B)  1
+    Cyclomatic Complexity   8
+    Maintainability (MI)    141
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-07FFE   768  31996  
+
+
+
+THE FOLLOWING IS TEMPORARY FOR DIAGNOSTIC USE ONLY:
+
+    n1    n2    N1    N2   v(G)
+     0     1     0     0     0    @delay_ms1
+     0     1     0     0     0    @const55
+     9    41    43    39     0    lcd_read_byte
+     5    17    15    15     0    lcd_send_nibble
+     9    30    31    29     0    lcd_send_byte
+    10    37    41    35     2    lcd_init
+    11    19    19    19     1    lcd_gotoxy
+     9    22    35    20     4    lcd_putc
+     9    24    28    21     1    MAIN
+     0     1     0     0     0    @const84
+     0     1     0     0     0    @const85
+     0     1     0     0     0    @PRINTF_LU_75

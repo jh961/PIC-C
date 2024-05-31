@@ -1,0 +1,85 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @SCRATCH
+005-006 mig
+007     lcd_init.i
+007     MAIN.@SCRATCH
+008-009 @PRINTF_LU_75.P1
+008     lcd_init.@SCRATCH
+009     lcd_init.@SCRATCH
+00A     @PRINTF_LU_75.@SCRATCH
+00B     @PRINTF_LU_75.@SCRATCH
+00C     @PRINTF_LU_75.@SCRATCH
+00D     @PRINTF_LU_75.@SCRATCH
+00E     @PRINTF_LU_75.@SCRATCH
+00F     @PRINTF_LU_75.@SCRATCH
+010     @PRINTF_LU_75.@SCRATCH
+011     lcd_putc.c
+012     lcd_gotoxy.x
+012     @delay_ms1.P1
+013     lcd_gotoxy.y
+014     lcd_gotoxy.address
+015     lcd_gotoxy.@SCRATCH
+016     lcd_send_byte.address
+017     lcd_send_byte.n
+018     lcd_read_byte.low
+018     lcd_send_byte.@SCRATCH
+019     lcd_read_byte.high
+019     lcd_send_nibble.n
+01A     lcd_read_byte.@SCRATCH
+F83     lcd
+F83     PSP_DATA
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB-FBC CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE-FBF CCP_1
+FBF     CCP_1_HIGH
+FE9-FEA @WRITE_PROGRAM_MEMORY.P1
+FE9-FEA @READ_PROGRAM_MEMORY.P2
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+005C  @delay_ms1
+0004  LCD_INIT_STRING
+009C  lcd_read_byte
+0084  lcd_send_nibble
+00D4  lcd_send_byte
+010A  lcd_init
+0162  lcd_gotoxy
+0184  lcd_putc
+027C  MAIN
+0018  @const84
+003A  @const85
+01C8  @PRINTF_LU_75
+027C  @cinit
+
+Project Files:
+    lcd.c
+    C:\Program Files (x86)\PICC\devices\18f4550.h
+    C:\Program Files (x86)\PICC\drivers\lcd.c
+
+Units:
+    D:\miguel\micros total\compilado Picc\lcd teclado\lcd.c (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      0
+    Short,Int,Long: 1,8,16
+
+Output Files:
+    Errors:      D:\miguel\micros total\compilado Picc\lcd teclado\lcd.err
+    Ext Symbols: D:\miguel\micros total\compilado Picc\lcd teclado\lcd.esym
+    INHX32:      D:\miguel\micros total\compilado Picc\lcd teclado\lcd.hex
+    Symbols:     D:\miguel\micros total\compilado Picc\lcd teclado\lcd.sym
+    List:        D:\miguel\micros total\compilado Picc\lcd teclado\lcd.lst
+    Debug/COFF:  D:\miguel\micros total\compilado Picc\lcd teclado\lcd.cof
+    Call Tree:   lcd.tre
+    Statistics:  lcd.sta

@@ -1,0 +1,77 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @SCRATCH
+005     mig
+006     m
+007     lcd_init.i
+007     MAIN.@SCRATCH
+008     lcd_putc.c
+008     lcd_init.@SCRATCH
+009     @delay_ms1.P1
+009     lcd_gotoxy.x
+009     lcd_init.@SCRATCH
+00A     lcd_gotoxy.y
+00B     lcd_gotoxy.address
+00C     lcd_gotoxy.@SCRATCH
+00D     lcd_send_byte.address
+00E     lcd_send_byte.n
+00F     lcd_read_byte.low
+00F     lcd_send_byte.@SCRATCH
+010     lcd_send_nibble.n
+010     lcd_read_byte.high
+011     lcd_read_byte.@SCRATCH
+F83     lcd
+F83     PSP_DATA
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB-FBC CCP_2
+FBC     CCP_2_HIGH
+FBE-FBF CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE9-FEA @WRITE_PROGRAM_MEMORY.P1
+FE9-FEA @READ_PROGRAM_MEMORY.P2
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+005C  @delay_ms1
+0004  LCD_INIT_STRING
+00A0  lcd_read_byte
+0082  lcd_send_nibble
+00DC  lcd_send_byte
+0112  lcd_init
+016A  lcd_gotoxy
+018C  lcd_putc
+01D0  MAIN
+0018  @const85
+003A  @const86
+01D0  @cinit
+
+Project Files:
+    caracter.c
+    C:\Program Files (x86)\PICC\devices\18f4550.h
+    C:\Program Files (x86)\PICC\drivers\lcd.c
+
+Units:
+    D:\miguel\micros total\compilado Picc\lcd teclado\caracter.c (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      0
+    Short,Int,Long: 1,8,16
+
+Output Files:
+    Errors:      D:\miguel\micros total\compilado Picc\lcd teclado\caracter.err
+    Ext Symbols: D:\miguel\micros total\compilado Picc\lcd teclado\caracter.esym
+    INHX32:      D:\miguel\micros total\compilado Picc\lcd teclado\caracter.hex
+    Symbols:     D:\miguel\micros total\compilado Picc\lcd teclado\caracter.sym
+    List:        D:\miguel\micros total\compilado Picc\lcd teclado\caracter.lst
+    Debug/COFF:  D:\miguel\micros total\compilado Picc\lcd teclado\caracter.cof
+    Call Tree:   caracter.tre
+    Statistics:  caracter.sta

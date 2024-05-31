@@ -1,0 +1,43 @@
+[PROJECT]
+Target=caracter.HEX
+Development_Mode=2
+Processor=0x4550
+ToolSuite=CCS
+Processor_Text=PIC18F4550
+
+[Directories]
+Include=
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=D:\miguel\micros total\compilado Picc\lcd teclado\caracter.c
+BuildTool=C-COMPILER
+OptionString=+FH
+AdditionalOptionString=
+BuildRequired=1
+
+[caracter.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=caracter.c
+
+[Windows]
+0=0000 caracter.c 0 0 796 451 3 0
+
+[Opened Files]
+1=D:\miguel\micros total\compilado Picc\delay\delay.c
+2=D:\miguel\micros total\compilado Picc\puerto basico\and.c
+3=D:\miguel\micros total\compilado Picc\lcd teclado\caracter.c
+4=D:\miguel\micros total\compilado Picc\lcd teclado\lcd y teclado.c
+5=
+[Units]
+Count=1
+1=caracter.c (main)
+Link=0
