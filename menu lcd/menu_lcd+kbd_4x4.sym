@@ -1,0 +1,116 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004-009 buf
+00A     MAIN.item
+00B     MAIN.n_menus
+00C     run_func.numfunc
+00C     lcd_init.i
+00C     MAIN.@SCRATCH1
+00D     lcd_init.@SCRATCH1
+00D     @PSTRINGC_112.@SCRATCH1
+00E     @PSTRINGC_112.@SCRATCH2
+00F     lcd_putc.c
+010     @delay_ms1.P1
+010     lcd_gotoxy.x
+011     lcd_gotoxy.y
+012     lcd_gotoxy.address
+013     lcd_gotoxy.@SCRATCH1
+014     lcd_send_byte.address
+015     lcd_send_byte.n
+016     lcd_read_byte.low
+016     lcd_send_byte.@SCRATCH1
+017     lcd_send_nibble.n
+017     lcd_read_byte.high
+018     lcd_read_byte.@SCRATCH1
+F83     lcd
+F83     PSP_DATA
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P1
+FE9-FEA @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @WRITE_PROGRAM_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0096  @delay_ms1
+0004  LCD_INIT_STRING
+00E6  lcd_read_byte
+00DA  lcd_read_nibble
+00BC  lcd_send_nibble
+0128  lcd_send_byte
+015C  lcd_init
+01BC  lcd_gotoxy
+01DE  lcd_putc
+0242  hola
+0018  @const124
+0222  @PSTRINGC_112
+025A  quetal
+001E  @const127
+0272  chao
+0026  @const129
+028A  vemos
+002C  @const131
+02A2  run_func
+02C2  @goto10230
+02E4  MAIN
+0032  @const139
+0042  @const140
+0050  @const141
+0060  @const142
+0070  @const143
+0078  @const144
+0084  @const145
+008C  @const146
+03FC  @goto10276
+02E4  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\menu lcd\
+
+Project Files:
+    menu_lcd+kbd_4x4.c
+    ..\..\..\..\..\..\Program Files\PICC\devices\18F4550.h
+    ..\..\..\..\..\..\Program Files\PICC\drivers\THW-24G.h
+    ..\..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\menu lcd\menu_lcd+kbd_4x4 (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      menu_lcd+kbd_4x4.err
+    Ext Symbols: menu_lcd+kbd_4x4.esym
+    INHX32:      menu_lcd+kbd_4x4.hex
+    Symbols:     menu_lcd+kbd_4x4.sym
+    List:        menu_lcd+kbd_4x4.lst
+    Debug/COFF:  menu_lcd+kbd_4x4.cof
+    Project:     menu_lcd+kbd_4x4.PJT
+    Call Tree:   menu_lcd+kbd_4x4.tre
+    Statistics:  menu_lcd+kbd_4x4.sta

@@ -1,0 +1,19 @@
+D G "__PCH__" 0 10 ""4.104""
+D G "__DEVICE__" 0 10 ""
+D G "__DATE__" 0 10 ""28-nov-16""
+D G "__TIME__" 0 10 ""18:40:00""
+V G "dato1" 0 9 "int8"
+V G "dato2" 0 9 "int8"
+V G "x" 0 9 "int8"
+V G "b" 0 9 "int8"
+V G "b1" 0 9 "int8"
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0

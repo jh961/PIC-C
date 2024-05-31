@@ -1,0 +1,164 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     dato1
+017     dato2
+018     x
+019     b
+01A     b1
+01B-01C l1
+01D-01E d
+01F-020 dato
+021-022 c
+023     a
+024     eprom
+025     @I2C_READ_1.P1
+025-026 @PRINTF_LD_93.P2
+025     @PSTRINGCN_93.P3
+025     @PRINTF_U_93.P4
+025     lcd_init.i
+025     MAIN.@SCRATCH1
+025     @PSTRINGC_93.@SCRATCH1
+026     @delay_us1.P1
+026     @I2C_WRITE_1.P2
+026     @PRINTF_U_93.P3
+026     lcd_init.@SCRATCH1
+026     @I2C_READ_1.@SCRATCH1
+026     @PSTRINGC_93.@SCRATCH2
+026     @PSTRINGCN_93.@SCRATCH1
+027     @DIV88.P1
+027     @I2C_READ_1.@SCRATCH2
+027     @PSTRINGCN_93.@SCRATCH2
+027     @PRINTF_LD_93.@SCRATCH1
+028     @DIV88.P1
+028     @PRINTF_LD_93.@SCRATCH2
+029     @PRINTF_LD_93.@SCRATCH3
+029     @DIV88.@SCRATCH1
+02A     @PRINTF_LD_93.@SCRATCH4
+02B     @PRINTF_LD_93.@SCRATCH5
+02C     @PRINTF_LD_93.@SCRATCH6
+02D     @PRINTF_LD_93.@SCRATCH7
+02E     lcd_putc.c
+02F     @delay_ms1.P1
+02F     lcd_gotoxy.x
+030     lcd_gotoxy.y
+031     lcd_gotoxy.address
+032     lcd_gotoxy.@SCRATCH1
+033     lcd_send_byte.address
+034     lcd_send_byte.n
+035     lcd_read_byte.low
+035     lcd_send_byte.@SCRATCH1
+036     lcd_send_nibble.n
+036     lcd_read_byte.high
+037     lcd_read_byte.@SCRATCH1
+F83     lcd
+F83     PSP_DATA
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @WRITE_PACKED_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+2E10  @delay_ms1
+2FBE  @delay_us1
+0096  LCD_INIT_STRING
+2E60  lcd_read_byte
+2E54  lcd_read_nibble
+2E36  lcd_send_nibble
+2EA2  lcd_send_byte
+2ED6  lcd_init
+2F38  lcd_gotoxy
+2F5A  lcd_putc
+312A  @I2C_READ_1
+2FDA  @I2C_WRITE_1
+00B4  voz
+2D66  rda_isr
+3202  MAIN
+2DAA  @const122
+2F9E  @PSTRINGC_93
+2DAC  @const124
+2DB2  @const125
+2DBE  @const126
+2DC0  @const127
+3022  @PSTRINGCN_93
+3040  @PRINTF_LD_93
+2DD0  @const132
+2DD2  @const133
+2DE0  @const134
+2DF0  @const135
+2DF2  @const136
+3174  @DIV88
+319C  @PRINTF_U_93
+2E00  @const144
+2E02  @const145
+2E08  @const146
+3202  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\leer y escribir eeprom\
+
+Project Files:
+    eeprom 24lc256.c
+    ..\..\..\..\..\..\Program Files\PICC\Devices\18f4550.h
+    ..\..\..\..\..\..\Program Files\PICC\Drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\leer y escribir eeprom\eeprom 24lc256 (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      eeprom 24lc256.err
+    Ext Symbols: eeprom 24lc256.esym
+    INHX32:      eeprom 24lc256.hex
+    Symbols:     eeprom 24lc256.sym
+    List:        eeprom 24lc256.lst
+    Debug/COFF:  eeprom 24lc256.cof
+    Project:     eeprom 24lc256.PJT
+    Call Tree:   eeprom 24lc256.tre
+    Statistics:  eeprom 24lc256.sta

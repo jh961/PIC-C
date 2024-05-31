@@ -1,0 +1,47 @@
+
+ROM used: 400 (1%)
+          400 (1%) including unused fragments
+
+          1 Average locations per line
+          16 Average locations per statement
+
+RAM used: 27 (1%) at main() level
+          31 (2%) worst case
+
+Stack used: 3 worst case (out of 31 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+   78    25 100  esclavo2.c
+  451     0   0  ..\..\..\..\..\..\Program Files\PICC\devices\18f4550.h
+----- -----
+  529    25 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0     40   5   1             @delay_ms1
+0     24   3   1             @I2C_WRITE_1
+0     72   9   2   290  4.1  ssp_interupt
+0    118  15   0   250  2.3  MAIN
+
+Program metrics:
+    Functions               2
+    Statements              25
+    Comments                123
+    Volume (V)              653
+    Difficilty (D)          6.2
+    Effort to implement (E) 4042
+    Time to implement (T)   4 minutes
+    Est Delivered Bugs (B)  0
+    Cyclomatic Complexity   3
+    Maintainability (MI)    79
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-00006     0  4  
+00008-00094   142  0  
+00096-07FFE   254  32364  
+
+
+

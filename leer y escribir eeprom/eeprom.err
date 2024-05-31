@@ -1,0 +1,8 @@
+>>> Warning 202 "eeprom.c" Line 9(5,10): Variable never used:   dato1
+>>> Warning 202 "eeprom.c" Line 9(13,18): Variable never used:   dato2
+>>> Warning 202 "eeprom.c" Line 9(29,31): Variable never used:   b1
+>>> Warning 202 "eeprom.c" Line 9(34,35): Variable never used:   j
+>>> Warning 202 "eeprom.c" Line 10(19,23): Variable never used:   dato
+>>> Warning 202 "eeprom.c" Line 3536(5,9): Variable never used:   voz1
+      Memory usage:   ROM=25%      RAM=75% - 76%
+      0 Errors,  6 Warnings.

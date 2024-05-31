@@ -1,0 +1,68 @@
+
+ROM used: 8324 (25%)
+          8324 (25%) including unused fragments
+
+          2 Average locations per line
+          69 Average locations per statement
+
+RAM used: 1539 (75%) at main() level
+          1557 (76%) worst case
+
+Stack used: 7 worst case (out of 31 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+ 3675    53  44  eeprom.c
+  451     0   0  ..\..\..\..\..\..\Program Files\PICC\Devices\18f4550.h
+  348    67  56  ..\..\..\..\..\..\Program Files\PICC\Drivers\lcd.c
+----- -----
+ 4474   120 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0     40   0   1             @delay_ms1
+0     30   0   0             @const76
+0     70   0   3   587  6.0  lcd_read_byte
+0     12   0   0    59  4.2  lcd_read_nibble
+0     34   0   1   172  3.4  lcd_send_nibble
+0     64   0   3   317  4.3  lcd_send_byte
+0    126   1   2   624  5.8  lcd_init
+0     38   0   4   186  5.5  lcd_gotoxy
+0     92   1   1   272  4.1  lcd_putc
+0     82   0   1             @I2C_WRITE_1
+0   3548  21   0             @const116
+0     72   0   0   243  5.0  rda_isr
+0   3582  22   1  1303  6.8  MAIN
+0      2   0   0             @const124
+0     32   0   2             @PSTRINGC_93
+0      6   0   0             @const126
+0     12   0   0             @const127
+0      2   0   0             @const128
+0     16   0   0             @const129
+0     42   0   3             @PSTRINGCN_93
+0    244   1   9             @PRINTF_LD_93
+0      2   0   0             @const134
+0     14   0   0             @const135
+0     16   0   0             @const136
+
+Program metrics:
+    Functions               9
+    Statements              120
+    Comments                242
+    Volume (V)              5695
+    Difficilty (D)          42.4
+    Effort to implement (E) 241335
+    Time to implement (T)   3 hours, 43 minutes
+    Est Delivered Bugs (B)  1
+    Cyclomatic Complexity   13
+    Maintainability (MI)    144
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-00006     0  4  
+00008-00094   142  0  
+00096-07FFE  8178  24440  
+
+
+

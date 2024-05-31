@@ -1,0 +1,7 @@
+>>> Warning 208 "C:\Program Files\PICC\drivers\THW-24G.h" Line 56(1,17): Function not void and does not return a value  RF_24G_initPorts
+*** Error 12 "menu_lcd+kbd_4x4.c" Line 36(12,14): Undefined identifier   hi
+*** Error 51 "menu_lcd+kbd_4x4.c" Line 39(7,11): A numeric expression must appear here
+*** Error 51 "menu_lcd+kbd_4x4.c" Line 42(7,11): A numeric expression must appear here
+*** Error 51 "menu_lcd+kbd_4x4.c" Line 45(7,11): A numeric expression must appear here
+*** Error 43 "menu_lcd+kbd_4x4.c" Line 49(1,2): Expecting a declaration
+      5 Errors,  1 Warnings.

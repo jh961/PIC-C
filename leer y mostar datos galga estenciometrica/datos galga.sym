@@ -1,0 +1,171 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004-007 valorg
+008-00B valor1
+00C     lcd_init.i
+00C-00F @PRINTF_L32D_228FPFPF.P1
+00C-00D @ITOF.P2
+00C     MAIN.@SCRATCH1
+00C     @PSTRINGC_228.@SCRATCH1
+00D     lcd_init.@SCRATCH1
+00D     MAIN.@SCRATCH2
+00D     @PSTRINGC_228.@SCRATCH2
+00E     MAIN.@SCRATCH3
+00F     MAIN.@SCRATCH4
+010     @PRINTF_L32D_228FPFPF.P1
+010-013 exp.x
+011     @PRINTF_L32D_228FPFPF.@SCRATCH1
+012     @PRINTF_L32D_228FPFPF.@SCRATCH2
+013     @PRINTF_L32D_228FPFPF.@SCRATCH3
+014-017 exp.y
+014     @PRINTF_L32D_228FPFPF.@SCRATCH4
+015     @PRINTF_L32D_228FPFPF.@SCRATCH5
+016     @PRINTF_L32D_228FPFPF.@SCRATCH6
+017     @PRINTF_L32D_228FPFPF.@SCRATCH7
+018-01B exp.res
+018     @PRINTF_L32D_228FPFPF.@SCRATCH8
+019-01C @FTOSD.P1
+019-01C @DIV3232.P2
+019     lcd_putc.c
+01A     lcd_gotoxy.x
+01A     @delay_ms1.P1
+01B     lcd_gotoxy.y
+01C-01F exp.r
+01C     lcd_gotoxy.address
+01D-020 @DIV3232.P1
+01D     lcd_gotoxy.@SCRATCH1
+01D     @FTOSD.@SCRATCH1
+01E     lcd_send_byte.address
+01F     lcd_send_byte.n
+020     lcd_read_byte.low
+020     exp.n
+020     lcd_send_byte.@SCRATCH1
+021     lcd_read_byte.high
+021.0   exp.s
+021     lcd_send_nibble.n
+021     @DIV3232.@SCRATCH1
+022-025 @DIVFF.P1
+022-025 @SFTOI.P2
+022-025 @MULFF.P3
+022-025 @FLT.P4
+022     exp.@SCRATCH1
+022     lcd_read_byte.@SCRATCH1
+022     @DIV3232.@SCRATCH2
+023     exp.@SCRATCH2
+023     @DIV3232.@SCRATCH3
+024     exp.@SCRATCH3
+024     @DIV3232.@SCRATCH4
+025     exp.@SCRATCH4
+025     @DIV3232.@SCRATCH5
+026-029 @DIVFF.P1
+026-029 @MULFF.P2
+026-029 @FLT.P3
+026-029 @ADDFF.P4
+026-027 @SITOF.P5
+02A-02D @ADDFF.P1
+02A     @FLT.@SCRATCH1
+02A     @DIVFF.@SCRATCH1
+02A     @MULFF.@SCRATCH1
+02B     @FLT.@SCRATCH2
+02B     @DIVFF.@SCRATCH2
+02B     @MULFF.@SCRATCH2
+02C     @DIVFF.@SCRATCH3
+02C     @MULFF.@SCRATCH3
+02D     @DIVFF.@SCRATCH4
+02E     @DIVFF.@SCRATCH5
+02E     @ADDFF.@SCRATCH1
+02F     @DIVFF.@SCRATCH6
+02F     @ADDFF.@SCRATCH2
+030     @ADDFF.@SCRATCH3
+031     @ADDFF.@SCRATCH4
+032     @ADDFF.@SCRATCH5
+033     @ADDFF.@SCRATCH6
+034     @ADDFF.@SCRATCH7
+035     @ADDFF.@SCRATCH8
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0040  @delay_ms1
+04AA  @FLT
+0470  @SFTOI
+01EC  @ITOF
+0316  @DIVFF
+056C  @ADDFF
+0224  @MULFF
+07D6  exp
+0522  @SITOF
+0004  LCD_INIT_STRING
+0090  lcd_read_byte
+0084  lcd_read_nibble
+0066  lcd_send_nibble
+00D2  lcd_send_byte
+0106  lcd_init
+0166  lcd_gotoxy
+0188  lcd_putc
+0DCE  MAIN
+0018  @const238
+01CC  @PSTRINGC_228
+0020  @const240
+0032  @const241
+0B8C  @FTOSD
+0BCC  @DIV3232
+0C46  @PRINTF_L32D_228FPFPF
+0DCE  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIMEIDAI\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\leer y mostar datos galga estenciometrica\
+
+Project Files:
+    datos galga.c
+    ..\..\..\..\..\..\..\Program Files\PICC\devices\18f4550.h
+    ..\..\..\..\..\..\..\Program Files\PICC\drivers\math.h
+    ..\..\..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIMEIDAI\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\leer y mostar datos galga estenciometrica\datos galga (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      datos galga.err
+    Ext Symbols: datos galga.esym
+    INHX32:      datos galga.hex
+    Symbols:     datos galga.sym
+    List:        datos galga.lst
+    Debug/COFF:  datos galga.cof
+    Project:     datos galga.PJT
+    Call Tree:   datos galga.tre
+    Statistics:  datos galga.sta

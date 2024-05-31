@@ -1,0 +1,266 @@
+CCS PCH C Compiler, Version 4.104, 5967               22-oct-15 09:03
+
+               Filename: C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\i2c con rs232\esclavo2.lst
+
+               ROM used: 400 bytes (1%)
+                         Largest free fragment is 32364
+               RAM used: 27 (1%) at main() level
+                         31 (2%) worst case
+               Stack:    3 worst case (1 in main + 2 for interrupts)
+
+*
+0000:  GOTO   011E
+*
+0008:  MOVWF  04
+000A:  MOVFF  FD8,05
+000E:  MOVFF  FE0,06
+0012:  MOVLB  0
+0014:  MOVFF  FE9,0C
+0018:  MOVFF  FEA,07
+001C:  MOVFF  FE1,08
+0020:  MOVFF  FE2,09
+0024:  MOVFF  FD9,0A
+0028:  MOVFF  FDA,0B
+002C:  MOVFF  FF3,12
+0030:  MOVFF  FF4,13
+0034:  MOVFF  FFA,14
+0038:  MOVFF  00,0E
+003C:  MOVFF  01,0F
+0040:  MOVFF  02,10
+0044:  MOVFF  03,11
+0048:  BTFSS  F9D.3
+004A:  GOTO   0054
+004E:  BTFSC  F9E.3
+0050:  GOTO   00AE
+0054:  MOVFF  0E,00
+0058:  MOVFF  0F,01
+005C:  MOVFF  10,02
+0060:  MOVFF  11,03
+0064:  MOVFF  0C,FE9
+0068:  MOVFF  07,FEA
+006C:  BSF    07.7
+006E:  MOVFF  08,FE1
+0072:  MOVFF  09,FE2
+0076:  MOVFF  0A,FD9
+007A:  MOVFF  0B,FDA
+007E:  MOVFF  12,FF3
+0082:  MOVFF  13,FF4
+0086:  MOVFF  14,FFA
+008A:  MOVF   04,W
+008C:  MOVFF  06,FE0
+0090:  MOVFF  05,FD8
+0094:  RETFIE 0
+.................... #include <18f4550.h> 
+.................... //////// Standard Header file for the PIC18F4550 device //////////////// 
+.................... #device PIC18F4550 
+.................... #list 
+....................  
+.................... #fuses HS,MCLR,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOPBADEN,NOLVP,NOCPD,NODEBUG,NOWRT,NOVREGEN 
+.................... #FUSES CPUDIV1         //DIVISION DE FRECUENCIA DEL OSCILADOR: 1 
+.................... #use delay(clock=20000000) 
+*
+00F6:  CLRF   FEA
+00F8:  MOVLW  1B
+00FA:  MOVWF  FE9
+00FC:  MOVF   FEF,W
+00FE:  BZ    011A
+0100:  MOVLW  06
+0102:  MOVWF  01
+0104:  CLRF   00
+0106:  DECFSZ 00,F
+0108:  BRA    0106
+010A:  DECFSZ 01,F
+010C:  BRA    0104
+010E:  MOVLW  7B
+0110:  MOVWF  00
+0112:  DECFSZ 00,F
+0114:  BRA    0112
+0116:  DECFSZ FEF,F
+0118:  BRA    0100
+011A:  GOTO   0190 (RETURN)
+.................... //#include <lcd.c> 
+....................  
+.................... #use i2c(slave, fast, sda=PIN_B0, scl=PIN_B1, address=0xA0) 
+*
+0096:  MOVF   FC9,W
+0098:  MOVFF  1E,FC9
+009C:  BSF    FC6.4
+009E:  BCF    F9E.3
+00A0:  BTFSC  FC7.0
+00A2:  BRA    00A0
+00A4:  CLRF   01
+00A6:  BTFSC  FC6.4
+00A8:  INCF   01,F
+00AA:  GOTO   00EE (RETURN)
+.................... int flag =0; 
+.................... int dato; 
+.................... byte incoming,state; 
+....................  
+.................... #INT_SSP 
+.................... void ssp_interupt () 
+.................... { 
+.................... BYTE incoming, state; 
+....................  
+....................    state = i2c_isr_state(); 
+00AE:  BTFSC  FC7.5
+00B0:  BRA    00B8
+00B2:  CLRF   1A
+00B4:  BTFSC  FC7.2
+00B6:  BSF    1A.7
+00B8:  MOVF   1A,W
+00BA:  INCF   1A,F
+00BC:  MOVWF  1D
+....................  
+....................    if(state < 0x80)                     //Master is sending data 
+00BE:  MOVF   1D,W
+00C0:  SUBLW  7F
+00C2:  BNC   00DE
+....................    { 
+....................       incoming = i2c_read(); 
+00C4:  BCF    FC6.6
+00C6:  BTFSS  F9E.3
+00C8:  BRA    00C6
+00CA:  MOVF   FC9,W
+00CC:  BSF    FC6.4
+00CE:  MOVWF  1C
+....................  
+....................       if (incoming == 0x06){ 
+00D0:  MOVF   1C,W
+00D2:  SUBLW  06
+00D4:  BNZ   00DE
+....................  
+....................          flag=1; 
+00D6:  MOVLW  01
+00D8:  MOVWF  16
+....................       output_high(pin_a5); 
+00DA:  BCF    F92.5
+00DC:  BSF    F89.5
+....................  
+....................       } 
+....................  
+....................  
+....................    } 
+....................    if((state == 0x80)&& (flag==1))                     //Master is requesting data 
+00DE:  MOVF   1D,W
+00E0:  SUBLW  80
+00E2:  BNZ   00F0
+00E4:  DECFSZ 16,W
+00E6:  BRA    00F0
+....................    { 
+....................       i2c_write(dato); 
+00E8:  MOVFF  17,1E
+00EC:  BRA    0096
+....................       flag=0; 
+00EE:  CLRF   16
+....................    } 
+.................... } 
+....................  
+....................  
+....................  
+....................  
+00F0:  BCF    F9E.3
+00F2:  GOTO   0054
+.................... void main (){ 
+*
+011E:  CLRF   FF8
+0120:  BCF    FD0.7
+0122:  BSF    07.7
+0124:  CLRF   FEA
+0126:  CLRF   FE9
+0128:  BSF    F93.1
+012A:  BSF    F93.0
+012C:  MOVLW  A0
+012E:  MOVWF  FC8
+0130:  MOVLW  36
+0132:  MOVWF  FC6
+0134:  CLRF   16
+0136:  MOVF   FC1,W
+0138:  ANDLW  C0
+013A:  IORLW  0F
+013C:  MOVWF  FC1
+013E:  MOVLW  07
+0140:  MOVWF  FB4
+0142:  MOVLW  03
+0144:  MOVWF  1A
+.................... set_tris_b (0xff); 
+0146:  MOVLW  FF
+0148:  MOVWF  F93
+.................... set_tris_a (0x0f); 
+014A:  MOVLW  0F
+014C:  MOVWF  F92
+.................... enable_interrupts(GLOBAL); 
+014E:  MOVLW  C0
+0150:  IORWF  FF2,F
+.................... enable_interrupts(INT_SSP); 
+0152:  BSF    F9D.3
+.................... /* 
+.................... lcd_init(); 
+....................  lcd_putc("\f"); 
+....................  lcd_gotoxy (1, 1) ; 
+....................     printf (lcd_putc, "AUTOR"); 
+....................     lcd_gotoxy (1, 2) ; 
+....................     printf (lcd_putc, "HARRY"); 
+....................     delay_ms(1000); 
+....................     */ 
+.................... setup_adc_ports (AN0); 
+0154:  MOVF   FC1,W
+0156:  ANDLW  C0
+0158:  IORLW  0E
+015A:  MOVWF  FC1
+.................... setup_adc(ADC_CLOCK_INTERNAL ); 
+015C:  BSF    FC0.0
+015E:  BSF    FC0.1
+0160:  BSF    FC0.2
+0162:  BCF    FC0.7
+0164:  BSF    FC2.0
+.................... set_adc_channel(0); 
+0166:  MOVLW  00
+0168:  MOVWF  01
+016A:  MOVF   FC2,W
+016C:  ANDLW  C3
+016E:  IORWF  01,W
+0170:  MOVWF  FC2
+.................... delay_us(10); 
+0172:  MOVLW  10
+0174:  MOVWF  00
+0176:  DECFSZ 00,F
+0178:  BRA    0176
+017A:  NOP   
+....................   
+....................  
+.................... while (true){ 
+.................... output_low(pin_a5); 
+017C:  BCF    F92.5
+017E:  BCF    F89.5
+.................... dato=read_adc(); 
+0180:  BSF    FC2.1
+0182:  BTFSC  FC2.1
+0184:  BRA    0182
+0186:  MOVFF  FC4,17
+.................... delay_ms(1); 
+018A:  MOVLW  01
+018C:  MOVWF  1B
+018E:  BRA    00F6
+.................... /* 
+.................... lcd_putc("\f"); 
+....................   lcd_gotoxy (1, 1) ; 
+....................     printf (lcd_putc, "Dato es ="); 
+....................     lcd_gotoxy (1, 2) ; 
+....................     printf (lcd_putc, "%u",dato); 
+....................     delay_ms(10); 
+....................     */ 
+.................... } 
+0190:  BRA    017C
+....................  
+.................... } 
+....................  
+0192:  SLEEP 
+
+Configuration Fuses:
+   Word  1: CC27   IESO FCMEN HS PLL12 CPUDIV1 USBDIV
+   Word  2: 1E19   NOBROWNOUT NOWDT BORV20 NOPUT WDT32768 NOVREGEN
+   Word  3: 8500   NOPBADEN CCP2C1 MCLR LPT1OSC
+   Word  4: 0081   STVREN NODEBUG NOLVP NOXINST NOICPRT
+   Word  5: C00F   NOPROTECT NOCPD NOCPB
+   Word  6: E00F   NOWRT NOWRTD NOWRTC NOWRTB
+   Word  7: 400F   NOEBTR NOEBTRB
