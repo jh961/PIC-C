@@ -1,0 +1,204 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016-062 days_of_week
+063-064 @sprintf_string
+065     consulta
+066     borrar
+067     valor
+068     dato
+069-06A g
+06B-06C g1
+06D-06E personas
+06F-070 p
+071-072 d
+073     sec
+074     min
+075     hrs
+076     day
+077     month
+078     yr
+079     dow
+07A     e
+07B-085 sdow
+086     ds1307_set_date_time.day
+086     @PSTRINGCN_93.P1
+086     lcd_init.i
+086     ds1307_init.val
+086-087 ds1307_get_day_of_week.ptr
+086-087 @PRINTF_LD_93.P1
+086     ds1307_get_time.@SCRATCH1
+086     MAIN.@SCRATCH1
+086     @PSTRINGC_93.@SCRATCH1
+087     ds1307_set_date_time.mth
+087     ds1307_init.seconds
+087     lcd_init.@SCRATCH1
+087     @PSTRINGC_93.@SCRATCH2
+087     @PSTRINGCN_93.@SCRATCH1
+088     ds1307_set_date_time.year
+088     ds1307_get_day_of_week.lday
+088     ds1307_init.@SCRATCH1
+088     @PSTRINGCN_93.@SCRATCH2
+088     @PRINTF_LD_93.@SCRATCH1
+089     ds1307_get_day_of_week.lmonth
+089     ds1307_set_date_time.dow
+089     @PRINTF_LD_93.@SCRATCH2
+08A     ds1307_set_date_time.hr
+08A     ds1307_get_day_of_week.lyr
+08A     @PRINTF_LD_93.@SCRATCH3
+08B     ds1307_set_date_time.min
+08B     ds1307_get_day_of_week.ldow
+08B     @PRINTF_LD_93.@SCRATCH4
+08C     ds1307_set_date_time.sec
+08C     ds1307_get_date.@SCRATCH1
+08C     ds1307_get_day_of_week.@SCRATCH1
+08C     @PRINTF_LD_93.@SCRATCH5
+08D     ds1307_bin2bcd.binary_value
+08D     ds1307_set_date_time.@SCRATCH1
+08D     ds1307_get_day_of_week.@SCRATCH2
+08D     @PRINTF_LD_93.@SCRATCH6
+08E     ds1307_bin2bcd.temp
+08E     @PSTRINGR_143.@SCRATCH1
+08E     @PRINTF_LD_93.@SCRATCH7
+08F     ds1307_bin2bcd.retval
+08F     lcd_putc.c
+08F     @PSTRINGR_143.@SCRATCH2
+090     @I2C_WRITE_1.P1
+090     @SPRINTF.P2
+090     @delay_ms1.P3
+090     lcd_gotoxy.x
+090     @I2C_READ_1.P1
+091     ds1307_bcd2bin.bcd_value
+091     lcd_gotoxy.y
+091     @I2C_READ_1.@SCRATCH1
+092     ds1307_bcd2bin.temp
+092     lcd_gotoxy.address
+092     @I2C_READ_1.@SCRATCH2
+093     lcd_gotoxy.@SCRATCH1
+093     ds1307_bcd2bin.@SCRATCH1
+094     lcd_send_byte.address
+095     lcd_send_byte.n
+096     lcd_read_byte.low
+096     lcd_send_byte.@SCRATCH1
+097     lcd_send_nibble.n
+097     lcd_read_byte.high
+098     lcd_read_byte.@SCRATCH1
+099     @I2C_READ_2.P1
+099     @I2C_WRITE_2.P2
+099     TIMER1.@SCRATCH1
+09A     @I2C_READ_2.@SCRATCH1
+09B     @I2C_READ_2.@SCRATCH2
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+040E  @delay_ms1
+0096  LCD_INIT_STRING
+045E  lcd_read_byte
+0452  lcd_read_nibble
+0434  lcd_send_nibble
+04A0  lcd_send_byte
+04D4  lcd_init
+0862  lcd_gotoxy
+0884  lcd_putc
+05A0  @I2C_READ_1
+0534  @I2C_WRITE_1
+0650  ds1307_init
+078E  ds1307_set_date_time
+0B42  ds1307_get_date
+0C1A  ds1307_get_time
+0A34  ds1307_get_day_of_week
+09F0  @SPRINTF
+0A0E  @PSTRINGR_143
+062C  ds1307_bin2bcd
+0606  ds1307_bcd2bin
+00FC  @I2C_READ_2
+00B4  @I2C_WRITE_2
+0144  TIMER1
+0B3A  leer_reloj
+0CE8  escribir_eprom
+0E96  MAIN
+03D2  @const177
+08C8  @PSTRINGC_93
+03D4  @const179
+03DA  @const180
+03E2  @const181
+03E4  @const182
+08E8  @PSTRINGCN_93
+0906  @PRINTF_LD_93
+03FA  @const187
+0E96  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\trabajo final homan\Programa\
+
+Project Files:
+    PIC1.c
+    ..\..\..\..\..\..\..\..\Program Files\PICC\Devices\18f4550.h
+    ..\..\..\..\..\..\..\..\Program Files\PICC\Drivers\lcd.c
+    ..\..\..\..\..\..\..\..\Program Files\PICC\Drivers\_ds1307.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\trabajo final homan\Programa\PIC1 (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      PIC1.err
+    Ext Symbols: PIC1.esym
+    INHX32:      PIC1.hex
+    Symbols:     PIC1.sym
+    List:        PIC1.lst
+    Debug/COFF:  PIC1.cof
+    Project:     PIC1.PJT
+    Call Tree:   PIC1.tre
+    Statistics:  PIC1.sta

@@ -1,0 +1,197 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     a
+017-142 eprom
+143     consulta
+144     borrar
+145     valor
+146-147 d
+148-149 g
+14A-14B t
+14C-14D tiempo
+14E-14F personas
+150-151 h
+152-153 j
+154     flag
+155     flag1
+156     flag2
+157     flag3
+158     flag4
+159     flag5
+15A-609 dato
+60A     @I2C_STATE
+60B     @PSTRINGCN_93.P1
+60B     lcd_init.i
+60B-60C @PRINTF_LD_93.P1
+60B     MAIN.@SCRATCH1
+60B     @PSTRINGC_93.@SCRATCH1
+60C     lcd_init.@SCRATCH1
+60C     @PSTRINGC_93.@SCRATCH2
+60C     @PSTRINGCN_93.@SCRATCH1
+60D     @PSTRINGCN_93.@SCRATCH2
+60D     @PRINTF_LD_93.@SCRATCH1
+60E     @PRINTF_LD_93.@SCRATCH2
+60F     @PRINTF_LD_93.@SCRATCH3
+610     @PRINTF_LD_93.@SCRATCH4
+611     @PRINTF_LD_93.@SCRATCH5
+612     @PRINTF_LD_93.@SCRATCH6
+613     @PRINTF_LD_93.@SCRATCH7
+614     lcd_putc.c
+615     @delay_ms1.P1
+615     lcd_gotoxy.x
+616     lcd_gotoxy.y
+617     lcd_gotoxy.address
+618     lcd_gotoxy.@SCRATCH1
+619     lcd_send_byte.address
+61A     lcd_send_byte.n
+61B     lcd_read_byte.low
+61B     lcd_send_byte.@SCRATCH1
+61C     lcd_read_byte.high
+61C     lcd_send_nibble.n
+61D     lcd_read_byte.@SCRATCH1
+61E     ssp_interupt.incoming
+61E     rda_isr.@SCRATCH1
+61F     ssp_interupt.state
+61F     rda_isr.@SCRATCH2
+620-621 @DIV1616.P1
+620     @I2C_WRITE_1.P2
+620     rda_isr.@SCRATCH3
+620     ssp_interupt.@SCRATCH1
+621     ssp_interupt.@SCRATCH2
+622-623 @ITOF.P1
+622-623 @DIV1616.P2
+622     ssp_interupt.@SCRATCH3
+623     ssp_interupt.@SCRATCH4
+624-627 @PRINTF_L32D_9600_31766_31767FPFPF.P1
+624     @DIV1616.@SCRATCH1
+628     @PRINTF_L32D_9600_31766_31767FPFPF.P1
+629     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH1
+62A     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH2
+62B     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH3
+62C     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH4
+62D     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH5
+62E     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH6
+62F     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH7
+630     @PRINTF_L32D_9600_31766_31767FPFPF.@SCRATCH8
+631-634 @DIV3232.P1
+631-634 @MULFF.P2
+631-634 @FTOSD.P3
+635-638 @DIV3232.P1
+635-638 @MULFF.P2
+635     @FTOSD.@SCRATCH1
+639     @MULFF.@SCRATCH1
+639     @DIV3232.@SCRATCH1
+63A     @MULFF.@SCRATCH2
+63A     @DIV3232.@SCRATCH2
+63B     @MULFF.@SCRATCH3
+63B     @DIV3232.@SCRATCH3
+63C     @DIV3232.@SCRATCH4
+63D     @DIV3232.@SCRATCH5
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P1
+FE9-FEA @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0916  @delay_ms1
+00AE  LCD_INIT_STRING
+096C  lcd_read_byte
+0960  lcd_read_nibble
+093E  lcd_send_nibble
+09B2  lcd_send_byte
+09F2  lcd_init
+0A70  lcd_gotoxy
+0A96  lcd_putc
+02FA  @PUTCHARI_BIU_1
+02E4  @I2C_WRITE_1
+00CC  TIMER1
+0100  rda_isr
+06AA  ssp_interupt
+02AC  @ITOF
+0302  @MULFF
+03FA  @FTOSD
+043E  @DIV3232
+04BE  @PRINTF_L32D_9600_31766_31767FPFPF
+0662  @DIV1616
+0C2E  MAIN
+08F2  @const148
+0AF2  @PSTRINGC_93
+08F4  @const150
+08FA  @const151
+0902  @const152
+0904  @const153
+0B12  @PSTRINGCN_93
+0B3A  @PRINTF_LD_93
+0C2E  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\trabajo final homan\Programa\
+
+Project Files:
+    PIC2.c
+    ..\..\..\..\..\..\..\..\Program Files\PICC\Devices\18f4550.h
+    ..\..\..\..\..\..\..\..\Program Files\PICC\Drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\trabajo final homan\Programa\PIC2 (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      PIC2.err
+    Ext Symbols: PIC2.esym
+    INHX32:      PIC2.hex
+    Symbols:     PIC2.sym
+    List:        PIC2.lst
+    Debug/COFF:  PIC2.cof
+    Project:     PIC2.PJT
+    Call Tree:   PIC2.tre
+    Statistics:  PIC2.sta

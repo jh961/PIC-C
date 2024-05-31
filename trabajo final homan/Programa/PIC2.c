@@ -1,0 +1,216 @@
+#include <18f4550.h>
+#fuses HS,MCLR,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOPBADEN,NOLVP,NOCPD,NODEBUG,NOWRT,NOVREGEN
+#FUSES CPUDIV1         //DIVISION DE FRECUENCIA DEL OSCILADOR: 1
+#use delay(clock=20000000)
+#include <lcd.c>
+#use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=pc 1)
+#use i2c(slave, fast, sda=PIN_B0, scl=PIN_B1, address=0xA0)
+char a,eprom[300],consulta='D',borrar='F',valor='B';
+long d,g=0,t=0,tiempo=0,personas=0,h=1,j=0;
+int flag,flag1,flag2,flag3,flag4,flag5;
+float dato[300];
+
+#int_TIMER1 //interrupcion timer1 
+void TIMER1(void){  //funcion que se ejecutara al desbordar timer1 
+//set_timer1(10); // se vuelve a cargar valor de timer1 
+output_toggle(PIN_a3);
+if(g>=10){
+ g=0;
+ if(t>=1){
+ t--;
+ }
+}
+g++;
+} 
+#INT_rda
+void rda_isr(){
+
+   disable_interrupts (INT_TIMER1); // desabilitar la interruccion
+   disable_interrupts(INT_SSP);
+   disable_interrupts(int_rda);
+   disable_interrupts(GLOBAL);
+   
+   a = fgetc () ;
+   output_high(pin_a1);
+   IF (a == '@')
+   {
+     eprom[0] = a;
+   
+      FOR (d = 1; d <= 300; d++)
+      {
+         a = fgetc () ;
+        eprom[d]=a;
+        
+        if(a == '$'){
+        personas=(((eprom[d-3]-48)*100)+((eprom[d-2]-48)*10)+((eprom[d-1]-48)*1));
+        }else IF (a == '&'){
+         tiempo=(((eprom[d-2]-48)*10)+((eprom[d-1]-48)*1));
+         }else IF (a == '?'){
+         consulta=eprom[d-1];
+         }else IF (a == '#'){
+         
+         borrar=eprom[d-1];
+         
+         break;
+         }
+       }
+   }
+   enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+   enable_interrupts(INT_SSP);
+   enable_interrupts(int_rda);
+   enable_interrupts(GLOBAL);
+} 
+
+
+#INT_SSP
+void ssp_interupt ()
+{
+disable_interrupts (INT_TIMER1); // desabilitar la interruccion
+   disable_interrupts(INT_SSP);
+   disable_interrupts(int_rda);
+   disable_interrupts(GLOBAL);
+BYTE incoming, state;
+   state = i2c_isr_state();
+
+  output_high(pin_a0);
+   if(state < 0x80)                     //Master is sending data
+   {
+      incoming = i2c_read(0);
+     
+       
+      if(incoming != 0xA0){
+      if(flag==1){
+    valor=incoming;
+    incoming=0;
+    flag=0;
+    }else if(flag4==1){
+     //disable_interrupts (INT_TIMER1); // desabilitar la interruccion
+     //disable_interrupts(GLOBAL);
+  
+    dato[h] =incoming;
+    incoming=0;
+    h++;
+    flag4=0;
+    
+     //enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+    //enable_interrupts(GLOBAL);
+    }
+      }
+      
+      if (incoming == 0x05){
+
+         flag=1;
+         
+      }else if(incoming == 0x06){
+      flag1=1;
+      
+      }else if(incoming == 0x07){
+      flag2=1;
+      
+      }else if(incoming == 0x08){
+      flag3=1;
+      
+      }else if(incoming == 0x09){
+      flag4=1;
+      
+      }else if(incoming == 0x03){
+      flag5=1;
+      }
+      //incoming=0;
+   }
+   
+   if((state == 0x80))                     //Master is requesting data
+   {
+   if (flag1==1){
+      i2c_write(personas);
+      flag1=0;
+    }else if(flag2==1){
+    i2c_write(consulta);
+      flag2=0;
+    }else if(flag3==1){
+    i2c_write(borrar);
+     borrar='F';
+     h=1;
+      flag3=0;
+    }else if(flag5==1){
+    
+  disable_interrupts (INT_TIMER1); // desabilitar la interruccion
+  disable_interrupts(INT_SSP);
+  disable_interrupts(int_rda);
+  disable_interrupts(GLOBAL);
+ 
+ fputc('@');
+ for(d=1;d<256;d++){
+ fputc(' ');
+  printf ("%02.0f",dato[d]);
+  j=d%6;
+  if((j==0)&&(d!=0)){
+  fputc(',');
+  //fputc('\n');
+  }
+
+ }
+ fputc('#');
+ 
+ if(h>256){
+ h=1;
+ }
+ flag5=0;
+ consulta='D';
+ i2c_write(consulta);
+ enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+  enable_interrupts(INT_SSP);
+  enable_interrupts(int_rda);
+   enable_interrupts(GLOBAL);
+ }
+   }
+    enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+   enable_interrupts(INT_SSP);
+   enable_interrupts(int_rda);
+   enable_interrupts(GLOBAL);
+    
+}
+
+
+void main(){
+     set_tris_a (0x00);
+     lcd_init();
+     
+   enable_interrupts(INT_SSP);
+   enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+   enable_interrupts(int_rda);
+   enable_interrupts(GLOBAL);
+     
+     
+      setup_timer_1(T1_INTERNAL|T1_DIV_BY_8); //configura timer1 interno con division de 8 
+     
+    lcd_putc("\f");
+    lcd_gotoxy (1, 1) ;
+    printf (lcd_putc, "AUTOR");
+    lcd_gotoxy (1, 2) ;
+    printf (lcd_putc, "NOMBRE");
+    delay_ms(1000);
+    
+ while (true){
+ output_low(pin_a0);
+ 
+    lcd_putc("\f");
+    lcd_gotoxy (1, 1) ;
+    printf (lcd_putc, "B/A=%c Tiempo=%ld",valor,t);
+    lcd_gotoxy (1, 2) ;
+    printf (lcd_putc,"P=%ld T=%ld C=%c b=%c",personas,tiempo,consulta,borrar);
+    delay_ms(50);
+   
+     
+ if((valor=='B')&&(t<=0)){    /// bien  
+ output_low(PIN_a2);
+ }else if((valor=='B')&&(t>0)){     ///  mal , bien
+ output_high(PIN_a2);
+ }else if (valor=='A'){   ////////// mal 
+ output_high(PIN_a2);
+ t=tiempo;
+ }
+ 
+
+ }
+}

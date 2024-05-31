@@ -1,0 +1,202 @@
+#include <18f4550.h>
+#fuses HS,MCLR,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOPBADEN,NOLVP,NOCPD,NODEBUG,NOWRT,NOVREGEN
+#FUSES CPUDIV1         //DIVISION DE FRECUENCIA DEL OSCILADOR: 1
+#use delay(clock=20000000)
+#include <lcd.c>
+#include <_ds1307.c>
+#use i2c(master,FAST, scl=PIN_B1, sda=PIN_B0,FORCE_SW)
+
+char consulta='D',borrar='F',valor='B',dato="";
+long g=0,g1=0,personas=0,p=1,d=0;
+
+int sec=0,min=0,hrs=0,day=0,month=0,yr=0,dow=0,e=45;
+char sdow[11]="";
+
+#int_TIMER1 //interrupcion timer1 
+void TIMER1(void){  //funcion que se ejecutara al desbordar timer1 
+//set_timer1(10); // se vuelve a cargar valor de timer1 
+output_toggle(PIN_a3);
+
+   i2c_start();
+   i2c_write(0xA0); 
+   i2c_write(0x05);
+   i2c_stop();
+   i2c_start();
+   i2c_write(0xA0);
+   i2c_write(valor);
+   i2c_stop();
+   i2c_start();
+   i2c_write(0xA0);
+   i2c_write(0x06);
+   i2c_start();
+   i2c_write(0xA1);
+   personas=i2c_read(0);
+   i2c_stop();
+   i2c_start();
+   i2c_write(0xA0);
+   i2c_write(0x07);
+   i2c_start();
+   i2c_write(0xA1);
+   consulta=i2c_read(0);
+   i2c_stop();
+   i2c_start();
+   i2c_write(0xA0);
+   i2c_write(0x08);
+   i2c_start();
+   i2c_write(0xA1);
+   borrar=i2c_read(0);
+   i2c_stop();
+   
+   if(consulta=='C'){
+      disable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+     disable_interrupts(GLOBAL);
+     
+     for(d=1;d<256;d++){
+    dato= read_EEPROM (d);
+    delay_us(5);
+    
+    i2c_start();
+   i2c_write(0xA0); 
+   i2c_write(0x09);
+   i2c_stop();
+   i2c_start();
+   i2c_write(0xA0);
+   i2c_write(dato);
+   i2c_stop();
+   delay_us(5);
+     }
+     delay_us(10);
+    i2c_start();
+   i2c_write(0xA0);
+   i2c_write(0x03);
+   i2c_start();
+   i2c_write(0xA1);
+   consulta=i2c_read(0);
+   i2c_stop();
+   //delay_us(10);
+   
+     enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+     enable_interrupts(GLOBAL);
+     }
+     
+   valor='B';
+         
+      
+     
+} 
+
+void leer_reloj(){
+ 
+   ds1307_get_day_of_week((char*) sdow);
+   ds1307_get_date(day,month,yr,dow);
+   ds1307_get_time(hrs,min,sec);
+   delay_us(10);
+   //printf("\%s \%02d/\%02d/\%02d",sdow,day,month,yr);
+  // printf("\%02d:\%02d:\%02d", hrs,min,sec);
+}
+void escribir_eprom(){
+      
+      write_eeprom(p,day);
+      p++;
+      delay_us(10);
+       write_eeprom(p,month);
+      p++;
+      delay_us(10);
+       write_eeprom(p,yr);
+      p++;
+      delay_us(10);
+       write_eeprom(p,hrs);
+      p++;
+      delay_us(10);
+       write_eeprom(p,min);
+      p++;
+      delay_us(10);
+      write_eeprom(p,e);
+      p++;
+      delay_us(10);
+      if(p>=255){
+      p=1;
+      }
+      write_eeprom(0,p);
+      delay_us(10);
+}
+void main(){
+     set_tris_a (0xf0);
+     lcd_init();
+     
+   enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+   enable_interrupts(GLOBAL);
+     
+    setup_timer_1(T1_INTERNAL|T1_DIV_BY_8); //configura timer1 interno con division de 8 
+   
+    ds1307_init(DS1307_OUT_ON_DISABLED_HIHG | DS1307_OUT_ENABLED | DS1307_OUT_1_HZ);
+   //ds1307_set_date_time(day,mth,year,dow,hour,min,sec)
+   ds1307_set_date_time(26,10,15,0,12,34,0);
+    p = read_EEPROM (0);
+    
+    lcd_putc("\f");
+    lcd_gotoxy (1, 1) ;
+    printf (lcd_putc, "AUTOR");
+    lcd_gotoxy (1, 2) ;
+    printf (lcd_putc, "NOMBRE");
+    delay_ms(1000);
+ 
+ while (true){
+ lcd_putc("\f");
+
+ lcd_gotoxy (1, 1) ;
+ printf (lcd_putc,"B/A=%c CTA=%ld M=%ld",valor,g1,g);
+ lcd_gotoxy (1, 2) ;
+ printf (lcd_putc,"#P=%ld CNS=%c BR=%c",personas,consulta,borrar);
+ delay_ms(50);
+ 
+ 
+    if(input(pin_a4)==1){
+     disable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+     disable_interrupts(GLOBAL);
+     leer_reloj();
+     e=43;
+     escribir_eprom();
+      g++;
+      g1++;
+       if(g>=personas){
+        valor='A';
+        g=0;
+        }
+        if(g1>=999){
+        g1=0;
+        }
+     while (input(pin_a4)==1){}
+   enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+   enable_interrupts(GLOBAL);
+     }else if (input(pin_a5)==1) {
+     disable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+     disable_interrupts(GLOBAL);
+     g1--;
+     leer_reloj();
+     e=45;
+     escribir_eprom();
+      if(g1==-1){
+      g1=999;
+      }
+     while (input(pin_a5)==1){}
+      enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+     enable_interrupts(GLOBAL);
+     }
+     
+    if(borrar=='E'){
+    disable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+     disable_interrupts(GLOBAL);
+    for(d=0;d<256;d++){
+    write_eeprom(d,0);
+    delay_us(10);
+     }
+     p=1;
+      enable_interrupts (INT_TIMER1); // avilita la interruccion por derrame
+     enable_interrupts(GLOBAL);
+    }
+     
+    
+    
+ }
+}

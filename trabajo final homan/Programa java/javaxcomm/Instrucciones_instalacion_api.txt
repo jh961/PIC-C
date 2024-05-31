@@ -1,0 +1,8 @@
+
+
+copiar en la carpeta de JAVA en las siguientes carpetas:
+
+
+Comm.jar  		 :     	 Jre/lib/ext
+javax.comm.properties	 :	 Jre/lib
+win32comm.dll		 :	 Jre/bin
