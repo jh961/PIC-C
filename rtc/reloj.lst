@@ -1,0 +1,1405 @@
+CCS PCH C Compiler, Version 4.104, 5967               23-oct-15 01:58
+
+               Filename: C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\rtc\reloj.lst
+
+               ROM used: 2826 bytes (9%)
+                         Largest free fragment is 29938
+               RAM used: 121 (6%) at main() level
+                         134 (7%) worst case
+               Stack:    5 worst case (4 in main + 1 for interrupts)
+
+*
+0000:  GOTO   0900
+*
+0008:  MOVWF  04
+000A:  MOVFF  FD8,05
+000E:  MOVFF  FE0,06
+0012:  MOVLB  0
+0014:  MOVFF  FE9,0C
+0018:  MOVFF  FEA,07
+001C:  MOVFF  FE1,08
+0020:  MOVFF  FE2,09
+0024:  MOVFF  FD9,0A
+0028:  MOVFF  FDA,0B
+002C:  MOVFF  FF3,12
+0030:  MOVFF  FF4,13
+0034:  MOVFF  FFA,14
+0038:  MOVFF  00,0E
+003C:  MOVFF  01,0F
+0040:  MOVFF  02,10
+0044:  MOVFF  03,11
+0048:  BTFSS  F9D.5
+004A:  GOTO   0054
+004E:  BTFSC  F9E.5
+0050:  GOTO   0096
+0054:  MOVFF  0E,00
+0058:  MOVFF  0F,01
+005C:  MOVFF  10,02
+0060:  MOVFF  11,03
+0064:  MOVFF  0C,FE9
+0068:  MOVFF  07,FEA
+006C:  BSF    07.7
+006E:  MOVFF  08,FE1
+0072:  MOVFF  09,FE2
+0076:  MOVFF  0A,FD9
+007A:  MOVFF  0B,FDA
+007E:  MOVFF  12,FF3
+0082:  MOVFF  13,FF4
+0086:  MOVFF  14,FFA
+008A:  MOVF   04,W
+008C:  MOVFF  06,FE0
+0090:  MOVFF  05,FD8
+0094:  RETFIE 0
+.................... // Real Time Clock & NVRAM 
+.................... // Hardware DS1307 of Dallas Maxim 
+.................... // With interface I2C 
+....................   
+.................... #include <18f4550.h> 
+.................... //////// Standard Header file for the PIC18F4550 device //////////////// 
+.................... #device PIC18F4550 
+.................... #list 
+....................  
+.................... #fuses HS,MCLR,NOWDT,NOPROTECT,NOPUT,NOBROWNOUT,NOPBADEN,NOLVP,NOCPD,NODEBUG,NOWRT,NOVREGEN 
+.................... #use delay(clock=20000000) 
+*
+01DA:  CLRF   FEA
+01DC:  MOVLW  79
+01DE:  MOVWF  FE9
+01E0:  MOVF   FEF,W
+01E2:  BZ    01FE
+01E4:  MOVLW  06
+01E6:  MOVWF  01
+01E8:  CLRF   00
+01EA:  DECFSZ 00,F
+01EC:  BRA    01EA
+01EE:  DECFSZ 01,F
+01F0:  BRA    01E8
+01F2:  MOVLW  7B
+01F4:  MOVWF  00
+01F6:  DECFSZ 00,F
+01F8:  BRA    01F6
+01FA:  DECFSZ FEF,F
+01FC:  BRA    01E4
+01FE:  RETLW  00
+.................... #use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7) 
+....................   
+.................... // Libreria DS1307.c ////////////////////////////////////////////////////////// 
+....................   
+.................... //#define RTC_SDA  PIN_B0 
+.................... //#define RTC_SCL  PIN_B1 
+....................   
+.................... #include <_ds1307.c> 
+.................... /////////////////////////////////////////////////////////////////////////////////////// 
+.................... ///                               DS1307.C                                           /// 
+.................... ///                     Driver for Real Time Clock                                   /// 
+.................... ///                     modified by Redpic 08/2006                                   /// 
+.................... ///                  http://picmania.garcia-cuervo.com                               /// 
+.................... ///                                                                                  /// 
+.................... /// void ds1307_init(val)                                                            /// 
+.................... ///                  - Enable oscillator without clearing the seconds register       /// 
+.................... ///                    used when PIC loses power and DS1307 run from 3V BAT          /// 
+.................... ///                  - Config Control Register with next parameters:                 /// 
+.................... ///                     DS1307_ALL_DISABLED          All disabled                    /// 
+.................... ///                     DS1307_OUT_ON_DISABLED_HIHG  Out to Hight on Disable Out     /// 
+.................... ///                     DS1307_OUT_ENABLED           Out Enabled                     /// 
+.................... ///                     DS1307_OUT_1_HZ              Freq. Out to 1 Hz               /// 
+.................... ///                     DS1307_OUT_4_KHZ             Freq. Out to 4.096 Khz          /// 
+.................... ///                     DS1307_OUT_8_KHZ             Freq. Out to 8.192 Khz          /// 
+.................... ///                     DS1307_OUT_32_KHZ            Freq. Out to 32.768 Khz         /// 
+.................... ///                                                                                  /// 
+.................... ///                     Example init:                                                /// 
+.................... ///                     ds1307_init(DS1307_ALL_DISABLED);                            /// 
+.................... ///                     ds1307_init(DS1307_OUT_ENABLED | DS1307_OUT_1_HZ);           /// 
+.................... ///                                                                                  /// 
+.................... /// void ds1307_set_date_time(day,mth,year,dow,hour,min,sec) - Set the date/time     /// 
+.................... ///                                                                                  /// 
+.................... /// void ds1307_get_date(day,mth,year,dow)                   - Get the date          /// 
+.................... ///                                                                                  /// 
+.................... /// void ds1307_get_time(hr,min,sec)                         - Get the time          /// 
+.................... ///                                                                                  /// 
+.................... /// char ds1307_read_nvram_byte(char addr)                   - Read byte in address  /// 
+.................... ///                                                                                  /// 
+.................... /// void ds1307_write_nvram_byte(char addr, char value)      - Write byte in address /// 
+.................... ///                                                                                  /// 
+.................... /// void ds1307_get_day_of_week(char* ptr)                   - Get string Day Of Week/// 
+.................... ///                                                                                  /// 
+.................... /// If defined USE_INTERRUPTS all functions disable Global Interrupts on starts and  /// 
+.................... ///                           enable Global on ends else usar can do it hiself       /// 
+.................... ///                                                                                  /// 
+.................... /////////////////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #ifndef RTC_SDA 
+.................... #define RTC_SDA  PIN_B0 
+.................... #define RTC_SCL  PIN_B1 
+.................... #endif 
+....................  
+.................... #use i2c(master, sda=RTC_SDA, scl=RTC_SCL) 
+0200:  MOVLW  08
+0202:  MOVWF  01
+0204:  MOVLW  05
+0206:  MOVWF  00
+0208:  DECFSZ 00,F
+020A:  BRA    0208
+020C:  BCF    F8A.1
+020E:  BCF    F93.1
+0210:  MOVLW  06
+0212:  MOVWF  00
+0214:  DECFSZ 00,F
+0216:  BRA    0214
+0218:  RLCF   x82,F
+021A:  BCF    F8A.0
+021C:  BTFSC  FD8.0
+021E:  BSF    F93.0
+0220:  BTFSS  FD8.0
+0222:  BCF    F93.0
+0224:  BSF    F93.1
+0226:  BTFSS  F81.1
+0228:  BRA    0226
+022A:  DECFSZ 01,F
+022C:  BRA    0204
+022E:  MOVLW  05
+0230:  MOVWF  00
+0232:  DECFSZ 00,F
+0234:  BRA    0232
+0236:  BCF    F8A.1
+0238:  BCF    F93.1
+023A:  NOP   
+023C:  BSF    F93.0
+023E:  MOVLW  06
+0240:  MOVWF  00
+0242:  DECFSZ 00,F
+0244:  BRA    0242
+0246:  MOVLW  06
+0248:  MOVWF  00
+024A:  DECFSZ 00,F
+024C:  BRA    024A
+024E:  BSF    F93.1
+0250:  BTFSS  F81.1
+0252:  BRA    0250
+0254:  CLRF   01
+0256:  MOVLW  06
+0258:  MOVWF  00
+025A:  DECFSZ 00,F
+025C:  BRA    025A
+025E:  BTFSC  F81.0
+0260:  BSF    01.0
+0262:  BCF    F8A.1
+0264:  BCF    F93.1
+0266:  BCF    F8A.0
+0268:  BCF    F93.0
+026A:  RETLW  00
+026C:  MOVLW  08
+026E:  MOVWF  x83
+0270:  MOVFF  00,84
+0274:  BSF    F93.0
+0276:  MOVLW  06
+0278:  MOVWF  00
+027A:  DECFSZ 00,F
+027C:  BRA    027A
+027E:  BSF    F93.1
+0280:  BTFSS  F81.1
+0282:  BRA    0280
+0284:  BTFSC  F81.0
+0286:  BSF    FD8.0
+0288:  BTFSS  F81.0
+028A:  BCF    FD8.0
+028C:  RLCF   01,F
+028E:  MOVLW  05
+0290:  MOVWF  00
+0292:  DECFSZ 00,F
+0294:  BRA    0292
+0296:  BCF    F93.1
+0298:  BCF    F8A.1
+029A:  DECFSZ x83,F
+029C:  BRA    0274
+029E:  BSF    F93.0
+02A0:  MOVLW  06
+02A2:  MOVWF  00
+02A4:  DECFSZ 00,F
+02A6:  BRA    02A4
+02A8:  BCF    F8A.0
+02AA:  MOVF   x84,W
+02AC:  BTFSS  FD8.2
+02AE:  BCF    F93.0
+02B0:  NOP   
+02B2:  BSF    F93.1
+02B4:  BTFSS  F81.1
+02B6:  BRA    02B4
+02B8:  MOVLW  05
+02BA:  MOVWF  00
+02BC:  DECFSZ 00,F
+02BE:  BRA    02BC
+02C0:  BCF    F8A.1
+02C2:  BCF    F93.1
+02C4:  MOVLW  06
+02C6:  MOVWF  00
+02C8:  DECFSZ 00,F
+02CA:  BRA    02C8
+02CC:  BCF    F8A.0
+02CE:  BCF    F93.0
+02D0:  RETLW  00
+....................  
+.................... #define DS1307_ALL_DISABLED         0b00000000 // All disabled 
+.................... #define DS1307_OUT_ON_DISABLED_HIHG 0b10000000 // Out to Hight on Disable Out 
+.................... #define DS1307_OUT_ENABLED          0b00010000 // Out Enabled 
+.................... #define DS1307_OUT_1_HZ             0b00000000 // Freq. Out to 1 Hz 
+.................... #define DS1307_OUT_4_KHZ            0b00000001 // Freq. Out to 4.096 Khz 
+.................... #define DS1307_OUT_8_KHZ            0b00000010 // Freq. Out to 8.192 Khz 
+.................... #define DS1307_OUT_32_KHZ           0b00000011 // Freq. Out to 32.768 Khz 
+....................  
+.................... #define Start_user_address_nvram    0x08 
+.................... #define End_user_address_nvram      0x3f 
+....................  
+.................... char days_of_week[7][11]={"Lunes\0","Martes\0","Miércoles\0","Jueves\0","Viernes\0","Sábado\0","Domingo\0"}; 
+....................  
+.................... byte ds1307_bin2bcd(byte binary_value); 
+.................... byte ds1307_bcd2bin(byte bcd_value); 
+....................  
+.................... void ds1307_init(int val){ 
+*
+031E:  CLRF   x79
+....................  
+....................    byte seconds = 0; 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    disable_interrupts(global); 
+0320:  BCF    FF2.6
+0322:  BCF    FF2.7
+0324:  BTFSC  FF2.7
+0326:  BRA    0322
+.................... #endif 
+....................  
+....................    i2c_start(); 
+0328:  BSF    F93.0
+032A:  MOVLW  05
+032C:  MOVWF  00
+032E:  DECFSZ 00,F
+0330:  BRA    032E
+0332:  BSF    F93.1
+0334:  MOVLW  06
+0336:  MOVWF  00
+0338:  DECFSZ 00,F
+033A:  BRA    0338
+033C:  BCF    F8A.0
+033E:  BCF    F93.0
+0340:  MOVLW  05
+0342:  MOVWF  00
+0344:  DECFSZ 00,F
+0346:  BRA    0344
+0348:  BCF    F8A.1
+034A:  BCF    F93.1
+....................    i2c_write(0xD0); 
+034C:  MOVLW  D0
+034E:  MOVWF  x82
+0350:  RCALL  0200
+....................    i2c_write(0x00); 
+0352:  CLRF   x82
+0354:  RCALL  0200
+....................    i2c_start(); 
+0356:  BSF    F93.0
+0358:  MOVLW  05
+035A:  MOVWF  00
+035C:  DECFSZ 00,F
+035E:  BRA    035C
+0360:  BSF    F93.1
+0362:  MOVLW  06
+0364:  MOVWF  00
+0366:  DECFSZ 00,F
+0368:  BRA    0366
+036A:  BTFSS  F81.1
+036C:  BRA    036A
+036E:  BCF    F8A.0
+0370:  BCF    F93.0
+0372:  MOVLW  05
+0374:  MOVWF  00
+0376:  DECFSZ 00,F
+0378:  BRA    0376
+037A:  BCF    F8A.1
+037C:  BCF    F93.1
+....................    i2c_write(0xD1); 
+037E:  MOVLW  D1
+0380:  MOVWF  x82
+0382:  RCALL  0200
+....................    seconds = ds1307_bcd2bin(i2c_read(0)); 
+0384:  CLRF   00
+0386:  RCALL  026C
+0388:  MOVFF  01,7A
+038C:  MOVFF  01,83
+0390:  RCALL  02D2
+0392:  MOVFF  01,79
+....................    i2c_stop(); 
+0396:  BCF    F93.0
+0398:  NOP   
+039A:  BSF    F93.1
+039C:  BTFSS  F81.1
+039E:  BRA    039C
+03A0:  MOVLW  05
+03A2:  MOVWF  00
+03A4:  DECFSZ 00,F
+03A6:  BRA    03A4
+03A8:  BRA    03AA
+03AA:  NOP   
+03AC:  BSF    F93.0
+03AE:  MOVLW  05
+03B0:  MOVWF  00
+03B2:  DECFSZ 00,F
+03B4:  BRA    03B2
+....................    seconds &= 0x7F; 
+03B6:  BCF    x79.7
+....................  
+....................    delay_cycles(3); 
+03B8:  BRA    03BA
+03BA:  NOP   
+....................  
+....................    i2c_start(); 
+03BC:  BSF    F93.0
+03BE:  MOVLW  05
+03C0:  MOVWF  00
+03C2:  DECFSZ 00,F
+03C4:  BRA    03C2
+03C6:  BSF    F93.1
+03C8:  MOVLW  06
+03CA:  MOVWF  00
+03CC:  DECFSZ 00,F
+03CE:  BRA    03CC
+03D0:  BCF    F8A.0
+03D2:  BCF    F93.0
+03D4:  MOVLW  05
+03D6:  MOVWF  00
+03D8:  DECFSZ 00,F
+03DA:  BRA    03D8
+03DC:  BCF    F8A.1
+03DE:  BCF    F93.1
+....................    i2c_write(0xD0); 
+03E0:  MOVLW  D0
+03E2:  MOVWF  x82
+03E4:  RCALL  0200
+....................    i2c_write(0x00); 
+03E6:  CLRF   x82
+03E8:  RCALL  0200
+....................    i2c_write(ds1307_bin2bcd(seconds)); 
+03EA:  MOVFF  79,7A
+03EE:  BRA    02F8
+03F0:  MOVFF  01,7A
+03F4:  MOVFF  01,82
+03F8:  RCALL  0200
+....................    i2c_start(); 
+03FA:  BSF    F93.0
+03FC:  MOVLW  05
+03FE:  MOVWF  00
+0400:  DECFSZ 00,F
+0402:  BRA    0400
+0404:  BSF    F93.1
+0406:  MOVLW  06
+0408:  MOVWF  00
+040A:  DECFSZ 00,F
+040C:  BRA    040A
+040E:  BTFSS  F81.1
+0410:  BRA    040E
+0412:  BCF    F8A.0
+0414:  BCF    F93.0
+0416:  MOVLW  05
+0418:  MOVWF  00
+041A:  DECFSZ 00,F
+041C:  BRA    041A
+041E:  BCF    F8A.1
+0420:  BCF    F93.1
+....................    i2c_write(0xD0); 
+0422:  MOVLW  D0
+0424:  MOVWF  x82
+0426:  RCALL  0200
+....................    i2c_write(0x07); 
+0428:  MOVLW  07
+042A:  MOVWF  x82
+042C:  RCALL  0200
+....................    i2c_write(val); 
+042E:  MOVFF  78,82
+0432:  RCALL  0200
+....................    i2c_stop(); 
+0434:  BCF    F93.0
+0436:  NOP   
+0438:  BSF    F93.1
+043A:  BTFSS  F81.1
+043C:  BRA    043A
+043E:  MOVLW  05
+0440:  MOVWF  00
+0442:  DECFSZ 00,F
+0444:  BRA    0442
+0446:  BRA    0448
+0448:  NOP   
+044A:  BSF    F93.0
+044C:  MOVLW  05
+044E:  MOVWF  00
+0450:  DECFSZ 00,F
+0452:  BRA    0450
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    enable_interrupts(global); 
+0454:  MOVLW  C0
+0456:  IORWF  FF2,F
+.................... #endif 
+....................  
+.................... } 
+0458:  GOTO   0A9C (RETURN)
+....................  
+.................... void ds1307_set_date_time(byte day, byte mth, byte year, byte dow, byte hr, byte min, byte sec){ 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    disable_interrupts(global); 
+.................... #endif 
+....................  
+....................   sec &= 0x7F; 
+....................   hr &= 0x3F; 
+....................  
+....................   i2c_start(); 
+....................   i2c_write(0xD0); 
+....................   i2c_write(0x00); 
+....................   i2c_write(ds1307_bin2bcd(sec)); 
+....................   i2c_write(ds1307_bin2bcd(min)); 
+....................   i2c_write(ds1307_bin2bcd(hr)); 
+....................   i2c_write(ds1307_bin2bcd(dow)); 
+....................   i2c_write(ds1307_bin2bcd(day)); 
+....................   i2c_write(ds1307_bin2bcd(mth)); 
+....................   i2c_write(ds1307_bin2bcd(year)); 
+....................   i2c_stop(); 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    enable_interrupts(global); 
+.................... #endif 
+....................  
+.................... } 
+....................  
+.................... void ds1307_get_date(byte &day, byte &mth, byte &year, byte &dow){ 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    disable_interrupts(global); 
+*
+04A0:  BCF    FF2.6
+04A2:  BCF    FF2.7
+04A4:  BTFSC  FF2.7
+04A6:  BRA    04A2
+*
+06CE:  BCF    FF2.6
+06D0:  BCF    FF2.7
+06D2:  BTFSC  FF2.7
+06D4:  BRA    06D0
+.................... #endif 
+....................  
+....................   i2c_start(); 
+*
+04A8:  BSF    F93.0
+04AA:  MOVLW  05
+04AC:  MOVWF  00
+04AE:  DECFSZ 00,F
+04B0:  BRA    04AE
+04B2:  BSF    F93.1
+04B4:  MOVLW  06
+04B6:  MOVWF  00
+04B8:  DECFSZ 00,F
+04BA:  BRA    04B8
+04BC:  BCF    F8A.0
+04BE:  BCF    F93.0
+04C0:  MOVLW  05
+04C2:  MOVWF  00
+04C4:  DECFSZ 00,F
+04C6:  BRA    04C4
+04C8:  BCF    F8A.1
+04CA:  BCF    F93.1
+*
+06D6:  BSF    F93.0
+06D8:  MOVLW  05
+06DA:  MOVWF  00
+06DC:  DECFSZ 00,F
+06DE:  BRA    06DC
+06E0:  BSF    F93.1
+06E2:  MOVLW  06
+06E4:  MOVWF  00
+06E6:  DECFSZ 00,F
+06E8:  BRA    06E6
+06EA:  BCF    F8A.0
+06EC:  BCF    F93.0
+06EE:  MOVLW  05
+06F0:  MOVWF  00
+06F2:  DECFSZ 00,F
+06F4:  BRA    06F2
+06F6:  BCF    F8A.1
+06F8:  BCF    F93.1
+....................   i2c_write(0xD0); 
+*
+04CC:  MOVLW  D0
+04CE:  MOVWF  x82
+04D0:  RCALL  0200
+*
+06FA:  MOVLW  D0
+06FC:  MOVWF  x82
+06FE:  RCALL  0200
+....................   i2c_write(0x03); 
+*
+04D2:  MOVLW  03
+04D4:  MOVWF  x82
+04D6:  RCALL  0200
+*
+0700:  MOVLW  03
+0702:  MOVWF  x82
+0704:  RCALL  0200
+....................   i2c_start(); 
+*
+04D8:  BSF    F93.0
+04DA:  MOVLW  05
+04DC:  MOVWF  00
+04DE:  DECFSZ 00,F
+04E0:  BRA    04DE
+04E2:  BSF    F93.1
+04E4:  MOVLW  06
+04E6:  MOVWF  00
+04E8:  DECFSZ 00,F
+04EA:  BRA    04E8
+04EC:  BTFSS  F81.1
+04EE:  BRA    04EC
+04F0:  BCF    F8A.0
+04F2:  BCF    F93.0
+04F4:  MOVLW  05
+04F6:  MOVWF  00
+04F8:  DECFSZ 00,F
+04FA:  BRA    04F8
+04FC:  BCF    F8A.1
+04FE:  BCF    F93.1
+*
+0706:  BSF    F93.0
+0708:  MOVLW  05
+070A:  MOVWF  00
+070C:  DECFSZ 00,F
+070E:  BRA    070C
+0710:  BSF    F93.1
+0712:  MOVLW  06
+0714:  MOVWF  00
+0716:  DECFSZ 00,F
+0718:  BRA    0716
+071A:  BTFSS  F81.1
+071C:  BRA    071A
+071E:  BCF    F8A.0
+0720:  BCF    F93.0
+0722:  MOVLW  05
+0724:  MOVWF  00
+0726:  DECFSZ 00,F
+0728:  BRA    0726
+072A:  BCF    F8A.1
+072C:  BCF    F93.1
+....................   i2c_write(0xD1); 
+*
+0500:  MOVLW  D1
+0502:  MOVWF  x82
+0504:  RCALL  0200
+*
+072E:  MOVLW  D1
+0730:  MOVWF  x82
+0732:  RCALL  0200
+....................   dow  = ds1307_bcd2bin(i2c_read() & 0x7f); 
+*
+0506:  MOVLW  01
+0508:  MOVWF  00
+050A:  RCALL  026C
+050C:  MOVF   01,W
+050E:  ANDLW  7F
+0510:  MOVWF  x7E
+0512:  MOVWF  x83
+0514:  RCALL  02D2
+0516:  MOVFF  01,7D
+*
+0734:  MOVLW  01
+0736:  MOVWF  00
+0738:  RCALL  026C
+073A:  MOVF   01,W
+073C:  ANDLW  7F
+073E:  MOVWF  x7E
+0740:  MOVWF  x83
+0742:  RCALL  02D2
+0744:  MOVFF  01,6C
+....................   day  = ds1307_bcd2bin(i2c_read() & 0x3f); 
+*
+051A:  MOVLW  01
+051C:  MOVWF  00
+051E:  RCALL  026C
+0520:  MOVF   01,W
+0522:  ANDLW  3F
+0524:  MOVWF  x7E
+0526:  MOVWF  x83
+0528:  RCALL  02D2
+052A:  MOVFF  01,7A
+*
+0748:  MOVLW  01
+074A:  MOVWF  00
+074C:  RCALL  026C
+074E:  MOVF   01,W
+0750:  ANDLW  3F
+0752:  MOVWF  x7E
+0754:  MOVWF  x83
+0756:  RCALL  02D2
+0758:  MOVFF  01,69
+....................   mth  = ds1307_bcd2bin(i2c_read() & 0x1f); 
+*
+052E:  MOVLW  01
+0530:  MOVWF  00
+0532:  RCALL  026C
+0534:  MOVF   01,W
+0536:  ANDLW  1F
+0538:  MOVWF  x7E
+053A:  MOVWF  x83
+053C:  RCALL  02D2
+053E:  MOVFF  01,7B
+*
+075C:  MOVLW  01
+075E:  MOVWF  00
+0760:  RCALL  026C
+0762:  MOVF   01,W
+0764:  ANDLW  1F
+0766:  MOVWF  x7E
+0768:  MOVWF  x83
+076A:  RCALL  02D2
+076C:  MOVFF  01,6A
+....................   year = ds1307_bcd2bin(i2c_read(0)); 
+*
+0542:  CLRF   00
+0544:  RCALL  026C
+0546:  MOVFF  01,7E
+054A:  MOVFF  01,83
+054E:  RCALL  02D2
+0550:  MOVFF  01,7C
+*
+0770:  CLRF   00
+0772:  RCALL  026C
+0774:  MOVFF  01,7E
+0778:  MOVFF  01,83
+077C:  RCALL  02D2
+077E:  MOVFF  01,6B
+....................   i2c_stop(); 
+*
+0554:  BCF    F93.0
+0556:  NOP   
+0558:  BSF    F93.1
+055A:  BTFSS  F81.1
+055C:  BRA    055A
+055E:  MOVLW  05
+0560:  MOVWF  00
+0562:  DECFSZ 00,F
+0564:  BRA    0562
+0566:  BRA    0568
+0568:  NOP   
+056A:  BSF    F93.0
+056C:  MOVLW  05
+056E:  MOVWF  00
+0570:  DECFSZ 00,F
+0572:  BRA    0570
+*
+0782:  BCF    F93.0
+0784:  NOP   
+0786:  BSF    F93.1
+0788:  BTFSS  F81.1
+078A:  BRA    0788
+078C:  MOVLW  05
+078E:  MOVWF  00
+0790:  DECFSZ 00,F
+0792:  BRA    0790
+0794:  BRA    0796
+0796:  NOP   
+0798:  BSF    F93.0
+079A:  MOVLW  05
+079C:  MOVWF  00
+079E:  DECFSZ 00,F
+07A0:  BRA    079E
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    enable_interrupts(global); 
+*
+0574:  MOVLW  C0
+0576:  IORWF  FF2,F
+*
+07A2:  MOVLW  C0
+07A4:  IORWF  FF2,F
+.................... #endif 
+....................  
+.................... } 
+....................  
+.................... void ds1307_get_time(byte &hr, byte &min, byte &sec){ 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    disable_interrupts(global); 
+07A6:  BCF    FF2.6
+07A8:  BCF    FF2.7
+07AA:  BTFSC  FF2.7
+07AC:  BRA    07A8
+.................... #endif 
+....................  
+....................   i2c_start(); 
+07AE:  BSF    F93.0
+07B0:  MOVLW  05
+07B2:  MOVWF  00
+07B4:  DECFSZ 00,F
+07B6:  BRA    07B4
+07B8:  BSF    F93.1
+07BA:  MOVLW  06
+07BC:  MOVWF  00
+07BE:  DECFSZ 00,F
+07C0:  BRA    07BE
+07C2:  BCF    F8A.0
+07C4:  BCF    F93.0
+07C6:  MOVLW  05
+07C8:  MOVWF  00
+07CA:  DECFSZ 00,F
+07CC:  BRA    07CA
+07CE:  BCF    F8A.1
+07D0:  BCF    F93.1
+....................   i2c_write(0xD0); 
+07D2:  MOVLW  D0
+07D4:  MOVWF  x82
+07D6:  RCALL  0200
+....................   i2c_write(0x00); 
+07D8:  CLRF   x82
+07DA:  RCALL  0200
+....................   i2c_start(); 
+07DC:  BSF    F93.0
+07DE:  MOVLW  05
+07E0:  MOVWF  00
+07E2:  DECFSZ 00,F
+07E4:  BRA    07E2
+07E6:  BSF    F93.1
+07E8:  MOVLW  06
+07EA:  MOVWF  00
+07EC:  DECFSZ 00,F
+07EE:  BRA    07EC
+07F0:  BTFSS  F81.1
+07F2:  BRA    07F0
+07F4:  BCF    F8A.0
+07F6:  BCF    F93.0
+07F8:  MOVLW  05
+07FA:  MOVWF  00
+07FC:  DECFSZ 00,F
+07FE:  BRA    07FC
+0800:  BCF    F8A.1
+0802:  BCF    F93.1
+....................   i2c_write(0xD1); 
+0804:  MOVLW  D1
+0806:  MOVWF  x82
+0808:  RCALL  0200
+....................   sec = ds1307_bcd2bin(i2c_read() & 0x7f); 
+080A:  MOVLW  01
+080C:  MOVWF  00
+080E:  RCALL  026C
+0810:  MOVF   01,W
+0812:  ANDLW  7F
+0814:  MOVWF  x78
+0816:  MOVWF  x83
+0818:  RCALL  02D2
+081A:  MOVFF  01,66
+....................   min = ds1307_bcd2bin(i2c_read() & 0x7f); 
+081E:  MOVLW  01
+0820:  MOVWF  00
+0822:  RCALL  026C
+0824:  MOVF   01,W
+0826:  ANDLW  7F
+0828:  MOVWF  x78
+082A:  MOVWF  x83
+082C:  RCALL  02D2
+082E:  MOVFF  01,67
+....................   hr  = ds1307_bcd2bin(i2c_read(0) & 0x3f); 
+0832:  CLRF   00
+0834:  RCALL  026C
+0836:  MOVF   01,W
+0838:  ANDLW  3F
+083A:  MOVWF  x78
+083C:  MOVWF  x83
+083E:  RCALL  02D2
+0840:  MOVFF  01,68
+....................   i2c_stop(); 
+0844:  BCF    F93.0
+0846:  NOP   
+0848:  BSF    F93.1
+084A:  BTFSS  F81.1
+084C:  BRA    084A
+084E:  MOVLW  05
+0850:  MOVWF  00
+0852:  DECFSZ 00,F
+0854:  BRA    0852
+0856:  BRA    0858
+0858:  NOP   
+085A:  BSF    F93.0
+085C:  MOVLW  05
+085E:  MOVWF  00
+0860:  DECFSZ 00,F
+0862:  BRA    0860
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    enable_interrupts(global); 
+0864:  MOVLW  C0
+0866:  IORWF  FF2,F
+.................... #endif 
+....................  
+.................... } 
+....................  
+....................  
+.................... char ds1307_read_nvram_byte(char addr){ 
+....................  
+....................    char retval; 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    disable_interrupts(global); 
+.................... #endif 
+....................  
+....................    i2c_start(); 
+....................    i2c_write(0xD0); 
+....................    i2c_write(addr); 
+....................  
+....................    i2c_start(); 
+....................    i2c_write(0xD1); 
+....................    retval = i2c_read(0); 
+....................    i2c_stop(); 
+....................  
+....................    return(retval); 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    enable_interrupts(global); 
+.................... #endif 
+....................  
+.................... } 
+....................  
+.................... void ds1307_write_nvram_byte(char addr, char value){ 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    disable_interrupts(global); 
+.................... #endif 
+....................  
+....................    i2c_start(); 
+....................    i2c_write(0xD0); 
+....................    i2c_write(addr); 
+....................    i2c_write(value); 
+....................    i2c_stop(); 
+....................  
+.................... #ifndef USE_INTERRUPTS 
+....................    enable_interrupts(global); 
+.................... #endif 
+....................  
+.................... } 
+....................  
+.................... void ds1307_get_day_of_week(char* ptr){ 
+....................  
+....................    byte lday; 
+....................    byte lmonth; 
+....................    byte lyr; 
+....................    byte ldow; 
+....................    ds1307_get_date(lday,lmonth,lyr,ldow); 
+....................    sprintf(ptr,"%s",days_of_week[ldow]); 
+*
+0578:  MOVF   x7D,W
+057A:  MULLW  0B
+057C:  MOVF   FF3,W
+057E:  CLRF   03
+0580:  ADDLW  16
+0582:  MOVWF  01
+0584:  MOVLW  00
+0586:  ADDWFC 03,F
+0588:  MOVFF  01,7E
+058C:  MOVFF  03,7F
+0590:  MOVFF  79,64
+0594:  MOVFF  78,63
+0598:  MOVFF  03,FEA
+059C:  MOVFF  01,FE9
+05A0:  BRA    047A
+.................... } 
+05A2:  GOTO   06CE (RETURN)
+....................  
+.................... /////////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... byte ds1307_bin2bcd(byte binary_value){ 
+....................  
+....................   byte temp; 
+....................   byte retval; 
+....................  
+....................   temp = binary_value; 
+*
+02F8:  MOVFF  7A,7B
+....................   retval = 0; 
+02FC:  CLRF   x7C
+....................   while(true){ 
+....................     if(temp >= 10){ 
+02FE:  MOVF   x7B,W
+0300:  SUBLW  09
+0302:  BC    030E
+....................       temp -= 10; 
+0304:  MOVLW  0A
+0306:  SUBWF  x7B,F
+....................       retval += 0x10; 
+0308:  MOVLW  10
+030A:  ADDWF  x7C,F
+....................     }else{ 
+030C:  BRA    0314
+....................       retval += temp; 
+030E:  MOVF   x7B,W
+0310:  ADDWF  x7C,F
+....................       break; 
+0312:  BRA    0316
+....................     } 
+....................   } 
+0314:  BRA    02FE
+....................   return(retval); 
+0316:  MOVFF  7C,01
+.................... } 
+031A:  GOTO   03F0 (RETURN)
+....................  
+.................... byte ds1307_bcd2bin(byte bcd_value){ 
+....................  
+....................   byte temp; 
+....................  
+....................   temp = bcd_value; 
+*
+02D2:  MOVFF  83,84
+....................   temp >>= 1; 
+02D6:  BCF    FD8.0
+02D8:  RRCF   x84,F
+....................   temp &= 0x78; 
+02DA:  MOVLW  78
+02DC:  ANDWF  x84,F
+....................   return(temp + (temp >> 2) + (bcd_value & 0x0f)); 
+02DE:  RRCF   x84,W
+02E0:  MOVWF  00
+02E2:  RRCF   00,F
+02E4:  MOVLW  3F
+02E6:  ANDWF  00,F
+02E8:  MOVF   00,W
+02EA:  ADDWF  x84,W
+02EC:  MOVWF  x85
+02EE:  MOVF   x83,W
+02F0:  ANDLW  0F
+02F2:  ADDWF  x85,W
+02F4:  MOVWF  01
+.................... } 
+02F6:  RETLW  00
+....................  
+.................... /////////////////////////////////////////////////////////////////////////////// 
+....................  
+....................   
+.................... //#define USE_INTERRUPTS 1 
+....................   
+.................... /////////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... char rec='f'; 
+.................... int sec,min,hrs,day,month,yr,dow; 
+.................... char sdow[11]; 
+....................   
+.................... // INTERRUPCION por RECEPCION SERIE ------------------------------------------- 
+....................   
+.................... #int_rda 
+.................... void serial_isr() { 
+....................  
+....................      rec=fgetc(); 
+*
+0096:  BTFSS  F9E.5
+0098:  BRA    0096
+009A:  MOVFF  FAE,65
+....................      
+.................... } 
+....................   
+009E:  BCF    F9E.5
+00A0:  GOTO   0054
+.................... void lee_y_transmite_date_and_time(void){ 
+....................   
+....................    ds1307_get_day_of_week((char*) sdow); 
+*
+06C6:  CLRF   x79
+06C8:  MOVLW  6D
+06CA:  MOVWF  x78
+06CC:  BRA    04A0
+....................    ds1307_get_date(day,month,yr,dow); 
+....................    ds1307_get_time(hrs,min,sec); 
+....................    printf("\%s \%02d/\%02d/\%02d ",sdow,day,month,yr); 
+*
+0868:  CLRF   FEA
+086A:  MOVLW  6D
+086C:  MOVWF  FE9
+086E:  BRA    05A6
+0870:  MOVLW  20
+0872:  BTFSS  F9E.4
+0874:  BRA    0872
+0876:  MOVWF  FAD
+0878:  MOVFF  69,78
+087C:  MOVLW  01
+087E:  MOVWF  x79
+0880:  RCALL  05F6
+0882:  MOVLW  2F
+0884:  BTFSS  F9E.4
+0886:  BRA    0884
+0888:  MOVWF  FAD
+088A:  MOVFF  6A,78
+088E:  MOVLW  01
+0890:  MOVWF  x79
+0892:  RCALL  05F6
+0894:  MOVLW  2F
+0896:  BTFSS  F9E.4
+0898:  BRA    0896
+089A:  MOVWF  FAD
+089C:  MOVFF  6B,78
+08A0:  MOVLW  01
+08A2:  MOVWF  x79
+08A4:  RCALL  05F6
+08A6:  MOVLW  20
+08A8:  BTFSS  F9E.4
+08AA:  BRA    08A8
+08AC:  MOVWF  FAD
+....................    printf("\%02d:\%02d:\%02d:\%02d\r\n", hrs,min,sec,dow); 
+08AE:  MOVFF  68,78
+08B2:  MOVLW  01
+08B4:  MOVWF  x79
+08B6:  RCALL  05F6
+08B8:  MOVLW  3A
+08BA:  BTFSS  F9E.4
+08BC:  BRA    08BA
+08BE:  MOVWF  FAD
+08C0:  MOVFF  67,78
+08C4:  MOVLW  01
+08C6:  MOVWF  x79
+08C8:  RCALL  05F6
+08CA:  MOVLW  3A
+08CC:  BTFSS  F9E.4
+08CE:  BRA    08CC
+08D0:  MOVWF  FAD
+08D2:  MOVFF  66,78
+08D6:  MOVLW  01
+08D8:  MOVWF  x79
+08DA:  RCALL  05F6
+08DC:  MOVLW  3A
+08DE:  BTFSS  F9E.4
+08E0:  BRA    08DE
+08E2:  MOVWF  FAD
+08E4:  MOVFF  6C,78
+08E8:  MOVLW  01
+08EA:  MOVWF  x79
+08EC:  RCALL  05F6
+08EE:  MOVLW  0D
+08F0:  BTFSS  F9E.4
+08F2:  BRA    08F0
+08F4:  MOVWF  FAD
+08F6:  MOVLW  0A
+08F8:  BTFSS  F9E.4
+08FA:  BRA    08F8
+08FC:  MOVWF  FAD
+.................... } 
+08FE:  RETLW  00
+....................   
+.................... void main() { 
+0900:  CLRF   FF8
+0902:  BCF    FD0.7
+0904:  BSF    07.7
+0906:  CLRF   FEA
+0908:  CLRF   FE9
+090A:  BSF    FB8.3
+090C:  MOVLW  08
+090E:  MOVWF  FAF
+0910:  MOVLW  02
+0912:  MOVWF  FB0
+0914:  MOVLW  A6
+0916:  MOVWF  FAC
+0918:  MOVLW  90
+091A:  MOVWF  FAB
+091C:  MOVLW  66
+091E:  MOVWF  x65
+0920:  MOVF   FC1,W
+0922:  ANDLW  C0
+0924:  IORLW  0F
+0926:  MOVWF  FC1
+0928:  MOVLW  07
+092A:  MOVWF  FB4
+092C:  MOVLW  4C
+092E:  MOVWF  16
+0930:  MOVLW  75
+0932:  MOVWF  17
+0934:  MOVLW  6E
+0936:  MOVWF  18
+0938:  MOVLW  65
+093A:  MOVWF  19
+093C:  MOVLW  73
+093E:  MOVWF  1A
+0940:  CLRF   1B
+0942:  CLRF   1C
+0944:  CLRF   1D
+0946:  CLRF   1E
+0948:  CLRF   1F
+094A:  CLRF   20
+094C:  MOVLW  4D
+094E:  MOVWF  21
+0950:  MOVLW  61
+0952:  MOVWF  22
+0954:  MOVLW  72
+0956:  MOVWF  23
+0958:  MOVLW  74
+095A:  MOVWF  24
+095C:  MOVLW  65
+095E:  MOVWF  25
+0960:  MOVLW  73
+0962:  MOVWF  26
+0964:  CLRF   27
+0966:  CLRF   28
+0968:  CLRF   29
+096A:  CLRF   2A
+096C:  CLRF   2B
+096E:  MOVLW  4D
+0970:  MOVWF  2C
+0972:  MOVLW  69
+0974:  MOVWF  2D
+0976:  MOVLW  E9
+0978:  MOVWF  2E
+097A:  MOVLW  72
+097C:  MOVWF  2F
+097E:  MOVLW  63
+0980:  MOVWF  30
+0982:  MOVLW  6F
+0984:  MOVWF  31
+0986:  MOVLW  6C
+0988:  MOVWF  32
+098A:  MOVLW  65
+098C:  MOVWF  33
+098E:  MOVLW  73
+0990:  MOVWF  34
+0992:  CLRF   35
+0994:  CLRF   36
+0996:  MOVLW  4A
+0998:  MOVWF  37
+099A:  MOVLW  75
+099C:  MOVWF  38
+099E:  MOVLW  65
+09A0:  MOVWF  39
+09A2:  MOVLW  76
+09A4:  MOVWF  3A
+09A6:  MOVLW  65
+09A8:  MOVWF  3B
+09AA:  MOVLW  73
+09AC:  MOVWF  3C
+09AE:  CLRF   3D
+09B0:  CLRF   3E
+09B2:  CLRF   3F
+09B4:  CLRF   40
+09B6:  CLRF   41
+09B8:  MOVLW  56
+09BA:  MOVWF  42
+09BC:  MOVLW  69
+09BE:  MOVWF  43
+09C0:  MOVLW  65
+09C2:  MOVWF  44
+09C4:  MOVLW  72
+09C6:  MOVWF  45
+09C8:  MOVLW  6E
+09CA:  MOVWF  46
+09CC:  MOVLW  65
+09CE:  MOVWF  47
+09D0:  MOVLW  73
+09D2:  MOVWF  48
+09D4:  CLRF   49
+09D6:  CLRF   4A
+09D8:  CLRF   4B
+09DA:  CLRF   4C
+09DC:  MOVLW  53
+09DE:  MOVWF  4D
+09E0:  MOVLW  E1
+09E2:  MOVWF  4E
+09E4:  MOVLW  62
+09E6:  MOVWF  4F
+09E8:  MOVLW  61
+09EA:  MOVWF  50
+09EC:  MOVLW  64
+09EE:  MOVWF  51
+09F0:  MOVLW  6F
+09F2:  MOVWF  52
+09F4:  CLRF   53
+09F6:  CLRF   54
+09F8:  CLRF   55
+09FA:  CLRF   56
+09FC:  CLRF   57
+09FE:  MOVLW  44
+0A00:  MOVWF  58
+0A02:  MOVLW  6F
+0A04:  MOVWF  59
+0A06:  MOVLW  6D
+0A08:  MOVWF  5A
+0A0A:  MOVLW  69
+0A0C:  MOVWF  5B
+0A0E:  MOVLW  6E
+0A10:  MOVWF  5C
+0A12:  MOVLW  67
+0A14:  MOVWF  5D
+0A16:  MOVLW  6F
+0A18:  MOVWF  5E
+0A1A:  CLRF   5F
+0A1C:  CLRF   x60
+0A1E:  CLRF   x63
+0A20:  CLRF   x64
+....................   
+....................    
+....................    
+....................    set_tris_b(0b00000111); 
+0A22:  MOVLW  07
+0A24:  MOVWF  F93
+....................    set_tris_e(0b00010000); 
+0A26:  MOVLW  10
+0A28:  MOVWF  F96
+....................    output_e(0x00); 
+0A2A:  CLRF   F96
+0A2C:  CLRF   F8D
+....................    set_tris_c(0b10000000); 
+0A2E:  MOVLW  80
+0A30:  MOVWF  F94
+....................   
+....................     
+....................    printf("\r\n"); 
+0A32:  MOVLW  0D
+0A34:  BTFSS  F9E.4
+0A36:  BRA    0A34
+0A38:  MOVWF  FAD
+0A3A:  MOVLW  0A
+0A3C:  BTFSS  F9E.4
+0A3E:  BRA    0A3C
+0A40:  MOVWF  FAD
+....................    printf("based on DS1307 Dallas Maxim Hardware\r\n\n"); 
+0A42:  MOVLW  A4
+0A44:  MOVWF  FF6
+0A46:  MOVLW  00
+0A48:  MOVWF  FF7
+0A4A:  CALL   01B8
+....................    printf("Available RS232 commands:\r\n"); 
+0A4E:  MOVLW  CE
+0A50:  MOVWF  FF6
+0A52:  MOVLW  00
+0A54:  MOVWF  FF7
+0A56:  CALL   01B8
+....................    printf("  [o] Dump Date & Time ON\r\n"); 
+0A5A:  MOVLW  EA
+0A5C:  MOVWF  FF6
+0A5E:  MOVLW  00
+0A60:  MOVWF  FF7
+0A62:  CALL   01B8
+....................    printf("  [f] Dump Date & Time OFF\r\n\n"); 
+0A66:  MOVLW  06
+0A68:  MOVWF  FF6
+0A6A:  MOVLW  01
+0A6C:  MOVWF  FF7
+0A6E:  CALL   01B8
+....................    
+....................   
+....................    enable_interrupts(int_ext2); 
+0A72:  BSF    FF0.4
+....................    enable_interrupts(int_rda); 
+0A74:  BSF    F9D.5
+....................    enable_interrupts(global); 
+0A76:  MOVLW  C0
+0A78:  IORWF  FF2,F
+....................   
+....................    // Inicializa DS1307 
+....................    printf("Inicializando DS1307 ...\r\n\n"); 
+0A7A:  MOVLW  24
+0A7C:  MOVWF  FF6
+0A7E:  MOVLW  01
+0A80:  MOVWF  FF7
+0A82:  CALL   01B8
+....................     delay_ms(1000); 
+0A86:  MOVLW  04
+0A88:  MOVWF  x78
+0A8A:  MOVLW  FA
+0A8C:  MOVWF  x79
+0A8E:  CALL   01DA
+0A92:  DECFSZ x78,F
+0A94:  BRA    0A8A
+....................    ds1307_init(DS1307_OUT_ON_DISABLED_HIHG | DS1307_OUT_ENABLED | DS1307_OUT_1_HZ); 
+0A96:  MOVLW  90
+0A98:  MOVWF  x78
+0A9A:  BRA    031E
+....................    //ds1307_set_date_time(8,8,15,6,12,12,12); 
+....................    // Set date for -> 5 Agosto 2006 Viernes 
+....................    // Set time for -> 02:50:00 
+....................    // printf("Set Date & Time to ...\r\n"); 
+....................    // ds1307_set_date_time(5,8,6,5,2,50,00); 
+....................   
+....................    // Lee Fecha y Hora actual y transmite 
+....................   
+....................    printf("Fecha y Hora actual en el DS1307\r\n\n"); 
+0A9C:  MOVLW  40
+0A9E:  MOVWF  FF6
+0AA0:  MOVLW  01
+0AA2:  MOVWF  FF7
+0AA4:  CALL   01B8
+....................    lee_y_transmite_date_and_time(); 
+0AA8:  RCALL  06C6
+....................    printf("\r\n\n"); 
+0AAA:  MOVLW  0D
+0AAC:  BTFSS  F9E.4
+0AAE:  BRA    0AAC
+0AB0:  MOVWF  FAD
+0AB2:  MOVLW  0A
+0AB4:  BTFSS  F9E.4
+0AB6:  BRA    0AB4
+0AB8:  MOVWF  FAD
+0ABA:  MOVLW  0A
+0ABC:  BTFSS  F9E.4
+0ABE:  BRA    0ABC
+0AC0:  MOVWF  FAD
+....................   
+....................    // Test de RAM -> primero Write, segundo Read 
+....................    printf("Test de la NVRAM interna (Write and read) ...\r\n\n"); 
+0AC2:  MOVLW  64
+0AC4:  MOVWF  FF6
+0AC6:  MOVLW  01
+0AC8:  MOVWF  FF7
+0ACA:  CALL   01B8
+....................  
+....................    do{ 
+....................   
+....................       if(rec=='o'){ 
+0ACE:  MOVF   x65,W
+0AD0:  SUBLW  6F
+0AD2:  BNZ   0AF4
+....................          
+....................             printf("Set Dump ON\r\n\n"); 
+0AD4:  MOVLW  96
+0AD6:  MOVWF  FF6
+0AD8:  MOVLW  01
+0ADA:  MOVWF  FF7
+0ADC:  CALL   01B8
+....................            
+....................          lee_y_transmite_date_and_time(); 
+0AE0:  RCALL  06C6
+....................           delay_ms(1000); 
+0AE2:  MOVLW  04
+0AE4:  MOVWF  x78
+0AE6:  MOVLW  FA
+0AE8:  MOVWF  x79
+0AEA:  CALL   01DA
+0AEE:  DECFSZ x78,F
+0AF0:  BRA    0AE6
+....................           
+....................       }else if(rec=='f'){ 
+0AF2:  BRA    0B0A
+0AF4:  MOVF   x65,W
+0AF6:  SUBLW  66
+0AF8:  BNZ   0B0A
+....................          
+....................             printf("\r\nSet Dump OFF\r\n\n"); 
+0AFA:  MOVLW  A6
+0AFC:  MOVWF  FF6
+0AFE:  MOVLW  01
+0B00:  MOVWF  FF7
+0B02:  CALL   01B8
+....................            rec=2; 
+0B06:  MOVLW  02
+0B08:  MOVWF  x65
+....................           
+....................       } 
+....................    } while (TRUE); 
+.................... } 
+0B0A:  BRA    0ACE
+....................   
+0B0C:  SLEEP 
+
+Configuration Fuses:
+   Word  1: CC3F   IESO FCMEN HS PLL12 CPUDIV4 USBDIV
+   Word  2: 1E19   NOBROWNOUT NOWDT BORV20 NOPUT WDT32768 NOVREGEN
+   Word  3: 8500   NOPBADEN CCP2C1 MCLR LPT1OSC
+   Word  4: 0081   STVREN NODEBUG NOLVP NOXINST NOICPRT
+   Word  5: C00F   NOPROTECT NOCPD NOCPB
+   Word  6: E00F   NOWRT NOWRTD NOWRTC NOWRTB
+   Word  7: 400F   NOEBTR NOEBTRB

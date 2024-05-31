@@ -1,0 +1,9 @@
+*** Error 18 "reloj.c" Line 15(10,21): File can not be opened
+    Not in "C:\Program Files\PICC\Devices\_ds1307.c"
+    Not in "C:\Program Files\PICC\Drivers\_ds1307.c"
+    Not in local "C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\rtc\_ds1307.c"
+*** Error 12 "reloj.c" Line 36(26,27): Undefined identifier  -- ds1307_get_day_of_week
+*** Error 12 "reloj.c" Line 37(19,20): Undefined identifier  -- ds1307_get_date
+*** Error 12 "reloj.c" Line 38(19,20): Undefined identifier  -- ds1307_get_time
+*** Error 12 "reloj.c" Line 67(15,16): Undefined identifier  -- ds1307_init
+      5 Errors,  0 Warnings.

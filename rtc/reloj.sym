@@ -1,0 +1,156 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016-062 days_of_week
+063-064 @sprintf_string
+065     rec
+066     sec
+067     min
+068     hrs
+069     day
+06A     month
+06B     yr
+06C     dow
+06D-077 sdow
+078     @PRINTF_D_9600_31766_31767.P1
+078     ds1307_init.val
+078-079 ds1307_get_day_of_week.ptr
+078     ds1307_get_time.@SCRATCH1
+078     @PSTRINGR_9600_31766_31767.@SCRATCH1
+078     MAIN.@SCRATCH1
+078     @PSTRINGC_9600_31766_31767.@SCRATCH1
+079     ds1307_init.seconds
+079     @delay_ms1.P1
+079     @PRINTF_D_9600_31766_31767.P2
+079     @PSTRINGR_9600_31766_31767.@SCRATCH2
+079     @PSTRINGC_9600_31766_31767.@SCRATCH2
+07A     ds1307_bin2bcd.binary_value
+07A     ds1307_get_day_of_week.lday
+07A     ds1307_init.@SCRATCH1
+07A     @PRINTF_D_9600_31766_31767.@SCRATCH1
+07B     ds1307_bin2bcd.temp
+07B     ds1307_get_day_of_week.lmonth
+07B     @PRINTF_D_9600_31766_31767.@SCRATCH2
+07C     ds1307_get_day_of_week.lyr
+07C     ds1307_bin2bcd.retval
+07C     @PRINTF_D_9600_31766_31767.@SCRATCH3
+07D     ds1307_get_day_of_week.ldow
+07D     @PRINTF_D_9600_31766_31767.@SCRATCH4
+07E     @DIV88.P1
+07E     ds1307_get_date.@SCRATCH1
+07E     ds1307_get_day_of_week.@SCRATCH1
+07F     @DIV88.P1
+07F     ds1307_get_day_of_week.@SCRATCH2
+080     @PSTRINGR_114.@SCRATCH1
+080     @DIV88.@SCRATCH1
+081     @PSTRINGR_114.@SCRATCH2
+082     @I2C_READ_1.P1
+082     @SPRINTF.P2
+082     @I2C_WRITE_1.P3
+083     ds1307_bcd2bin.bcd_value
+083     @I2C_READ_1.@SCRATCH1
+084     ds1307_bcd2bin.temp
+084     @I2C_READ_1.@SCRATCH2
+085     ds1307_bcd2bin.@SCRATCH1
+F83     PSP_DATA
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+01DA  @delay_ms1
+026C  @I2C_READ_1
+0200  @I2C_WRITE_1
+031E  ds1307_init
+06CE  ds1307_get_date
+07A6  ds1307_get_time
+04A0  ds1307_get_day_of_week
+045C  @SPRINTF
+047A  @PSTRINGR_114
+02F8  ds1307_bin2bcd
+02D2  ds1307_bcd2bin
+0096  serial_isr
+06C6  lee_y_transmite_date_and_time
+05A6  @PSTRINGR_9600_31766_31767
+05CE  @DIV88
+05F6  @PRINTF_D_9600_31766_31767
+0900  MAIN
+00A4  @const143
+01B8  @PSTRINGC_9600_31766_31767
+00CE  @const145
+00EA  @const146
+0106  @const147
+0124  @const148
+0140  @const149
+0164  @const151
+0196  @const152
+01A6  @const153
+0900  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\rtc\
+
+Project Files:
+    reloj.c
+    ..\..\..\..\..\..\Program Files\PICC\devices\18f4550.h
+    ..\..\..\..\..\..\Program Files\PICC\drivers\_ds1307.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\rtc\reloj (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      reloj.err
+    Ext Symbols: reloj.esym
+    INHX32:      reloj.hex
+    Symbols:     reloj.sym
+    List:        reloj.lst
+    Debug/COFF:  reloj.cof
+    Project:     reloj.PJT
+    Call Tree:   reloj.tre
+    Statistics:  reloj.sta

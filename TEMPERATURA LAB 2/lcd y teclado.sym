@@ -1,0 +1,170 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     kbd_getc.kbd_call_count
+005.0   kbd_getc.kbd_down
+006     kbd_getc.last_key
+007     kbd_getc.col
+008-009 digital_reading
+00A-00D temp
+00E-011 tempc
+012     num1
+013     num2
+014     numf
+015     MAIN.k
+016     MAIN.p
+017     MAIN.car
+018     MAIN.car1
+019     MAIN.numero
+01A-01B @ITOF.P1
+01A     @PSTRINGCN_105.P2
+01A     lcd_init.i
+01A     kbd_getc.kchar
+01A-01D @FLT.P1
+01A-01D @PRINTF_L32D_105FPFPF.P2
+01A     MAIN.@SCRATCH1
+01A     @PSTRINGC_105.@SCRATCH1
+01B     kbd_getc.row
+01B     lcd_init.@SCRATCH1
+01B     @PSTRINGC_105.@SCRATCH2
+01B     @PSTRINGCN_105.@SCRATCH1
+01C     kbd_getc.@SCRATCH1
+01C     @PSTRINGCN_105.@SCRATCH2
+01D     kbd_getc.@SCRATCH2
+01E-021 @FLT.P1
+01E     @PRINTF_L32D_105FPFPF.P2
+01F     @PRINTF_L32D_105FPFPF.@SCRATCH1
+020     @PRINTF_L32D_105FPFPF.@SCRATCH2
+021     @PRINTF_L32D_105FPFPF.@SCRATCH3
+022     @PRINTF_L32D_105FPFPF.@SCRATCH4
+022     @FLT.@SCRATCH1
+023     @PRINTF_L32D_105FPFPF.@SCRATCH5
+023     @FLT.@SCRATCH2
+024     @PRINTF_L32D_105FPFPF.@SCRATCH6
+025     @PRINTF_L32D_105FPFPF.@SCRATCH7
+026     @PRINTF_L32D_105FPFPF.@SCRATCH8
+027-02A @FTOSD.P1
+027-02A @DIV3232.P2
+027-02A @MULFF.P3
+027     lcd_putc.c
+028     lcd_gotoxy.x
+028     @delay_ms1.P1
+029     lcd_gotoxy.y
+02A     lcd_gotoxy.address
+02B-02E @MULFF.P1
+02B-02E @DIV3232.P2
+02B     lcd_gotoxy.@SCRATCH1
+02B     @FTOSD.@SCRATCH1
+02C     lcd_send_byte.address
+02D     lcd_send_byte.n
+02E     lcd_read_byte.low
+02E     lcd_send_byte.@SCRATCH1
+02F     lcd_send_nibble.n
+02F     lcd_read_byte.high
+02F     @MULFF.@SCRATCH1
+02F     @DIV3232.@SCRATCH1
+030     lcd_read_byte.@SCRATCH1
+030     @MULFF.@SCRATCH2
+030     @DIV3232.@SCRATCH2
+031     @MULFF.@SCRATCH3
+031     @DIV3232.@SCRATCH3
+032     @DIV3232.@SCRATCH4
+033     @DIV3232.@SCRATCH5
+F83     lcd
+F83     PSP_DATA
+F83     kbd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @READ_PACKED_MEMORY.P1
+FE1-FE2 @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0104  @delay_ms1
+0004  KEYS
+0232  kbd_init
+02CA  kbd_getc
+0020  LCD_INIT_STRING
+0154  lcd_read_byte
+0148  lcd_read_nibble
+012A  lcd_send_nibble
+0196  lcd_send_byte
+01D0  lcd_init
+0236  lcd_gotoxy
+0258  lcd_putc
+0782  MAIN
+0034  @const124
+02AA  @PSTRINGC_105
+0040  @const126
+004E  @const127
+0062  @const128
+0072  @const129
+0084  @const130
+0086  @const131
+0092  @const132
+037A  @ITOF
+03B0  @MULFF
+00A0  @const138
+04A2  @FTOSD
+04E2  @DIV3232
+0570  @PRINTF_L32D_105FPFPF
+06EA  @PSTRINGCN_105
+00B0  @const149
+070A  @FLT
+00BA  @const153
+00D6  @const154
+00E0  @const155
+00EA  @const156
+00F6  @const157
+0782  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\TEMPERATURA LAB 2\
+
+Project Files:
+    lcd y teclado.c
+    ..\..\..\..\Program Files\PICC\devices\18f4550.h
+    ..\..\..\..\Program Files\PICC\drivers\KBD.c
+    ..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\TEMPERATURA LAB 2\lcd y teclado (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      lcd y teclado.err
+    Ext Symbols: lcd y teclado.esym
+    INHX32:      lcd y teclado.hex
+    Symbols:     lcd y teclado.sym
+    List:        lcd y teclado.lst
+    Debug/COFF:  lcd y teclado.cof
+    Project:     lcd y teclado.PJT
+    Call Tree:   lcd y teclado.tre
+    Statistics:  lcd y teclado.sta
