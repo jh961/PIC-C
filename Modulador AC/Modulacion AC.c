@@ -1,0 +1,88 @@
+#include <18f4550.h>
+#fuses XT,NOWDT,NOPROTECT,NOLVP,PUT,BROWNOUT
+#FUSES CPUDIV1         //DIVISION DE FRECUENCIA DEL OSCILADOR: 1
+#use delay(clock=4000000)
+#use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=pc 1)
+#include <stdio.h>
+
+#DEFINE  PIN_TTRIAC1  PIN_A3
+#DEFINE  PIN_TTRIAC2  PIN_A4
+//#include <lcd.c>
+
+
+
+int S=0,e,d=0,p1;
+char a;
+char dato[10]={};
+
+#int_rda
+void rda_isr()
+   {
+   output_high(PIN_b4);
+   a=fgetc();
+   if(a=='@'){
+   e=100;
+   dato[0]=a;
+
+      for(d=1;d<=e;d++) {
+      a=fgetc();
+      dato[d]=a;
+      if(a=='#'){
+       p1=d;
+       e=0;
+    }
+     
+   }
+   S=(((dato[p1-3]-48)*10)+ ((dato[p1-2]-48)*10)+ ((dato[p1-1]-48)));
+   }
+   }
+   
+#int_TIMER0
+void  INT_T0() 
+{
+   output_high(PIN_TTRIAC1);
+   output_high(PIN_TTRIAC2);
+   delay_us(10); 
+   output_low(PIN_TTRIAC1);
+   output_low(PIN_TTRIAC2);
+   disable_interrupts(INT_TIMER0);
+   enable_interrupts(int_rda);
+}
+
+#int_EXT
+void  EXT_isr() 
+{
+     set_timer0(S);
+     enable_interrupts(INT_TIMER0);
+     disable_interrupts(int_rda);
+}
+
+void main ()
+{
+  
+   
+   
+   ext_int_edge(l_to_h);// interrupcion externa por flanco de subida
+   setup_timer_0(RTCC_INTERNAL|RTCC_DIV_32|RTCC_8_BIT);//timer con desbordamiento maximo de t=1/(2*60Hz)=8.33ms
+   
+   enable_interrupts(INT_EXT);
+   enable_interrupts(int_rda);
+   enable_interrupts(GLOBAL);
+   
+   disable_interrupts(INT_TIMER0);//deshabilitamos interrupcion de timer 0
+   
+   set_tris_b(0xff);
+   set_tris_a(0x00);
+  //lcd_init();
+   
+ // printf(lcd_putc,"hola");
+  
+  output_low(PIN_TTRIAC1);
+   output_low(PIN_TTRIAC2);
+  while(true)
+  {
+    output_low(PIN_b4);
+  }
+}
+
+

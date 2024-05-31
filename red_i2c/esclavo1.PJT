@@ -1,0 +1,46 @@
+[PROJECT]
+Target=esclavo1.HEX
+Development_Mode=2
+Processor=0x877A
+ToolSuite=CCS
+Processor_Text=PIC16F877A
+
+[Directories]
+Include=
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=G:\red_i2c\esclavo1.c
+BuildTool=C-COMPILER
+OptionString=+FM
+AdditionalOptionString=
+BuildRequired=1
+
+[esclavo1.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=esclavo1.c
+
+[Windows]
+0=0000 esclavo1.c 0 0 796 451 3 0
+
+[Opened Files]
+1=G:\red_i2c\maestro.c
+2=G:\red_i2c\esclavo1.c
+3=C:\Program Files\PICC\Drivers\LCD.C
+4=C:\Program Files\PICC\Examples\EX_SLAVE.C
+5=
+6=G:\red_i2c\esclavo1.c
+7=C:\Program Files\PICC\Examples\EX_SLAVE.C
+8=
+[Units]
+Count=1
+1=esclavo1.c (main)
+Link=0

@@ -1,0 +1,44 @@
+
+ROM used: 154 (0%)
+          154 (0%) including unused fragments
+
+          0 Average locations per line
+          2 Average locations per statement
+
+RAM used: 7 (0%) at main() level
+          7 (0%) worst case
+
+Stack used: 0 worst case (out of 31 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+   47    12  14  modulacion2.c
+   35     0   0  modulacion2.h
+  461     0   0  ..\..\..\..\..\Program Files\PICC\devices\18F4550.h
+  411    75  86  ..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+----- -----
+  954    87 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0    150  49   0   267  3.2  MAIN
+
+Program metrics:
+    Functions               1
+    Statements              87
+    Comments                208
+    Volume (V)              267
+    Difficilty (D)          3.2
+    Effort to implement (E) 864
+    Time to implement (T)   1 minutes
+    Est Delivered Bugs (B)  0
+    Cyclomatic Complexity   1
+    Maintainability (MI)    52
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-07FFE   150  32614  
+
+
+

@@ -1,0 +1,139 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     @INTERRUPT_AREA
+017     valor
+018     pwmh
+019     x
+01A     y
+01B     z
+01C     n
+01D-01E time
+01F-020 subida
+021-022 bajada
+023     lcd_init.i
+023     MAIN.@SCRATCH1
+024     lcd_init.@SCRATCH1
+02F     EXT_ISR.@SCRATCH1
+02F     @PSTRINGC_97.@SCRATCH1
+030     @PSTRINGC_97.@SCRATCH2
+031     lcd_putc.c
+032     lcd_gotoxy.x
+032     @delay_ms2.P1
+033     lcd_gotoxy.y
+034     lcd_gotoxy.address
+035     lcd_gotoxy.@SCRATCH1
+036     lcd_send_byte.address
+037     lcd_send_byte.n
+038     lcd_read_byte.low
+038     lcd_send_byte.@SCRATCH1
+039     lcd_send_nibble.n
+039     lcd_read_byte.high
+03A     lcd_read_byte.@SCRATCH1
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0180  @delay_ms2
+00A2  LCD_INIT_STRING
+00CC  lcd_read_byte
+00C0  lcd_read_nibble
+010C  lcd_send_nibble
+012A  lcd_send_byte
+046E  lcd_init
+015E  lcd_gotoxy
+01A6  lcd_putc
+020A  EXT_ISR
+03A2  @const113
+01EA  @PSTRINGC_97
+03AC  @const115
+03B8  @const116
+03C2  @const117
+03CE  @const118
+03D8  @const119
+03E2  @const120
+03EC  @const121
+03F8  @const122
+0404  @const123
+040E  @const124
+041A  @const125
+0424  @const126
+042E  timer0_isr
+050A  MAIN
+045C  @const130
+0462  @const131
+050A  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\
+
+Project Files:
+    modulacion.c
+    MODULACION.h
+    ..\..\..\..\..\Program Files\PICC\devices\18F4550.h
+    ..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\modulacion (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      modulacion.err
+    Ext Symbols: modulacion.esym
+    INHX32:      modulacion.hex
+    Symbols:     modulacion.sym
+    List:        modulacion.lst
+    Debug/COFF:  modulacion.cof
+    Project:     modulacion.PJT
+    Call Tree:   modulacion.tre
+    Statistics:  modulacion.sta

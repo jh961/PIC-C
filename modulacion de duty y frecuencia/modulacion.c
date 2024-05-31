@@ -1,0 +1,265 @@
+#include <MODULACION.h>
+
+#fuses hs,nowdt,nolvp,noput,put,noprotect,nodebug,cpudiv1,usbdiv
+#use delay(clock=20000000) 
+#include <lcd.c>
+#define L_TO_H
+
+//#DEVICE ADC=10
+INT valor, pwmh = 0, x = 0, y = 0,z=0,n=0;
+   
+INT16 time = 255, subida = 0, bajada = 0;
+
+/*
+frecuencia =10k
+tiempo deseado= 1/(frecuencia*2)
+cristal/ reloj = 20Mhz
+division de crital=t2_div_b_#/cristal
+setup_timer_1(t1_internal|t1_div_by_#);
+set_timer1(time);
+
+Time = 65536-((tiempo requerido)/(4/division de crital))
+frecuencia =(1/ perido PWM)*2 
+*/
+#INT_EXT
+void EXT_ISR(VOID)
+{
+disable_interrupts (INT_TIMER0); // inavilita la interruccion por derrame
+disable_interrupts (INT_ext);
+disable_interrupts (global);
+output_low(pin_b7);
+
+WHILE (input (pin_b0) == 1){
+
+
+
+if ((input (pin_b0) == 1)&&(z==0)){
+
+if(input (pin_b4) == 1){
+ y++;
+ if(y==4){
+ y=0;
+ }
+  WHILE (input (pin_b4) == 1){}
+}
+IF (y == 0)
+      {
+       
+         lcd_gotoxy (1, 1) ;
+         printf (lcd_putc, "@   1K HZ");
+         lcd_gotoxy (1, 2) ;
+         printf (lcd_putc, "   2.5K Hz");
+         }else IF (y == 1) {
+        
+         lcd_gotoxy (1, 1) ;
+         printf (lcd_putc, "   1K Hz");
+         lcd_gotoxy (1, 2) ;
+         printf (lcd_putc, "@   2.5K Hz");
+         }else IF (y == 2) {
+        
+         lcd_gotoxy (1, 1) ;
+         printf (lcd_putc, "@   4K Hz");
+         lcd_gotoxy (1, 2) ;
+         printf (lcd_putc, "   10K Hz");
+         }else IF (y == 3) {
+        
+         lcd_gotoxy (1, 1) ;
+         printf (lcd_putc, "   4K Hz");
+         lcd_gotoxy (1, 2) ;
+         printf (lcd_putc, "@   10K Hz");
+      }
+      
+   }
+   else {
+   
+         lcd_gotoxy (1, 1) ;
+         printf (lcd_putc, "Seleccionó ");
+      
+      IF (y == 0)
+      {
+         lcd_gotoxy (1, 2) ;
+         printf (lcd_putc, "   1K HZ");
+         
+         }else IF (y == 1) {
+      
+         lcd_gotoxy (1, 2) ;
+         printf (lcd_putc, "   2.5K Hz");
+         }else IF (y == 2) {
+       
+         lcd_gotoxy (1, 2);
+         printf (lcd_putc, "   4K Hz");
+     
+         }else IF (y == 3) {
+        
+         lcd_gotoxy (1, 2) ;
+         printf (lcd_putc, "   10K Hz");
+      }
+   }
+   delay_ms (50);
+      lcd_putc ('\f');
+      
+    if(input (pin_b3) == 1){
+      z=1;
+    
+    WHILE (input (pin_b3) == 1){}
+      }
+}
+   enable_interrupts (INT_TIMER0); // avilita la interruccion por derrame
+   enable_interrupts (INT_ext);
+   enable_interrupts (global);
+}
+
+
+#INT_timer0
+void timer0_isr(VOID)
+{
+   output_toggle(pin_b7);
+   
+   
+
+
+
+   IF (x == 0)
+   {
+      x = 1;
+      output_high (pin_b5);
+      set_timer0 (subida); // carga timer con 1k
+      }ELSE {
+      x = 0;
+      output_low (pin_b5);
+      set_timer0 (bajada) ;
+   }
+
+  //set_timer0 (time) ;
+    
+}
+  
+void main()
+{
+   
+   
+   set_tris_a (0xff) ;
+   set_tris_b (0x0f) ;
+   set_tris_d (0x00) ;
+  
+   lcd_init();  
+   
+   printf(lcd_putc, "AUTOR");
+   lcd_gotoxy(1,2);
+   printf(lcd_putc, "JAIME DIAZ");
+   delay_ms(1000);
+   lcd_putc('\f');
+  
+   
+  // set_timer0 (time) ;
+   enable_interrupts (INT_TIMER0); // avilita la interruccion por derrame
+   enable_interrupts (INT_ext);
+   enable_interrupts (global);
+   
+   setup_timer_0 (rtcc_div_2|rtcc_internal|rtcc_8_bit) ;
+   
+   setup_adc (ADC_CLOCK_div_8);
+   setup_adc_ports (AN0);
+   set_adc_channel (0);
+   delay_us (10) ;
+
+   WHILE (true)
+   {
+      
+      valor = read_adc ();
+      pwmh = valor;
+      output_high (pin_b6);
+      z=0;
+    
+  if(y==3){
+   IF ( (pwmh <= 25)&& (pwmh >= 0)){           //10%
+      subida = 255;
+      bajada = 76;
+      
+      }
+      
+      else IF ( (pwmh <= 50)&& (pwmh >= 26)){ //20%
+      subida = 220;
+      bajada = 94;
+      
+      
+      }
+      else IF ( (pwmh <= 75)&& (pwmh >= 51)){  //30 %
+      subida = 200;
+      bajada = 115;
+      
+      
+      }else IF ( (pwmh <= 100)&& (pwmh >= 76)){ //40%
+      subida = 180;
+      bajada = 134;
+     
+      }else IF ( (pwmh <= 125)&& (pwmh >= 101)){ //50%
+      subida = 160;
+      bajada = 154;
+      
+      
+      }else IF ( (pwmh <= 150)&& (pwmh >= 126)){  //60 %
+      subida = 134;
+      bajada = 180;
+     
+      }else IF ( (pwmh <= 175)&& (pwmh >= 151)){ //70%
+      subida = 115;
+      bajada = 200;
+      
+      }else IF ( (pwmh <= 200)&& (pwmh >= 176)){ //80%
+      
+      subida = 94;
+      bajada = 220;
+      
+      }else IF ( (pwmh <= 255)&& (pwmh >= 201)){ //90%
+      
+      subida = 76;
+      bajada = 255;
+     
+   }else IF ( (pwmh <= 255)&& (pwmh >= 226))
+   {
+      //100%
+      subida =76 ;
+      bajada =255 ;
+   }
+
+   /*
+       lcd_gotoxy (1, 1) ;
+      printf (lcd_putc, "DUTY =");  
+      
+      IF ( (pwmh <= 25)&& (pwmh >= 0)){           //10%
+        lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   10  ");
+      }else IF ( (pwmh <= 50)&& (pwmh >= 26)){ //20%
+      lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   20  ");
+      }else IF ( (pwmh <= 75)&& (pwmh >= 51)){  //30 %
+      lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   30  ");
+      }else IF ( (pwmh <= 100)&& (pwmh >= 76)){ //40%
+      lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   40  ");
+      }else IF ( (pwmh <= 125)&& (pwmh >= 101)){ //50%
+      lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   50  ");
+      }else IF ( (pwmh <= 150)&& (pwmh >= 126)){  //60 %
+     lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   60  ");
+      }else IF ( (pwmh <= 175)&& (pwmh >= 151)){ //70%
+      lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   70  ");
+      }else IF ( (pwmh <= 200)&& (pwmh >= 176)){ //80%
+      lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   80  ");
+      }else IF ( (pwmh <= 255)&& (pwmh >= 201)){ //90%
+       lcd_gotoxy (1, 2) ;
+       printf (lcd_putc, "   90  ");
+   }
+      
+    
+      delay_ms (50);
+      lcd_putc ('\f');
+    */  
+}
+}
+}

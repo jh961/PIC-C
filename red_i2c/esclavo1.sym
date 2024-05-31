@@ -1,0 +1,80 @@
+004-005 @WRITE_PROGRAM_MEMORY.P1
+004-005 @READ_PROGRAM_MEMORY.P2
+008     PSP_DATA
+008     lcd
+015     CCP_1_LOW
+015-016 CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B-01C CCP_2
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028     @TRIS_C
+029     flag
+02A     dato
+02B     incoming
+02C     state
+02D     @I2C_STATE
+02E     @delay_ms1.P1
+02F     ssp_interupt.incoming
+030     ssp_interupt.state
+031     @I2C_WRITE_1.P1
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07B     @SCRATCH
+07F     @INTERRUPT_AREA
+09C.6   C1OUT
+09C.7   C2OUT
+0FF     @INTERRUPT_AREA
+10D     @WRITE_PROGRAM_MEMORY.P1
+10D     @READ_PROGRAM_MEMORY.P2
+10F     @READ_PROGRAM_MEMORY.P1
+10F     @WRITE_PROGRAM_MEMORY.P2
+17F     @INTERRUPT_AREA
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+
+006C  @delay_ms1
+00AE  lcd_putc
+0035  @I2C_WRITE_1
+0042  ssp_interupt
+0081  MAIN
+0081  @cinit
+
+Project Files:
+    esclavo1.c
+    C:\PROGRA~1\PICC\devices\16f877a.h
+    C:\PROGRA~1\PICC\drivers\lcd.c
+
+Units:
+    G:\red_i2c\esclavo1.c (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      0
+    Short,Int,Long: 1,8,16
+
+Output Files:
+    Errors:      G:\red_i2c\esclavo1.err
+    Ext Symbols: G:\red_i2c\esclavo1.esym
+    INHX8:       G:\red_i2c\esclavo1.hex
+    Symbols:     G:\red_i2c\esclavo1.sym
+    List:        G:\red_i2c\esclavo1.lst
+    Debug/COFF:  G:\red_i2c\esclavo1.cof
+    Call Tree:   esclavo1.tre
+    Statistics:  esclavo1.sta

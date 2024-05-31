@@ -1,0 +1,12 @@
+>>> Warning 225 "codigo final.c" Line 5(0,1): Duplicate #define
+>>> Warning 216 "codigo final.c" Line 355(0,1): Interrupts disabled during call to prevent re-entrancy:  (@delay_ms2)
+>>> Warning 216 "codigo final.c" Line 355(0,1): Interrupts disabled during call to prevent re-entrancy:  (lcd_send_nibble)
+>>> Warning 216 "codigo final.c" Line 355(0,1): Interrupts disabled during call to prevent re-entrancy:  (lcd_send_byte)
+>>> Warning 216 "codigo final.c" Line 355(0,1): Interrupts disabled during call to prevent re-entrancy:  (@PSTRINGC_101)
+>>> Warning 216 "codigo final.c" Line 355(0,1): Interrupts disabled during call to prevent re-entrancy:  (lcd_gotoxy)
+>>> Warning 216 "codigo final.c" Line 355(0,1): Interrupts disabled during call to prevent re-entrancy:  (lcd_putc)
+>>> Warning 202 "codigo final.c" Line 6(24,25): Variable never used:   n
+>>> Warning 202 "codigo final.c" Line 7(20,24): Variable never used:   time
+>>> Warning 202 "codigo final.c" Line 7(59,63): Variable never used:   modi
+      Memory usage:   ROM=9%      RAM=2% - 3%
+      0 Errors,  10 Warnings.

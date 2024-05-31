@@ -1,0 +1,7 @@
+ÀÄesclavo1
+   ÃÄMAIN  0/75  Ram=0
+   ³  ÃÄ??0??
+   ³  ÃÄ@delay_ms1  0/21  Ram=1
+   ³  ÀÄ@delay_ms1  0/21  Ram=1
+   ÀÄssp_interupt  0/42  Ram=2
+      ÀÄ@I2C_WRITE_1  0/13  Ram=1
