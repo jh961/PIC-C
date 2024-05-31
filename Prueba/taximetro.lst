@@ -1,0 +1,510 @@
+CCS PCH C Compiler, Version 4.114, 93460303               24-ago-15 21:36
+
+               Filename: C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\taximetro.lst
+
+               ROM used: 828 bytes (3%)
+                         Largest free fragment is 31936
+               RAM used: 44 (2%) at main() level
+                         49 (2%) worst case
+               Stack:    3 worst case (1 in main + 2 for interrupts)
+
+*
+0000:  GOTO   01FC
+*
+0008:  MOVWF  04
+000A:  MOVFF  FD8,05
+000E:  MOVFF  FE0,06
+0012:  MOVLB  0
+0014:  MOVFF  FE9,0C
+0018:  MOVFF  FEA,07
+001C:  MOVFF  FE1,08
+0020:  MOVFF  FE2,09
+0024:  MOVFF  FD9,0A
+0028:  MOVFF  FDA,0B
+002C:  MOVFF  FF3,12
+0030:  MOVFF  FF4,13
+0034:  MOVFF  FFA,14
+0038:  MOVFF  FF5,15
+003C:  MOVFF  FF6,16
+0040:  MOVFF  FF7,17
+0044:  MOVFF  00,0E
+0048:  MOVFF  01,0F
+004C:  MOVFF  02,10
+0050:  MOVFF  03,11
+0054:  BTFSS  FF2.4
+0056:  GOTO   0060
+005A:  BTFSC  FF2.1
+005C:  GOTO   0108
+0060:  BTFSS  FF0.3
+0062:  GOTO   006C
+0066:  BTFSC  FF0.0
+0068:  GOTO   01D4
+006C:  MOVFF  0E,00
+0070:  MOVFF  0F,01
+0074:  MOVFF  10,02
+0078:  MOVFF  11,03
+007C:  MOVFF  0C,FE9
+0080:  MOVFF  07,FEA
+0084:  BSF    07.7
+0086:  MOVFF  08,FE1
+008A:  MOVFF  09,FE2
+008E:  MOVFF  0A,FD9
+0092:  MOVFF  0B,FDA
+0096:  MOVFF  12,FF3
+009A:  MOVFF  13,FF4
+009E:  MOVFF  14,FFA
+00A2:  MOVFF  15,FF5
+00A6:  MOVFF  16,FF6
+00AA:  MOVFF  17,FF7
+00AE:  MOVF   04,W
+00B0:  MOVFF  06,FE0
+00B4:  MOVFF  05,FD8
+00B8:  RETFIE 0
+.................... #include <taximetro.h> 
+.................... #include <18F4550.h> 
+.................... //////// Standard Header file for the PIC18F4550 device //////////////// 
+.................... #device PIC18F4550 
+.................... #list 
+....................  
+....................  
+.................... #FUSES NOWDT                 	//No Watch Dog Timer 
+.................... #FUSES WDT128                	//Watch Dog Timer uses 1:128 Postscale 
+.................... #FUSES PLL12                 	//Divide By 12(48MHz oscillator input) 
+.................... #FUSES CPUDIV4               	//System Clock by 4 
+.................... #FUSES USBDIV                	//USB clock source comes from PLL divide by 2 
+.................... #FUSES XT                    	//Crystal osc <= 4mhz for PCM/PCH , 3mhz to 10 mhz for PCD 
+.................... #FUSES FCMEN                 	//Fail-safe clock monitor enabled 
+.................... #FUSES IESO                  	//Internal External Switch Over mode enabled 
+.................... #FUSES NOPUT                 	//No Power Up Timer 
+.................... #FUSES NOBROWNOUT            	//No brownout reset 
+.................... #FUSES BORV20                	//Brownout reset at 2.0V 
+.................... #FUSES VREGEN                	//USB voltage regulator enabled 
+.................... #FUSES PBADEN                	//PORTB pins are configured as analog input channels on RESET 
+.................... #FUSES LPT1OSC               	//Timer1 configured for low-power operation 
+.................... #FUSES MCLR                  	//Master Clear pin enabled 
+.................... #FUSES STVREN                	//Stack full/underflow will cause reset 
+.................... #FUSES NOLVP                 	//No low voltage prgming, B3(PIC16) or B5(PIC18) used for I/O 
+.................... #FUSES ICPRT                 	//ICPRT enabled 
+.................... #FUSES NOXINST               	//Extended set extension and Indexed Addressing mode disabled (Legacy mode) 
+.................... #FUSES NODEBUG               	//No Debug mode for ICD 
+.................... #FUSES NOPROTECT             	//Code not protected from reading 
+.................... #FUSES NOCPB                 	//No Boot Block code protection 
+.................... #FUSES NOCPD                 	//No EE protection 
+.................... #FUSES NOWRT                 	//Program memory not write protected 
+.................... #FUSES NOWRTC                	//configuration not registers write protected 
+.................... #FUSES NOWRTB                	//Boot block not write protected 
+.................... #FUSES NOWRTD                	//Data EEPROM not write protected 
+.................... #FUSES NOEBTR                	//Memory not protected from table reads 
+.................... #FUSES NOEBTRB               	//Boot block not protected from table reads 
+....................  
+.................... #use delay(crystal=20000000,  clock=5000000) 
+....................  
+....................  
+.................... #use delay( clock = 20000000 ) // reloj de 20 MHz  
+00E2:  CLRF   FEA
+00E4:  MOVLW  2E
+00E6:  MOVWF  FE9
+00E8:  MOVF   FEF,W
+00EA:  BZ    0106
+00EC:  MOVLW  06
+00EE:  MOVWF  01
+00F0:  CLRF   00
+00F2:  DECFSZ 00,F
+00F4:  BRA    00F2
+00F6:  DECFSZ 01,F
+00F8:  BRA    00F0
+00FA:  MOVLW  7B
+00FC:  MOVWF  00
+00FE:  DECFSZ 00,F
+0100:  BRA    00FE
+0102:  DECFSZ FEF,F
+0104:  BRA    00EC
+0106:  RETLW  00
+.................... #fuses HS,NOWDT,PUT 
+.................... #define H_TO_L 
+....................  
+.................... int vector[10]={0b11000000, 0b11111001, 0b10100100,0b10110000, 0b10011001, 0b10010010, 0b10000010, 0b11111000, 0b10000000, 0b10011000}; 
+.................... int i=0,i1=0,j1=0,j=0,m0=0,m1=0,cont=0;//varibales para contar 
+....................  
+.................... #int_EXT 
+.................... void EXT_ISR(void){ 
+....................  
+.................... while(input(pin_b0)==1){ 
+0108:  BSF    F93.0
+010A:  BTFSS  F81.0
+010C:  BRA    01CE
+....................  
+....................  if(m1==cont){ 
+010E:  MOVF   2A,W
+0110:  SUBWF  29,W
+0112:  BNZ   011C
+....................    i=0; 
+0114:  CLRF   24
+....................    j=0; 
+0116:  CLRF   27
+....................    m1=0; 
+0118:  CLRF   29
+....................    cont=0; 
+011A:  CLRF   2A
+....................  } 
+....................  if(input(PIN_B3)==1){ 
+011C:  BSF    F93.3
+011E:  BTFSS  F81.3
+0120:  BRA    0136
+....................      cont++; 
+0122:  INCF   2A,F
+....................          if (cont==100){ 
+0124:  MOVF   2A,W
+0126:  SUBLW  64
+0128:  BNZ   012C
+....................             cont=0; 
+012A:  CLRF   2A
+....................             } 
+....................  while(input(PIN_B3)==1){}// antirrebote 
+012C:  BSF    F93.3
+012E:  BTFSS  F81.3
+0130:  BRA    0134
+0132:  BRA    012C
+....................    } 
+....................  
+....................  else if(input(PIN_B4)==1){ 
+0134:  BRA    0150
+0136:  BSF    F93.4
+0138:  BTFSS  F81.4
+013A:  BRA    0150
+....................         cont--; 
+013C:  DECF   2A,F
+....................             if (cont==-1){ 
+013E:  MOVF   2A,W
+0140:  SUBLW  FF
+0142:  BNZ   0148
+....................             cont=99; 
+0144:  MOVLW  63
+0146:  MOVWF  2A
+....................             } 
+....................  while(input(PIN_B4)==1){}// antirrebote 
+0148:  BSF    F93.4
+014A:  BTFSS  F81.4
+014C:  BRA    0150
+014E:  BRA    0148
+....................  } 
+....................    i=cont/10; //decenas 
+0150:  MOVFF  2A,2E
+0154:  MOVLW  0A
+0156:  MOVWF  2F
+0158:  RCALL  00BA
+015A:  MOVFF  01,24
+....................    j=cont%10; //unidades 
+015E:  MOVFF  2A,2E
+0162:  MOVLW  0A
+0164:  MOVWF  2F
+0166:  RCALL  00BA
+0168:  MOVFF  00,27
+....................           output_high(pin_a3); 
+016C:  BCF    F92.3
+016E:  BSF    F89.3
+....................           output_low(pin_a2); 
+0170:  BCF    F92.2
+0172:  BCF    F89.2
+....................           output_low(pin_a5); 
+0174:  BCF    F92.5
+0176:  BCF    F89.5
+....................            
+....................           output_high(PIN_A0);  
+0178:  BCF    F92.0
+017A:  BSF    F89.0
+....................           output_low(PIN_A1);//unidades 
+017C:  BCF    F92.1
+017E:  BCF    F89.1
+....................           output_D(vector[i]); 
+0180:  CLRF   03
+0182:  MOVF   24,W
+0184:  ADDLW  1A
+0186:  MOVWF  FE9
+0188:  MOVLW  00
+018A:  ADDWFC 03,W
+018C:  MOVWF  FEA
+018E:  MOVFF  FEF,2E
+0192:  CLRF   F95
+0194:  MOVFF  2E,F8C
+....................           delay_us(1000); 
+0198:  MOVLW  01
+019A:  MOVWF  2E
+019C:  RCALL  00E2
+....................            
+....................           output_low(PIN_A0); 
+019E:  BCF    F92.0
+01A0:  BCF    F89.0
+....................           output_high(PIN_A1);   
+01A2:  BCF    F92.1
+01A4:  BSF    F89.1
+....................           output_D(vector[j]); 
+01A6:  CLRF   03
+01A8:  MOVF   27,W
+01AA:  ADDLW  1A
+01AC:  MOVWF  FE9
+01AE:  MOVLW  00
+01B0:  ADDWFC 03,W
+01B2:  MOVWF  FEA
+01B4:  MOVFF  FEF,2E
+01B8:  CLRF   F95
+01BA:  MOVFF  2E,F8C
+....................           delay_us(1000); 
+01BE:  MOVLW  01
+01C0:  MOVWF  2E
+01C2:  RCALL  00E2
+....................           output_low(PIN_A0); 
+01C4:  BCF    F92.0
+01C6:  BCF    F89.0
+....................           output_low(PIN_A1); 
+01C8:  BCF    F92.1
+01CA:  BCF    F89.1
+....................    } 
+01CC:  BRA    0108
+.................... } 
+01CE:  BCF    FF2.1
+01D0:  GOTO   006C
+.................... #int_EXT1 
+.................... void EXT1_ISR(void){ 
+....................    
+....................   m0++; 
+01D4:  INCF   28,F
+....................    if(m1==cont){ 
+01D6:  MOVF   2A,W
+01D8:  SUBWF  29,W
+01DA:  BNZ   01E0
+....................      m0=0; 
+01DC:  CLRF   28
+....................     } 
+....................     else if(m0==2){ 
+01DE:  BRA    01EA
+01E0:  MOVF   28,W
+01E2:  SUBLW  02
+01E4:  BNZ   01EA
+....................       m1++; 
+01E6:  INCF   29,F
+....................       m0=0; 
+01E8:  CLRF   28
+....................     } 
+....................   output_high(pin_a5); 
+01EA:  BCF    F92.5
+01EC:  BSF    F89.5
+....................   output_low(pin_a3); 
+01EE:  BCF    F92.3
+01F0:  BCF    F89.3
+....................   output_low(pin_a2); 
+01F2:  BCF    F92.2
+01F4:  BCF    F89.2
+.................... } 
+01F6:  BCF    FF0.0
+01F8:  GOTO   006C
+.................... void main( void ){ 
+01FC:  CLRF   FF8
+01FE:  BCF    FD0.7
+0200:  BSF    07.7
+0202:  CLRF   FEA
+0204:  CLRF   FE9
+0206:  CLRF   24
+0208:  CLRF   25
+020A:  CLRF   26
+020C:  CLRF   27
+020E:  CLRF   28
+0210:  CLRF   29
+0212:  CLRF   2A
+0214:  MOVF   FC1,W
+0216:  ANDLW  C0
+0218:  IORLW  0F
+021A:  MOVWF  FC1
+021C:  MOVLW  07
+021E:  MOVWF  FB4
+0220:  MOVLW  C0
+0222:  MOVWF  1A
+0224:  MOVLW  F9
+0226:  MOVWF  1B
+0228:  MOVLW  A4
+022A:  MOVWF  1C
+022C:  MOVLW  B0
+022E:  MOVWF  1D
+0230:  MOVLW  99
+0232:  MOVWF  1E
+0234:  MOVLW  92
+0236:  MOVWF  1F
+0238:  MOVLW  82
+023A:  MOVWF  20
+023C:  MOVLW  F8
+023E:  MOVWF  21
+0240:  MOVLW  80
+0242:  MOVWF  22
+0244:  MOVLW  98
+0246:  MOVWF  23
+....................  
+.................... set_tris_b( 255 ); 
+0248:  MOVLW  FF
+024A:  MOVWF  F93
+.................... set_tris_d( 0x00 ); 
+024C:  MOVLW  00
+024E:  MOVWF  F95
+.................... set_tris_a( 255 ); //salidas para activar cada display        
+0250:  MOVLW  FF
+0252:  MOVWF  F92
+....................  
+.................... enable_interrupts(INT_EXT); 
+0254:  BSF    FF2.4
+.................... enable_interrupts(INT_EXT1); 
+0256:  BSF    FF0.3
+.................... enable_interrupts(GLOBAL); // Habilitación general de interrupción 
+0258:  MOVLW  C0
+025A:  IORWF  FF2,F
+....................  
+.................... while(true){ 
+....................  
+.................... if(m1==cont){ 
+025C:  MOVF   2A,W
+025E:  SUBWF  29,W
+0260:  BNZ   0286
+....................  
+....................   output_high(pin_a2); 
+0262:  BCF    F92.2
+0264:  BSF    F89.2
+....................   output_high(pin_a3); 
+0266:  BCF    F92.3
+0268:  BSF    F89.3
+....................   output_high(pin_a5); 
+026A:  BCF    F92.5
+026C:  BSF    F89.5
+....................   output_low(pin_b5); 
+026E:  BCF    F93.5
+0270:  BCF    F8A.5
+0272:  CLRF   19
+0274:  BTFSC  FF2.7
+0276:  BSF    19.7
+0278:  BCF    FF2.7
+....................   delay_ms(100); 
+027A:  MOVLW  64
+027C:  MOVWF  2E
+027E:  RCALL  00E2
+0280:  BTFSC  19.7
+0282:  BSF    FF2.7
+.................... } 
+.................... else if(m1!=cont){ 
+0284:  BRA    029C
+0286:  MOVF   2A,W
+0288:  SUBWF  29,W
+028A:  BZ    029C
+....................    output_high(pin_a2); 
+028C:  BCF    F92.2
+028E:  BSF    F89.2
+....................    output_low(pin_a3); 
+0290:  BCF    F92.3
+0292:  BCF    F89.3
+....................    output_low(pin_a5); 
+0294:  BCF    F92.5
+0296:  BCF    F89.5
+....................    output_high(pin_b5); 
+0298:  BCF    F93.5
+029A:  BSF    F8A.5
+029C:  CLRF   19
+029E:  BTFSC  FF2.7
+02A0:  BSF    19.7
+02A2:  BCF    FF2.7
+....................  } 
+....................    i1=m1/10; //decenas 
+02A4:  MOVFF  29,2E
+02A8:  MOVLW  0A
+02AA:  MOVWF  2F
+02AC:  RCALL  00BA
+02AE:  BTFSC  19.7
+02B0:  BSF    FF2.7
+02B2:  MOVFF  01,25
+02B6:  CLRF   19
+02B8:  BTFSC  FF2.7
+02BA:  BSF    19.7
+02BC:  BCF    FF2.7
+....................    j1=m1%10; //unidades 
+02BE:  MOVFF  29,2E
+02C2:  MOVLW  0A
+02C4:  MOVWF  2F
+02C6:  RCALL  00BA
+02C8:  BTFSC  19.7
+02CA:  BSF    FF2.7
+02CC:  MOVFF  00,26
+....................     
+....................           output_high(PIN_A0);  
+02D0:  BCF    F92.0
+02D2:  BSF    F89.0
+....................           output_low(PIN_A1);//unidades 
+02D4:  BCF    F92.1
+02D6:  BCF    F89.1
+....................           output_D(vector[i1]); 
+02D8:  CLRF   03
+02DA:  MOVF   25,W
+02DC:  ADDLW  1A
+02DE:  MOVWF  FE9
+02E0:  MOVLW  00
+02E2:  ADDWFC 03,W
+02E4:  MOVWF  FEA
+02E6:  MOVFF  FEF,2B
+02EA:  CLRF   F95
+02EC:  MOVFF  2B,F8C
+....................           delay_us(1000); 
+02F0:  CLRF   19
+02F2:  BTFSC  FF2.7
+02F4:  BSF    19.7
+02F6:  BCF    FF2.7
+02F8:  MOVLW  01
+02FA:  MOVWF  2E
+02FC:  RCALL  00E2
+02FE:  BTFSC  19.7
+0300:  BSF    FF2.7
+....................            
+....................           output_low(PIN_A0); 
+0302:  BCF    F92.0
+0304:  BCF    F89.0
+....................           output_high(PIN_A1);   
+0306:  BCF    F92.1
+0308:  BSF    F89.1
+....................           output_D(vector[j1]); 
+030A:  CLRF   03
+030C:  MOVF   26,W
+030E:  ADDLW  1A
+0310:  MOVWF  FE9
+0312:  MOVLW  00
+0314:  ADDWFC 03,W
+0316:  MOVWF  FEA
+0318:  MOVFF  FEF,2B
+031C:  CLRF   F95
+031E:  MOVFF  2B,F8C
+....................           delay_us(1000); 
+0322:  CLRF   19
+0324:  BTFSC  FF2.7
+0326:  BSF    19.7
+0328:  BCF    FF2.7
+032A:  MOVLW  01
+032C:  MOVWF  2E
+032E:  RCALL  00E2
+0330:  BTFSC  19.7
+0332:  BSF    FF2.7
+....................           output_low(PIN_A0); 
+0334:  BCF    F92.0
+0336:  BCF    F89.0
+....................           output_low(PIN_A1); 
+0338:  BCF    F92.1
+033A:  BCF    F89.1
+....................  } 
+033C:  BRA    025C
+.................... }  
+....................  /*UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS 
+....................                       AUTOR 
+....................                     JAIME DIAZ    
+....................                     20141573116 
+....................   */ 
+033E:  SLEEP 
+
+Configuration Fuses:
+   Word  1: CC3C   PLL5 CPUDIV4 USBDIV HS FCMEN IESO
+   Word  2: 0E38   PUT NOBROWNOUT BORV20 VREGEN NOWDT WDT128
+   Word  3: 8700   CCP2C1 PBADEN LPT1OSC MCLR
+   Word  4: 00A1   STVREN NOLVP ICPRT NOXINST NODEBUG
+   Word  5: C00F   NOPROTECT NOCPB NOCPD
+   Word  6: E00F   NOWRT NOWRTC NOWRTB NOWRTD
+   Word  7: 400F   NOEBTR NOEBTRB

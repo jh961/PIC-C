@@ -1,0 +1,29 @@
+[PROJECT]
+Target=C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\taximetro.hex
+Development_Mode=
+Processor_Text=PIC18F4550
+ToolSuite=CCS
+Processor=0x4550
+[C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\taximetro]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+[mru-list]
+1=C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\taximetro.c
+[Windows]
+0=0000 %S 0 0 796 451 3 0
+[Units]
+Link=0
+Count=1
+1=C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\taximetro
+[Opened Files]
+1=taximetro.c
+2=
+3=
+4=
+[documentation]
+template=C:\Program Files\PICC\template_sdd.rtf
+output=taximetro.rtf

@@ -1,0 +1,14 @@
+ÀÄtaximetro
+   ÃÄMAIN  0/324  Ram=1
+   ³  ÃÄ??0??
+   ³  ÃÄ@delay_ms2  0/38  Ram=1
+   ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ÃÄ@delay_ms2  0/38  Ram=1
+   ³  ÀÄ@delay_ms2  0/38  Ram=1
+   ÃÄEXT_ISR  0/204  Ram=1
+   ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ÃÄ@delay_ms2  0/38  Ram=1
+   ³  ÀÄ@delay_ms2  0/38  Ram=1
+   ÀÄEXT1_ISR  0/40  Ram=0

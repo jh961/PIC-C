@@ -1,0 +1,168 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     @INTERRUPT_AREA
+017     @INTERRUPT_AREA
+018     @INTERRUPT_AREA
+019     valor
+01A-01D voltaje
+01E     @PSTRINGCN_97.P1
+01E     lcd_init.i
+01E-021 @PRINTF_L32D_97FPFPFR.P1
+01E     @PRINTF_U_97.P2
+01E-01F @ITOF.P3
+01E     MAIN.@SCRATCH1
+01F     @PRINTF_U_97.P1
+01F     lcd_init.@SCRATCH1
+01F     @PSTRINGCN_97.@SCRATCH1
+020     @DIV88.P1
+020     @PSTRINGCN_97.@SCRATCH2
+021     @DIV88.P1
+022     @PRINTF_L32D_97FPFPFR.P1
+022     @DIV88.@SCRATCH1
+023     @PRINTF_L32D_97FPFPFR.@SCRATCH1
+024     @PRINTF_L32D_97FPFPFR.@SCRATCH2
+025     @PRINTF_L32D_97FPFPFR.@SCRATCH3
+026     @PRINTF_L32D_97FPFPFR.@SCRATCH4
+027     @PRINTF_L32D_97FPFPFR.@SCRATCH5
+028     @PRINTF_L32D_97FPFPFR.@SCRATCH6
+029     @PRINTF_L32D_97FPFPFR.@SCRATCH7
+02A     @PRINTF_L32D_97FPFPFR.@SCRATCH8
+02B-02E @DIV3232.P1
+02B-02E @FTOSD.P2
+02B-02E @MULFF.P3
+02B     lcd_putc.c
+02B-02E @ADDFF.P1
+02C     lcd_gotoxy.x
+02C     @delay_ms2.P1
+02D     lcd_gotoxy.y
+02E     lcd_gotoxy.address
+02F-032 @DIV3232.P1
+02F-032 @MULFF.P2
+02F-032 @ADDFF.P3
+02F     lcd_gotoxy.@SCRATCH1
+02F     @FTOSD.@SCRATCH1
+030     lcd_send_byte.address
+031     lcd_send_byte.n
+032     lcd_read_byte.low
+032     lcd_send_byte.@SCRATCH1
+033     lcd_send_nibble.n
+033     lcd_read_byte.high
+033     @MULFF.@SCRATCH1
+033     @ADDFF.@SCRATCH1
+033     @DIV3232.@SCRATCH1
+034     lcd_read_byte.@SCRATCH1
+034     @MULFF.@SCRATCH2
+034     @ADDFF.@SCRATCH2
+034     @DIV3232.@SCRATCH2
+035     @MULFF.@SCRATCH3
+035     @ADDFF.@SCRATCH3
+035     @DIV3232.@SCRATCH3
+036     @ADDFF.@SCRATCH4
+036     @DIV3232.@SCRATCH4
+037     @ADDFF.@SCRATCH5
+037     @DIV3232.@SCRATCH5
+038     @ADDFF.@SCRATCH6
+039     @ADDFF.@SCRATCH7
+03A     @ADDFF.@SCRATCH8
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+00E4  @delay_ms2
+00AE  LCD_INIT_STRING
+0134  lcd_read_byte
+0128  lcd_read_nibble
+010A  lcd_send_nibble
+0176  lcd_send_byte
+01B0  lcd_init
+0214  lcd_gotoxy
+0236  lcd_putc
+00C2  TIMER_ISR
+0956  MAIN
+00D0  @const108
+0288  @PSTRINGCN_97
+02A6  @DIV88
+02CE  @PRINTF_U_97
+0336  @ITOF
+00DA  @const119
+036E  @MULFF
+0462  @ADDFF
+06CE  @FTOSD
+070E  @DIV3232
+079C  @PRINTF_L32D_97FPFPFR
+0956  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    c:\users\jaime diaz\desktop\laboratorios ud\programas pic\
+
+Project Files:
+    generador de ciclos.c
+    generador de ciclos.h
+    ..\..\..\..\..\Program Files\PICC\devices\18F4550.h
+    ..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    c:\users\jaime diaz\desktop\laboratorios ud\programas pic\generador de ciclos (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      generador de ciclos.err
+    Ext Symbols: generador de ciclos.esym
+    INHX32:      generador de ciclos.hex
+    Symbols:     generador de ciclos.sym
+    List:        generador de ciclos.lst
+    Debug/COFF:  generador de ciclos.cof
+    Project:     generador de ciclos.PJT
+    Call Tree:   generador de ciclos.tre
+    Statistics:  generador de ciclos.sta

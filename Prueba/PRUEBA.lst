@@ -1,0 +1,152 @@
+CCS PCH C Compiler, Version 4.114, 93460303               19-ago-15 21:21
+
+               Filename: C:\Users\JAIME DIAZ\Desktop\LABORATORIOS UD\PROGRAMAS PIC\PRUEBA.lst
+
+               ROM used: 122 bytes (0%)
+                         Largest free fragment is 32646
+               RAM used: 5 (0%) at main() level
+                         6 (0%) worst case
+               Stack:    1 locations
+
+*
+0000:  GOTO   002C
+.................... #include <PRUEBA.h> 
+.................... #include <18F4550.h> 
+.................... //////// Standard Header file for the PIC18F4550 device //////////////// 
+.................... #device PIC18F4550 
+.................... #list 
+....................  
+....................  
+.................... #FUSES NOWDT                 	//No Watch Dog Timer 
+.................... #FUSES WDT128                	//Watch Dog Timer uses 1:128 Postscale 
+.................... #FUSES PLL12                 	//Divide By 12(48MHz oscillator input) 
+.................... #FUSES CPUDIV4               	//System Clock by 4 
+.................... #FUSES USBDIV                	//USB clock source comes from PLL divide by 2 
+.................... #FUSES XT                    	//Crystal osc <= 4mhz for PCM/PCH , 3mhz to 10 mhz for PCD 
+.................... #FUSES FCMEN                 	//Fail-safe clock monitor enabled 
+.................... #FUSES IESO                  	//Internal External Switch Over mode enabled 
+.................... #FUSES NOPUT                 	//No Power Up Timer 
+.................... #FUSES NOBROWNOUT            	//No brownout reset 
+.................... #FUSES BORV20                	//Brownout reset at 2.0V 
+.................... #FUSES VREGEN                	//USB voltage regulator enabled 
+.................... #FUSES PBADEN                	//PORTB pins are configured as analog input channels on RESET 
+.................... #FUSES LPT1OSC               	//Timer1 configured for low-power operation 
+.................... #FUSES MCLR                  	//Master Clear pin enabled 
+.................... #FUSES STVREN                	//Stack full/underflow will cause reset 
+.................... #FUSES NOLVP                 	//No low voltage prgming, B3(PIC16) or B5(PIC18) used for I/O 
+.................... #FUSES ICPRT                 	//ICPRT enabled 
+.................... #FUSES NOXINST               	//Extended set extension and Indexed Addressing mode disabled (Legacy mode) 
+.................... #FUSES NODEBUG               	//No Debug mode for ICD 
+.................... #FUSES NOPROTECT             	//Code not protected from reading 
+.................... #FUSES NOCPB                 	//No Boot Block code protection 
+.................... #FUSES NOCPD                 	//No EE protection 
+.................... #FUSES NOWRT                 	//Program memory not write protected 
+.................... #FUSES NOWRTC                	//configuration not registers write protected 
+.................... #FUSES NOWRTB                	//Boot block not write protected 
+.................... #FUSES NOWRTD                	//Data EEPROM not write protected 
+.................... #FUSES NOEBTR                	//Memory not protected from table reads 
+.................... #FUSES NOEBTRB               	//Boot block not protected from table reads 
+....................  
+.................... #use delay(crystal=4000000,  clock=1000000) 
+....................  
+....................  
+.................... #fuses XT, NOWDT 
+.................... #use delay (clock = 4000000) // reloj 4 Mhz 
+0004:  CLRF   FEA
+0006:  MOVLW  06
+0008:  MOVWF  FE9
+000A:  MOVF   FEF,W
+000C:  BZ    002A
+000E:  MOVLW  01
+0010:  MOVWF  01
+0012:  CLRF   00
+0014:  DECFSZ 00,F
+0016:  BRA    0014
+0018:  DECFSZ 01,F
+001A:  BRA    0012
+001C:  MOVLW  4A
+001E:  MOVWF  00
+0020:  DECFSZ 00,F
+0022:  BRA    0020
+0024:  BRA    0026
+0026:  DECFSZ FEF,F
+0028:  BRA    000E
+002A:  RETLW  00
+.................... #use fast_io(B) //configurar rapidamente puerto B 
+....................  
+.................... void main() 
+.................... { 
+002C:  CLRF   FF8
+002E:  BCF    FD0.7
+0030:  CLRF   FEA
+0032:  CLRF   FE9
+0034:  MOVF   FC1,W
+0036:  ANDLW  C0
+0038:  IORLW  0F
+003A:  MOVWF  FC1
+003C:  MOVLW  07
+003E:  MOVWF  FB4
+....................  
+....................   port_b_pullups(true); 
+0040:  BCF    FF1.7
+....................   set_tris_b(0x1); 
+0042:  MOVLW  01
+0044:  MOVWF  F93
+....................   output_low(pin_B1); 
+0046:  BCF    F8A.1
+....................    
+....................   while(true){ 
+....................   while(input(pin_b2)==1) 
+....................   { 
+0048:  BTFSS  F81.2
+004A:  BRA    0058
+....................   if (input(pin_b0)==1) 
+004C:  BTFSS  F81.0
+004E:  BRA    0054
+....................   output_low(pin_b1); 
+0050:  BCF    F8A.1
+....................   else  
+0052:  BRA    0056
+....................   output_high(pin_B1); 
+0054:  BSF    F8A.1
+....................    
+....................   } 
+0056:  BRA    0048
+....................  
+....................   WHILE (input(pin_b2)==0){ 
+0058:  BTFSC  F81.2
+005A:  BRA    0076
+....................   
+....................  output_high(PIN_B1); 
+005C:  BSF    F8A.1
+....................  delay_ms(500); 
+005E:  MOVLW  02
+0060:  MOVWF  05
+0062:  MOVLW  FA
+0064:  MOVWF  06
+0066:  RCALL  0004
+0068:  DECFSZ 05,F
+006A:  BRA    0062
+....................  output_low(PIN_B1); 
+006C:  BCF    F8A.1
+....................  delay_ms(200); 
+006E:  MOVLW  C8
+0070:  MOVWF  06
+0072:  RCALL  0004
+....................   } 
+0074:  BRA    0058
+....................   
+....................  } 
+0076:  BRA    0048
+....................  
+.................... } 
+0078:  SLEEP 
+
+Configuration Fuses:
+   Word  1: C038   PLL1 CPUDIV4 USBDIV XT FCMEN IESO
+   Word  2: 0E39   NOPUT NOBROWNOUT BORV20 VREGEN NOWDT WDT128
+   Word  3: 8700   CCP2C1 PBADEN LPT1OSC MCLR
+   Word  4: 00A1   STVREN NOLVP ICPRT NOXINST NODEBUG
+   Word  5: C00F   NOPROTECT NOCPB NOCPD
+   Word  6: E00F   NOWRT NOWRTC NOWRTB NOWRTD
+   Word  7: 400F   NOEBTR NOEBTRB
