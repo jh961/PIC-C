@@ -1,0 +1,175 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004-007 distancia
+008-00B valor
+00C-00F valorg
+010-013 valor1
+014-015 tiempo
+016-017 @ITOF.P1
+016     @PSTRINGCN_228.P2
+016-017 @MUL1616.P3
+016-019 @PRINTF_L32D_228FPFPF.P4
+016     lcd_init.i
+016-019 @FLT.P1
+016-019 @ADDFF.P2
+016     MAIN.@SCRATCH1
+016     @PSTRINGC_228.@SCRATCH1
+017     lcd_init.@SCRATCH1
+017     MAIN.@SCRATCH2
+017     @PSTRINGC_228.@SCRATCH2
+017     @PSTRINGCN_228.@SCRATCH1
+018-019 @MUL1616.P1
+018-019 @DIV1616.P2
+018     MAIN.@SCRATCH3
+018     @PSTRINGCN_228.@SCRATCH2
+019     MAIN.@SCRATCH4
+01A     @PRINTF_L32D_228FPFPF.P1
+01A-01D @FLT.P2
+01A-01B @DIV1616.P3
+01A-01D @ADDFF.P4
+01A-01D @DIVFF.P5
+01A     @MUL1616.@SCRATCH1
+01B     @PRINTF_L32D_228FPFPF.@SCRATCH1
+01C     @DIV1616.@SCRATCH1
+01C     @PRINTF_L32D_228FPFPF.@SCRATCH2
+01D     @PRINTF_L32D_228FPFPF.@SCRATCH3
+01E-021 @DIVFF.P1
+01E     @FLT.@SCRATCH1
+01E     @ADDFF.@SCRATCH1
+01E     @PRINTF_L32D_228FPFPF.@SCRATCH4
+01F     @FLT.@SCRATCH2
+01F     @ADDFF.@SCRATCH2
+01F     @PRINTF_L32D_228FPFPF.@SCRATCH5
+020     @ADDFF.@SCRATCH3
+020     @PRINTF_L32D_228FPFPF.@SCRATCH6
+021     @ADDFF.@SCRATCH4
+021     @PRINTF_L32D_228FPFPF.@SCRATCH7
+022     @DIVFF.@SCRATCH1
+022     @ADDFF.@SCRATCH5
+022     @PRINTF_L32D_228FPFPF.@SCRATCH8
+023-026 @DIV3232.P1
+023-026 @FTOSD.P2
+023     lcd_putc.c
+023-026 @MULFF.P1
+023     @DIVFF.@SCRATCH2
+023     @ADDFF.@SCRATCH6
+024     @delay_ms1.P1
+024     lcd_gotoxy.x
+024     @DIVFF.@SCRATCH3
+024     @ADDFF.@SCRATCH7
+025     lcd_gotoxy.y
+025     @DIVFF.@SCRATCH4
+025     @ADDFF.@SCRATCH8
+026     lcd_gotoxy.address
+026     @DIVFF.@SCRATCH5
+027-02A @MULFF.P1
+027-02A @DIV3232.P2
+027     @DIVFF.@SCRATCH6
+027     lcd_gotoxy.@SCRATCH1
+027     @FTOSD.@SCRATCH1
+028     lcd_send_byte.address
+029     lcd_send_byte.n
+02A     lcd_read_byte.low
+02A     lcd_send_byte.@SCRATCH1
+02B     lcd_read_byte.high
+02B     lcd_send_nibble.n
+02B     @MULFF.@SCRATCH1
+02B     @DIV3232.@SCRATCH1
+02C     @MULFF.@SCRATCH2
+02C     lcd_read_byte.@SCRATCH1
+02C     @DIV3232.@SCRATCH2
+02D     @MULFF.@SCRATCH3
+02D     @DIV3232.@SCRATCH3
+02E     @DIV3232.@SCRATCH4
+02F     @DIV3232.@SCRATCH5
+F83     PSP_DATA
+F83     lcd
+F8C     lcdlat
+F95     lcdtris
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @READ_PROGRAM_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0084  @delay_ms1
+09D8  @FLT
+0294  @ITOF
+02CA  @DIVFF
+0424  @ADDFF
+068E  @MULFF
+0004  LCD_INIT_STRING
+00D4  lcd_read_byte
+00C8  lcd_read_nibble
+00AA  lcd_send_nibble
+0116  lcd_send_byte
+014A  lcd_init
+01AA  lcd_gotoxy
+01CC  lcd_putc
+0A50  MAIN
+0018  @const241
+0210  @PSTRINGC_228
+0026  @const243
+0034  @const244
+0044  @const245
+004C  @const246
+0230  @MUL1616
+0250  @DIV1616
+005E  @const253
+0070  @const254
+0780  @FTOSD
+07C0  @DIV3232
+083A  @PRINTF_L32D_228FPFPF
+09B8  @PSTRINGCN_228
+0A50  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\JAIMEIDAI\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\ultrasonido PIC\
+
+Project Files:
+    ultrasonido.c
+    ..\..\..\..\..\..\..\Program Files\PICC\devices\18f4550.h
+    ..\..\..\..\..\..\..\Program Files\PICC\drivers\math.h
+    ..\..\..\..\..\..\..\Program Files\PICC\drivers\lcd.c
+
+Units:
+    C:\Users\JAIMEIDAI\Desktop\ESCRITORIO\PROGRAMAS,informacion,tranversales\PROGRAMAS PIC\ultrasonido PIC\ultrasonido (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      ultrasonido.err
+    Ext Symbols: ultrasonido.esym
+    INHX32:      ultrasonido.hex
+    Symbols:     ultrasonido.sym
+    List:        ultrasonido.lst
+    Debug/COFF:  ultrasonido.cof
+    Project:     ultrasonido.PJT
+    Call Tree:   ultrasonido.tre
+    Statistics:  ultrasonido.sta
