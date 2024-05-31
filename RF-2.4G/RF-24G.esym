@@ -1,0 +1,181 @@
+D G "__PCH__" 0 144 ""4.104""
+D G "__DEVICE__" 0 144 "4550"
+D G "__DATE__" 0 144 ""06-oct-15""
+D G "__TIME__" 0 144 ""00:35:38"" "Laipac RF-24G / TXRX24G"
+D G "RF_24G_CE" 0 43 "PIN_B3"
+D G "RF_24G_DATA" 0 44 "PIN_B4"
+D G "RF_24G_CLK1" 0 45 "PIN_B5"
+D G "RF_24G_DR1" 0 47 "PIN_B6"
+D G "RF_24G_CS" 0 48 "PIN_B7"
+D G "numOfBytes" 0 53 "6"
+F G "RF_24G_initPorts" 0 56 "int8(maxptr ,int16 ,int16 )"
+D G "DATA2_W" 0 71 "numOfBytes * 8"
+D G "DATA1_W" 0 74 "numOfBytes * 8"
+D G "ADDR2_4" 0 77 "0x00"
+D G "ADDR2_3" 0 78 "0x00"
+D G "ADDR2_2" 0 79 "0x00"
+D G "ADDR2_1" 0 80 "0x42"
+D G "ADDR2_0" 0 81 "0x42"
+D G "ADDR1_4" 0 84 "0x00"
+D G "ADDR1_3" 0 85 "0x00"
+D G "ADDR1_2" 0 86 "0x00"
+D G "ADDR1_1" 0 87 "0x42"
+D G "ADDR1_0" 0 88 "0x42"
+D G "ADDR_W_5_BYTE" 0 97 "0b10100000"
+D G "ADDR_W_4_BYTE" 0 98 "0b10000000"
+D G "ADDR_W_3_BYTE" 0 99 "0b01100000"
+D G "ADDR_W_2_BYTE" 0 100 "0b01000000"
+D G "ADDR_W_1_BYTE" 0 101 "0b00100000"
+D G "CRC_L_8_BIT" 0 103 "0b00000000"
+D G "CRC_L_16_BIT" 0 104 "0b00000010"
+D G "CRC_EN_DISABLE" 0 106 "0b00000000"
+D G "CRC_EN_ENABLE" 0 107 "0b00000001"
+D G "RX2_EN_DISABLE" 0 117 "0b00000000"
+D G "RX2_EN_ENABLE" 0 118 "0b10000000"
+D G "CM_DIRECT" 0 120 "0b00000000"
+D G "CM_SHOCKBURST" 0 121 "0b01000000"
+D G "RFDR_SB_250_KBPS" 0 123 "0b00000000"
+D G "RFDR_SB_1_MBPS" 0 124 "0b00100000"
+D G "XO_F_4MHZ" 0 126 "0b00000000"
+D G "XO_F_8MHZ" 0 127 "0b00000100"
+D G "XO_F_12MHZ" 0 128 "0b00001100"
+D G "XO_F_16MHZ" 0 129 "0b00001100"
+D G "XO_F_20MHZ" 0 130 "0b00010000"
+D G "RF_PWR_N20DB" 0 132 "0b00000000" "-20db"
+D G "RF_PWR_N10DB" 0 133 "0b00000001" "-10db"
+D G "RF_PWR_N5DB" 0 134 "0b00000010" "-5db"
+D G "RF_PWR_0DB" 0 135 "0b00000011" "0db (Full Power)"
+D G "RF_CH" 0 142 "0b10000000" "64 - 2464GHz"
+D G "RXEN_TX" 0 144 "0b00000000"
+D G "RXEN_RX" 0 145 "0b00000001"
+D G "BUF_MAX" 0 148 "numOfBytes"
+F B "RF_24G_CLK1" 0 0
+F B "RF_24G_DR1" 1 0
+F B "RF_24G_CS" 0 0
+F B "numOfBytes" 1 0
+F B "RF_24G_initPorts" 2 0
+F B "PORT_B_PULLUPS" 3 0
+F B "MAIN" 2 2
+F B "FALSE" 2 2
+F B "DISABLE_INTERRUPTS" 2 0
+F B "INT_RB" 2 0
+F B "DATA2_W" 2 0
+F B "DATA1_W" 3 0
+F B "ADDR2_4" 2 0
+F B "ADDR2_3" 2 0
+F B "ADDR2_2" 2 0
+F B "ADDR2_1" 2 0
+F B "ADDR2_0" 2 0
+F B "ADDR1_4" 1 0
+F B "ADDR1_3" 1 0
+F B "ADDR1_2" 1 0
+F B "ADDR1_1" 1 255
+F B "ADDR1_0" 1 255
+F B "ADDR_W_5_BYTE" 1 255
+F B "ADDR_W_4_BYTE" 2 0
+F B "ADDR_W_3_BYTE" 2 0
+F B "ADDR_W_2_BYTE" 1 255
+F B "ADDR_W_1_BYTE" 1 1
+F B "CRC_L_8_BIT" 1 0
+F B "CRC_L_16_BIT" 1 0
+F B "CRC_EN_DISABLE" 2 2
+F B "CRC_EN_ENABLE" 1 0
+F B "RX2_EN_DISABLE" 1 0
+F B "RX2_EN_ENABLE" 1 0
+F B "CM_DIRECT" 1 0
+F B "CM_SHOCKBURST" 1 0
+F B "RFDR_SB_250_KBPS" 1 2
+F B "RFDR_SB_1_MBPS" 1 0
+F B "XO_F_4MHZ" 2 0
+F B "XO_F_8MHZ" 1 0
+F B "XO_F_12MHZ" 2 0
+F B "XO_F_16MHZ" 3 0
+F B "XO_F_20MHZ" 3 0
+F B "RF_PWR_N20DB" 1 0
+F B "RF_PWR_N10DB" 3 0
+F B "RF_PWR_N5DB" 3 0
+F B "RF_PWR_0DB" 1 0
+F B "RF_CH" 2 3
+F B "RXEN_TX" 2 3
+F B "strcpy" 2 0
+F B "memcpy" 3 0
+F B "strstr100" 2 0
+F B "output_high" 1 0
+F B "output_low" 1 0
+F B "input" 1 0
+F B "input_state" 1 0
+F B "output_float" 1 0
+F B "output_drive" 1 0
+F B "output_bit" 1 1
+F B "output_toggle" 1 0
+F B "output_a" 1 0
+F B "output_b" 1 0
+F B "output_c" 1 0
+F B "output_d" 1 0
+F B "output_e" 1 0
+F B "input_a" 0 0
+F B "input_b" 0 0
+F B "input_c" 0 0
+F B "input_d" 0 0
+F B "input_e" 0 0
+F B "set_tris_a" 1 0
+F B "set_tris_b" 1 0
+F B "set_tris_c" 1 0
+F B "set_tris_d" 1 0
+F B "set_tris_e" 1 0
+F B "get_tris_a" 0 0
+F B "get_tris_b" 0 0
+F B "get_tris_c" 0 0
+F B "get_tris_d" 0 0
+F B "get_tris_e" 0 0
+F B "input_change_a" 0 0
+F B "input_change_b" 0 0
+F B "input_change_c" 0 0
+F B "input_change_d" 0 0
+F B "input_change_e" 0 0
+F B "port_b_pullups" 1 0
+F B "setup_counters" 2 0
+F B "setup_wdt" 1 0
+F B "restart_cause" 0 0
+F B "restart_wdt" 0 0
+F B "get_rtcc" 0 0
+F B "set_rtcc" 1 0
+F B "get_timer0" 0 0
+F B "set_timer0" 1 0
+F B "setup_comparator" 1 0
+F B "setup_port_a" 1 0
+F B "setup_adc_ports" 1 0
+F B "setup_adc" 1 0
+F B "set_adc_channel" 1 0
+F B "read_adc" 0 1
+F B "adc_done" 0 0
+F B "setup_timer_0" 1 0
+F B "setup_vref" 1 0
+F B "setup_timer_1" 1 0
+F B "get_timer1" 0 0
+F B "set_timer1" 1 0
+F B "setup_timer_2" 3 0
+F B "get_timer2" 0 0
+F B "set_timer2" 1 0
+F B "setup_timer_3" 1 0
+F B "set_timer3" 1 0
+F B "get_timer3" 0 0
+F B "setup_ccp1" 1 2
+F B "set_pwm1_duty" 1 0
+F B "setup_ccp2" 1 0
+F B "set_pwm2_duty" 1 0
+F B "setup_low_volt_detect" 1 0
+F B "setup_oscillator" 1 2
+F B "setup_psp" 1 0
+F B "psp_output_full" 0 0
+F B "psp_input_full" 0 0
+F B "psp_overflow" 0 0
+F B "setup_spi" 1 0
+F B "spi_read" 0 1
+F B "spi_write" 1 0
+F B "spi_data_is_in" 0 0
+F B "setup_spi2" 1 0
+F B "spi_read2" 0 1
+F B "spi_write2" 1 0
+F B "spi_data_is_in2" 0 0
+F B "brownout_enable" 1 0
